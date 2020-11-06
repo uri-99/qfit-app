@@ -1,0 +1,6 @@
+falta:
+titulo que diga qfit
+	que tenga la q verde
+	que esté centrado
+cambiar el navigation bar a greyFront 
+	y los simbolos de los iconos a blancos (ponerle un icono igual pero blanco no funciona)

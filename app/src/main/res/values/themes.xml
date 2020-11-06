@@ -12,7 +12,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:backgroundTint">@color/greyBack</item>
+<!--        <item name="android:backgroundTint">@color/greyBack</item>-->
 <!--        <item name="android:navigationBarColor">@color/blue</item>-->
+        <item name="android:windowBackground">@color/greyBack</item>
+<!--        <item name="android:actionBarItemBackground">@color/red</item>-->
+<!--        <item name="android:actionMenuTextColor">@color/red</item>-->
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:panelColorForeground">@color/red</item>
     </style>
 </resources>
