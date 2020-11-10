@@ -3,7 +3,7 @@
     <string name="app_title">qfit</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_profile">Mi Perfil</string>
     <string name="profile_name">Juan Perez</string>
     <string name="profile_age">25 años</string>
     <string name="edit">Editar perfil</string>
