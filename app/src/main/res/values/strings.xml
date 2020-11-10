@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">qfit-app</string>
-    <string name="app_title">__________qfit</string>
+    <string name="app_title">qfit</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
+    <string name="profile_name">Juan Perez</string>
+    <string name="profile_age">25 años</string>
+    <string name="edit">Editar perfil</string>
+    <string name="activity">Mi Actividad</string>
+    <string name="objectives">Mis Objetivos</string>
 </resources>
