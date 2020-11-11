@@ -12,4 +12,19 @@
     <string name="objectives">Mis Objetivos</string>
     <string name="searchHint">Buscar</string>
 
+    <string-array name="filters">
+        <item>Filtrar</item>
+        <item>cat 1</item>
+        <item>cat 2</item>
+        <item>cat 3</item>
+    </string-array>
+    <string-array name="orders">
+        <item>Ordenar</item>
+        <item>cat 4</item>
+        <item>cat 5</item>
+        <item>cat 6</item>
+    </string-array>
+    <string name="sort">Ordenar</string>
+    <string name="filter">Filtrar</string>
+
 </resources>
