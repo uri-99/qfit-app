@@ -26,5 +26,8 @@
     </string-array>
     <string name="sort">Ordenar</string>
     <string name="filter">Filtrar</string>
-
+    
+    <string name="descripcion">Descripción: </string>
+    <string name="duracion">Duración: </string>
+    
 </resources>
