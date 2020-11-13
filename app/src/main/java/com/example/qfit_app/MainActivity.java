@@ -1,12 +1,16 @@
 package com.example.qfit_app;
 
+import android.app.MediaRouteButton;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,8 +21,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
     List<Routine> routineList;
-    ListView listView;
+  //  ListView listView;
+     private static ListView routineView;
+
+     private static List<Routine.Cycle> cycleList;
+     private static ListView cycleView;
+    private static ConstraintLayout routineDetails;
+
+    List<Exercise> exercises1;
+    List<Exercise> exercises2;
+ //   private static List<Routine.Cycle.Exercise> exerciseList;
+    private static ListView exerciseView;
+    private static RoutineListAdapter.CycleListAdapter cycleAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +62,55 @@ public class MainActivity extends AppCompatActivity {
         routineList.add(new Routine("Titulo 6", "entrenador 6", "desc 6", "duracion 6"));
 
 
-
-        listView = findViewById(R.id.myListView);
+        routineView = findViewById(R.id.myListView);
         RoutineListAdapter adapter = new RoutineListAdapter(this, R.layout.routine_as_item, routineList);
-        listView.setAdapter(adapter);
+        routineView.setAdapter(adapter);
+
+
+
+        List<Exercise> exercisesList1 = new ArrayList<>();
+        List<Exercise> exercisesList2 = new ArrayList<>();
+        exercisesList1.add(new Exercise("tit1", "tex1"));
+        exercisesList1.add(new Exercise("tit4", "tex4"));
+        exercisesList2.add(new Exercise("tit2", "tex2"));
+        exercisesList2.add(new Exercise("tit3", "tex3"));
+
+
+        cycleList = new ArrayList<>();
+        cycleList.add(routineList.get(0).createCycle("ciclo 1", "texto 1", exercisesList1));
+        cycleList.add(routineList.get(0).createCycle("ciclo 2", "texto 2", exercisesList2));
+        cycleView = findViewById(R.id.cycleList);
+        cycleAdapter = adapter.createCycleListAdapter(this, R.layout.cycle_as_item, cycleList);
+        cycleView.setAdapter(cycleAdapter);
+
+        routineDetails = findViewById(R.id.routineDetails);
+
+//        exercises1 = new ArrayList<>();
+//        exercises2 = new ArrayList<>();
+//        exercises1.add(cycleList.get(0).createExercise("tit1", "tex1"));
+//        exercises1.add(cycleList.get(0).createExercise("tit2", "tex2"));
+//        exercises2.add(cycleList.get(1).createExercise("tit3", "tex3"));
+//        exercises2.add(cycleList.get(1).createExercise("tit4", "tex4"));
+//        exerciseList = new ArrayList<>();
+//        exerciseList.add(cycleList.get(0).createExercise("tit1", "tex1"));
+//        exerciseList.add(cycleList.get(0).createExercise("tit2", "tex2"));
+//        exerciseList.add(cycleList.get(1).createExercise("tit3", "tex3"));
+//        exerciseList.add(cycleList.get(1).createExercise("tit4", "tex4"));
+//        exerciseView = findViewById(R.id.exerciseList);
+//   //     Log.d("tagg", exerciseView.toString());
+//        RoutineListAdapter.CycleListAdapter.ExerciseListAdapter exerciseAdapter = cycleAdapter.createExerciseListAdapter(this, R.layout.cycle_as_item, exerciseList);
+//        exerciseView.setAdapter(exerciseAdapter);
+
+
+    }
+
+    public static void appearList() {
+        routineView.setVisibility(View.VISIBLE);
+        routineDetails.setVisibility(View.GONE);
+    }
+    public static void disappearList() {
+        routineView.setVisibility(View.GONE);
+        routineDetails.setVisibility(View.VISIBLE);
     }
 
 }

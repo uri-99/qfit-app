@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoutineListAdapter extends ArrayAdapter<Routine> {
@@ -26,6 +28,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         this.context=context;
         this.resource=resource;
         this.routineList=routineList;
+
     }
 
     @NonNull
@@ -55,5 +58,82 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
 
     }
 
+    public CycleListAdapter createCycleListAdapter(Context context, int resource, List<Routine.Cycle> cycleList){
+        return new CycleListAdapter(context, resource, cycleList);
+    }
 
+    public class CycleListAdapter extends ArrayAdapter<Routine.Cycle> {
+
+        Context context;
+        int resource;
+        List<Routine.Cycle> cycleList;
+
+        public CycleListAdapter(@NonNull Context context, int resource, List<Routine.Cycle> cycleList) {
+            super(context, resource, cycleList);
+
+            this.context=context;
+            this.resource=resource;
+            this.cycleList=cycleList;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.cycle_as_item, null);
+            TextView cycleTitle = view.findViewById(R.id.cycleTitle);
+            TextView cycleDescription = view.findViewById(R.id.cycleDescription);
+            ListView exerciseList = view.findViewById(R.id.exerciseList);
+
+            Routine.Cycle cycle = cycleList.get(position);
+            cycleTitle.setText(cycle.getTitle());
+            cycleDescription.setText(cycle.getDescription());
+            exerciseList.setAdapter(createExerciseListAdapter(context, resource, cycle.exercises));
+
+            return view;
+
+        }
+
+        public ExerciseListAdapter createExerciseListAdapter(Context context, int resource, List<Exercise> exerciseList){
+            return new ExerciseListAdapter(context, resource, exerciseList);
+        }
+
+        public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
+
+            Context context;
+            int resource;
+            List<Exercise> exerciseList;
+
+            public ExerciseListAdapter(@NonNull Context context, int resource, List<Exercise> exerciseList) {
+                super(context, resource, exerciseList);
+
+                this.context=context;
+                this.resource=resource;
+                this.exerciseList=exerciseList;
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View view = inflater.inflate(R.layout.exercise_as_item, null);
+                TextView exerciseTitle = view.findViewById(R.id.exerciseTitle);
+                TextView exerciseReps = view.findViewById(R.id.exerciseReps);
+
+                Exercise exercise = exerciseList.get(position);
+                exerciseTitle.setText(exercise.getTitle());
+                exerciseReps.setText(exercise.getReps());
+
+                return view;
+
+            }
+
+
+
+
+        }
+
+
+
+    }
 }

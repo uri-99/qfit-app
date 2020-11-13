@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.qfit_app.MainActivity;
 import com.example.qfit_app.R;
 
 public class ProfileFragment extends Fragment {
@@ -28,6 +30,8 @@ public class ProfileFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        MainActivity.disappearList();
         return root;
     }
 }

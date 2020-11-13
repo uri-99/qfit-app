@@ -39,9 +39,7 @@
             android:clickable="false"
             android:textAlignment="center"
             android:visibility="visible"
-            app:srcCompat="@drawable/ic_baseline_rowing_24"
-            tools:src="@drawable/ic_baseline_rowing_24"
-            tools:srcCompat="@drawable/ic_baseline_rowing_24"
+            tools:srcCompat="@mipmap/carapela"
             tools:visibility="visible" />
 
         <TextView
