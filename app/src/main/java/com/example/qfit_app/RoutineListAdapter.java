@@ -1,6 +1,7 @@
 package com.example.qfit_app;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class RoutineListAdapter extends ArrayAdapter<Routine> {
@@ -47,12 +47,13 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         routineDuration.setText(routine.getDuration());
         routineTrainer.setText(routine.getTrainer());
 
-//        view.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //la funcion de la cosa que hace el botón
-//            }
-//        });
+        view.findViewById(R.id.routineItem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                routine.createDetails();
+                MainActivity.getInstance().appearDetails(routine);
+            }
+        });
 
         return view;
 
@@ -67,6 +68,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         Context context;
         int resource;
         List<Routine.Cycle> cycleList;
+        Routine routine;
 
         public CycleListAdapter(@NonNull Context context, int resource, List<Routine.Cycle> cycleList) {
             super(context, resource, cycleList);
@@ -89,6 +91,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             cycleTitle.setText(cycle.getTitle());
             cycleDescription.setText(cycle.getDescription());
             exerciseList.setAdapter(createExerciseListAdapter(context, resource, cycle.exercises));
+
 
             return view;
 

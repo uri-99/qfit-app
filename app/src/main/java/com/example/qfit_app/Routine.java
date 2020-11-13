@@ -1,16 +1,22 @@
 package com.example.qfit_app;
 
+import android.util.Log;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Routine {
 
     String title, trainer, description, duration;
+    List<Cycle> cycles;
 
     public Routine(String title, String trainer, String description, String duration) {
         this.title = title;
         this.trainer = trainer;
         this.description = description;
         this.duration = duration;
+        this.cycles = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -29,8 +35,38 @@ public class Routine {
         return duration;
     }
 
+    public void log() {
+        Log.d("tagg", getTitle());
+        for(int i=0; i<cycles.size(); i++) {
+            Log.d("tagg", cycles.get(i).getTitle());
+            for(int j=0; j < cycles.get(i).exercises.size() ; j++) {
+                Log.d("tagg", cycles.get(i).exercises.get(j).getTitle());
+            }
+        }
+    }
+
+    public void createDetails(){
+//esto enrealidad estaria chupando los datos de la api, metiendo los ejercicios de cada ciclo de la rutina correspondiente
+        List<Exercise> exercises1 = new ArrayList<>();
+        List<Exercise> exercises2 = new ArrayList<>();
+        cycles=new ArrayList<>();
+        exercises1.add(new Exercise("tit1", "tex1"));
+        exercises1.add(new Exercise("tit2", "tex2"));
+        exercises2.add(new Exercise("tit3", "tex3"));
+        exercises2.add(new Exercise("tit4", "tex4"));
+
+        createCycle("ciclo1", "descr1", exercises1);
+        createCycle("ciclo2", "descr2", exercises2);
+
+//        cycles.get(0).addExercise(new Exercise("tit1", "tex1"));
+//        cycles.get(0).addExercise(new Exercise("tit2", "tex2"));
+//        cycles.get(1).addExercise(new Exercise("tit3", "tex3"));
+//        cycles.get(1).addExercise(new Exercise("tit4", "tex4"));
+    }
+
     public Cycle createCycle(String title, String description, List<Exercise> exercises) {
-        return new Cycle(title, description, exercises);
+        cycles.add(new Cycle(title, description, exercises));
+        return cycles.get(cycles.size() -1); //el que acabo de crear
     }
 
     public class Cycle {
@@ -53,6 +89,10 @@ public class Routine {
 
         public List getExercises() {
             return exercises;
+        }
+
+        public void addExercise(Exercise exercise) {
+            exercises.add(exercise);
         }
 
 
