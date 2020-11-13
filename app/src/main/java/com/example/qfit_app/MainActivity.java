@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -108,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
         routinesView.setVisibility(View.GONE);
         routineDetails.setVisibility(View.VISIBLE);
+
+
+
+        TextView routineDetailTitle = findViewById(R.id.routineDetailTitle);
+        routineDetailTitle.setText(routine.getTitle());
     }
 
     public static void disappearLists() {
