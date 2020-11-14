@@ -3,6 +3,7 @@ package com.example.qfit_app;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -111,9 +112,11 @@ public class MainActivity extends AppCompatActivity {
         routineDetails.setVisibility(View.VISIBLE);
 
 
-
+        ImageButton button_back = findViewById(R.id.button_back);
+        button_back.setOnClickListener(v -> appearList());
         TextView routineDetailTitle = findViewById(R.id.routineDetailTitle);
         routineDetailTitle.setText(routine.getTitle());
+
     }
 
     public static void disappearLists() {

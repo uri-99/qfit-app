@@ -52,6 +52,7 @@ public class Routine {
         cycles=new ArrayList<>();
         exercises1.add(new Exercise("tit1", "tex1"));
         exercises1.add(new Exercise("tit2", "tex2"));
+        exercises1.add(new Exercise("tit22", "tex2"));
         exercises2.add(new Exercise("tit3", "tex3"));
         exercises2.add(new Exercise("tit4", "tex4"));
 

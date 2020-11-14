@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import org.w3c.dom.Text;
 
@@ -68,7 +70,6 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         Context context;
         int resource;
         List<Routine.Cycle> cycleList;
-        Routine routine;
 
         public CycleListAdapter(@NonNull Context context, int resource, List<Routine.Cycle> cycleList) {
             super(context, resource, cycleList);
@@ -91,6 +92,10 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             cycleTitle.setText(cycle.getTitle());
             cycleDescription.setText(cycle.getDescription());
             exerciseList.setAdapter(createExerciseListAdapter(context, resource, cycle.exercises));
+            ViewGroup.LayoutParams listSize = exerciseList.getLayoutParams();
+
+            listSize.height=83*exerciseList.getCount();
+            exerciseList.setLayoutParams(listSize);
 
 
             return view;
