@@ -11,6 +11,11 @@
     <string name="activity">Mi Actividad</string>
     <string name="objectives">Mis Objetivos</string>
     <string name="searchHint">Buscar</string>
+    <string name="comenzar">Comenzar</string>
+    <string name="terminar">Terminar</string>
+    <string name="exerciseDescription">Descripcion del ejercicio asi bien larga y detallada, manos adelante culo pa atras salta y cae cuidado no te tuerzas el tobillo y no aguantes la respiracion</string>
+    <string name="listo">listo</string>
+
     <string-array name="filters">
         <item>Filtrar</item>
         <item>cat 1</item>
@@ -37,5 +42,15 @@
     <string name="invalid_username">Nombre de Usuario Inválido</string>
     <string name="invalid_password">Su contraseña debe tener al menos 5 caracteres</string>
     <string name="login_failed">"Error al iniciar sesión"</string>
+
+    <string name="title_activity_routine_in_progress">routine_in_progress</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

@@ -56,6 +56,7 @@ public class Routine {
         exercises2.add(new Exercise("tit3", "tex3"));
         exercises2.add(new Exercise("tit4", "tex4"));
 
+
         createCycle("ciclo1", "descr1", exercises1);
         createCycle("ciclo2", "descr2", exercises2);
 

@@ -94,7 +94,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             exerciseList.setAdapter(createExerciseListAdapter(context, resource, cycle.exercises));
             ViewGroup.LayoutParams listSize = exerciseList.getLayoutParams();
 
-            listSize.height=83*exerciseList.getCount();
+            listSize.height=103*exerciseList.getCount();
             exerciseList.setLayoutParams(listSize);
 
 
