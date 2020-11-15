@@ -39,4 +39,15 @@
         android:backgroundTint="@color/red"
         android:text="@string/terminar" />
 
+    <TextView
+        android:id="@+id/finishMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="@string/finishedRoutine"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:visibility="invisible" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

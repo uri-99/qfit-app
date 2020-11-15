@@ -1,12 +1,14 @@
 package com.example.qfit_app;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Routine {
+public class Routine implements Parcelable {
 
     String title, trainer, description, duration;
     List<Cycle> cycles;
@@ -18,6 +20,25 @@ public class Routine {
         this.duration = duration;
         this.cycles = new ArrayList<>();
     }
+
+    protected Routine(Parcel in) {
+        title = in.readString();
+        trainer = in.readString();
+        description = in.readString();
+        duration = in.readString();
+    }
+
+    public static final Creator<Routine> CREATOR = new Creator<Routine>() {
+        @Override
+        public Routine createFromParcel(Parcel in) {
+            return new Routine(in);
+        }
+
+        @Override
+        public Routine[] newArray(int size) {
+            return new Routine[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -35,6 +56,11 @@ public class Routine {
         return duration;
     }
 
+    public List<Cycle> getCycles() {
+        Log.d("logg", cycles.get(0).toString());
+        return cycles;
+    }
+
     public void log() {
         Log.d("tagg", getTitle());
         for(int i=0; i<cycles.size(); i++) {
@@ -50,25 +76,32 @@ public class Routine {
         List<Exercise> exercises1 = new ArrayList<>();
         List<Exercise> exercises2 = new ArrayList<>();
         cycles=new ArrayList<>();
-        exercises1.add(new Exercise("tit1", "tex1"));
-        exercises1.add(new Exercise("tit2", "tex2"));
-        exercises1.add(new Exercise("tit22", "tex2"));
-        exercises2.add(new Exercise("tit3", "tex3"));
-        exercises2.add(new Exercise("tit4", "tex4"));
-
+        exercises1.add(new Exercise("tit1", "duracion1"));
+        exercises1.add(new Exercise("tit2", "duracion2"));
+        exercises1.add(new Exercise("tit22", "duracion3"));
+        exercises2.add(new Exercise("tit3", "duracion4"));
+        exercises2.add(new Exercise("tit4", "duracion5"));
 
         createCycle("ciclo1", "descr1", exercises1);
         createCycle("ciclo2", "descr2", exercises2);
-
-//        cycles.get(0).addExercise(new Exercise("tit1", "tex1"));
-//        cycles.get(0).addExercise(new Exercise("tit2", "tex2"));
-//        cycles.get(1).addExercise(new Exercise("tit3", "tex3"));
-//        cycles.get(1).addExercise(new Exercise("tit4", "tex4"));
     }
 
     public Cycle createCycle(String title, String description, List<Exercise> exercises) {
         cycles.add(new Cycle(title, description, exercises));
         return cycles.get(cycles.size() -1); //el que acabo de crear
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(trainer);
+        dest.writeString(description);
+        dest.writeString(duration);
     }
 
     public class Cycle {
@@ -85,6 +118,16 @@ public class Routine {
             return title;
         }
 
+        @Override
+        public String toString() {
+            StringBuilder string = new StringBuilder();
+            for(Exercise exercise : exercises) {
+                string.append(exercise.getTitle());
+                string.append(exercise.getReps());
+            }
+            return string.toString();
+        }
+
         public String getDescription() {
             return description;
         }
@@ -97,27 +140,6 @@ public class Routine {
             exercises.add(exercise);
         }
 
-
-//        public Exercise createExercise(String title, String reps){
-//            return new Exercise(title, reps);
-//        }
-//
-//        public class Exercise {
-//            String title, reps;
-//
-//            public Exercise(String title, String reps) {
-//                this.title = title;
-//                this.reps = reps;
-//            }
-//
-//            public String getTitle() {
-//                return title;
-//            }
-//
-//            public String getReps() {
-//                return reps;
-//            }
-//        }
 
     }
 

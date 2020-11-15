@@ -1,8 +1,11 @@
 package com.example.qfit_app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,24 +77,9 @@ public class MainActivity extends AppCompatActivity {
         routineDetails = findViewById(R.id.routineDetails);
         cycleView = findViewById(R.id.cycleList);
 
-
-//        List<Exercise> exercisesList1 = new ArrayList<>();
-//        List<Exercise> exercisesList2 = new ArrayList<>();
-//        exercisesList1.add(new Exercise("tit1", "tex1"));
-//        exercisesList1.add(new Exercise("tit4", "tex4"));
-//        exercisesList2.add(new Exercise("tit2", "tex2"));
-//        exercisesList2.add(new Exercise("tit3", "tex3"));
-//
-//        cycleList = new ArrayList<>();
-//        cycleList.add(routineList.get(0).createCycle("ciclo 1", "texto 1", exercisesList1));
-//        cycleList.add(routineList.get(0).createCycle("ciclo 2", "texto 2", exercisesList2));
-//        cycleView = findViewById(R.id.cycleList);
-//        cycleAdapter = adapter.createCycleListAdapter(this, R.layout.cycle_as_item, cycleList);
-//        cycleView.setAdapter(cycleAdapter);
-//
-//        routineDetails = findViewById(R.id.routineDetails);
-
         instance = this;
+
+
     }
 
     public static MainActivity getInstance(){
@@ -117,30 +106,30 @@ public class MainActivity extends AppCompatActivity {
         TextView routineDetailTitle = findViewById(R.id.routineDetailTitle);
         routineDetailTitle.setText(routine.getTitle());
 
+        Button startButton = findViewById(R.id.routineStartButton);
+        startButton.setBackgroundColor();
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent startRoutine = new Intent(getApplicationContext(), routine_in_progress.class);
+                startRoutine.putExtra("routine", routine);
+
+
+                List<Exercise> cycle1 = routine.cycles.get(0).getExercises();
+                startRoutine.putExtra("routineCycle1", (Serializable) cycle1);
+                List<Exercise> cycle2 = routine.cycles.get(1).getExercises();
+                startRoutine.putExtra("routineCycle2", (Serializable) cycle2);
+
+                startActivity(startRoutine);
+            }
+        });
+
     }
 
     public static void disappearLists() {
         routinesView.setVisibility(View.GONE);
         routineDetails.setVisibility(View.GONE);
     }
-
-//    public void createDetails() {
-//        exercisesList1 = new ArrayList<>();
-//        exercisesList2 = new ArrayList<>();
-//        exercisesList1.add(new Exercise("tit1", "tex1"));
-//        exercisesList1.add(new Exercise("tit4", "tex4"));
-//        exercisesList2.add(new Exercise("tit2", "tex2"));
-//        exercisesList2.add(new Exercise("tit3", "tex3"));
-//
-//
-//        cycleList = new ArrayList<>();
-//        cycleList.add(routineList.get(0).createCycle("ciclo 1", "texto 1", exercisesList1));
-//        cycleList.add(routineList.get(0).createCycle("ciclo 2", "texto 2", exercisesList2));
-//        cycleView = findViewById(R.id.cycleList);
-//        cycleAdapter = adapter.createCycleListAdapter(this, R.layout.cycle_as_item, cycleList);
-//        cycleView.setAdapter(cycleAdapter);
-//
-//        routineDetails = findViewById(R.id.routineDetails);
-//    }
 
 }

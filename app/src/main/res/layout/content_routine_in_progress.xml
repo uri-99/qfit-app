@@ -8,6 +8,26 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
+        android:id="@+id/in_progress_routineTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/in_progress_routineTitle"
+        tools:layout_editor_absoluteX="144dp" />
+
+    <TextView
         android:id="@+id/in_progress_cicleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,18 +37,18 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <View
         android:id="@+id/divider"
-        android:layout_width="match_parent"
+        android:layout_width="140dp"
         android:layout_height="2dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
         android:backgroundTint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/in_progress_cicleTitle"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_progress_cicleTitle" />
 
     <TextView
         android:id="@+id/in_progress_exerciseTitle"
