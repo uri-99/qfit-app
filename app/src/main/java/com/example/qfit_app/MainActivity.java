@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.qfit_app.api.ApiUserService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,6 +19,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
         instance = this;
 
+        try {
+            Log.d("logg", ApiUserService.getCurrentUser().execute().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -91,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         routineDetails.setVisibility(View.GONE);
     }
     public void appearDetails(Routine routine) {
-
 
         cycleAdapter = adapter.createCycleListAdapter(this, R.layout.cycle_as_item, routine.cycles);
         cycleView.setAdapter(cycleAdapter);
@@ -107,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         routineDetailTitle.setText(routine.getTitle());
 
         Button startButton = findViewById(R.id.routineStartButton);
-        startButton.setBackgroundColor();
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

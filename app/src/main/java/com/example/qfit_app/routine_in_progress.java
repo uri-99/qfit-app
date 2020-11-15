@@ -3,6 +3,7 @@ package com.example.qfit_app;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.qfit_app.api.ApiUserService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class routine_in_progress extends AppCompatActivity {
 
@@ -37,6 +40,8 @@ public class routine_in_progress extends AppCompatActivity {
     Exercise currentExercise;
     int size1, size2;
     int current1, current2 = 0;
+    Timer timerTotal;
+    int timeTotal=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +58,6 @@ public class routine_in_progress extends AppCompatActivity {
         finishMessage = findViewById(R.id.finishMessage);
         divider = findViewById(R.id.divider);
         routineTitle = findViewById(R.id.in_progress_routineTitle);
-
-
 
         Intent lastIntent = getIntent();
         Bundle bundle = lastIntent.getExtras();
@@ -91,6 +94,22 @@ public class routine_in_progress extends AppCompatActivity {
             }
         });
 
+        TextView timerTotalDisplay = findViewById(R.id.timerTotalDisplay);
+
+        timerTotal = new Timer();
+        timerTotal.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        timerTotalDisplay.setText("tiempo total: "+timeTotal);
+                        timeTotal++;
+                    }
+                });
+            }
+        }, 1000, 1000);
+
     }
 
     public void nextExercise(){
@@ -106,6 +125,12 @@ public class routine_in_progress extends AppCompatActivity {
             currentExercise = cycle2.get(current2);
             current2++;
         } else {
+            timerTotal.cancel();
+            timeTotal--; //se le escapa un segundo al final
+            String fs;
+            fs= String.format("Has completado\n'%s' en %d segundos,\nFelicitaciones!",routineTitle.getText() ,timeTotal);
+
+            finishMessage.setText(fs);
             finishMessage.setVisibility(View.VISIBLE);
             cycleTitle.setVisibility(View.INVISIBLE);
             exerciseTitle.setVisibility(View.INVISIBLE);

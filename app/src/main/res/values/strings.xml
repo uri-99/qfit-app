@@ -15,7 +15,8 @@
     <string name="terminar">Terminar</string>
     <string name="exerciseDescription">Descripcion del ejercicio asi bien larga y detallada, manos adelante culo pa atras salta y cae cuidado no te tuerzas el tobillo y no aguantes la respiracion</string>
     <string name="listo">listo</string>
-    <string name="finishedRoutine">Has completado esta rutina\nFelicitaciones!</string>
+    <string name="finishedRoutine1">Has completado esta rutina en \nFelicitaciones!</string>
+    <string name="finishedRoutine2"></string>
 
     <string-array name="filters">
         <item>Filtrar</item>
