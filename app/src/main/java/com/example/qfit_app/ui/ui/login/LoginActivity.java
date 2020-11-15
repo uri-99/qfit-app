@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -38,7 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button signupButton = findViewById(R.id.sign_up);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final EditText emailEditText = findViewById(R.id.email);
 
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
@@ -102,6 +105,13 @@ public class LoginActivity extends AppCompatActivity {
             loginViewModel.login(usernameEditText.getText().toString(),
                     passwordEditText.getText().toString());
         });
+        signupButton.setOnClickListener(v->{
+            emailEditText.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.GONE);
+            signupButton.setBackgroundColor(Color.rgb(1,225,64));
+        });
+
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

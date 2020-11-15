@@ -9,31 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Qfitapp">
-
         <activity
-            android:theme="@style/Theme.Login"
-            android:name=".ui.ui.login.LoginActivity">
-
-        </activity>
-
-
+            android:name=".ui.SignUp"
+            android:theme="@style/Theme.Login">
+            ></activity>
         <activity
-            android:theme="@style/Theme.Qfitapp"
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:name=".ui.ui.login.LoginActivity"
+            android:theme="@style/Theme.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Qfitapp" />
         <activity
             android:name=".routine_in_progress"
             android:label="@string/title_activity_routine_in_progress"
-            android:theme="@style/Theme.Qfitapp.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.Qfitapp.NoActionBar" />
     </application>
 
 </manifest>
