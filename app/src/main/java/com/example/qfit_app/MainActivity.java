@@ -2,16 +2,15 @@ package com.example.qfit_app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.qfit_app.api.ApiUserService;
+import com.example.qfit_app.api.ApiClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
@@ -19,7 +18,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<Exercise> exercises1;
     List<Exercise> exercises2;
- //   private static List<Routine.Cycle.Exercise> exerciseList;
+ //   private static List<RoutineDTO.Cycle.Exercise> exerciseList;
     private static ListView exerciseView;
     private static RoutineListAdapter.CycleListAdapter cycleAdapter;
 
@@ -81,11 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
         instance = this;
 
-        try {
-            Log.d("logg", ApiUserService.getCurrentUser().execute().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ApiClient apiClient = new ApiClient();
+        apiClient.getCurrentUser();
+        apiClient.login();
+        apiClient.getRoutines();
 
     }
 

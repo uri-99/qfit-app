@@ -3,20 +3,13 @@ package com.example.qfit_app;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.qfit_app.api.ApiUserService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Timer;

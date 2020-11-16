@@ -1,45 +1,32 @@
 package com.example.qfit_app.api.classes;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-public class User {
 
-    @SerializedName("id")
-    @Expose
+public class UserDTO {
+
+
     private int id;
-    @SerializedName("username")
-    @Expose
+
     private String username;
-    @SerializedName("fullName")
-    @Expose
+
     private String fullName;
-    @SerializedName("gender")
-    @Expose
+
     private String gender;
-    @SerializedName("birthdate")
-    @Expose
+
     private int birthdate;
-    @SerializedName("email")
-    @Expose
+
     private String email;
-    @SerializedName("phone")
-    @Expose
+
     private String phone;
-    @SerializedName("avatarUrl")
-    @Expose
+
     private String avatarUrl;
-    @SerializedName("dateCreated")
-    @Expose
+
     private int dateCreated;
-    @SerializedName("dateLastActive")
-    @Expose
+
     private int dateLastActive;
-    @SerializedName("deleted")
-    @Expose
+
     private boolean deleted;
-    @SerializedName("verified")
-    @Expose
+
     private boolean verified;
 
     public int getId() {
