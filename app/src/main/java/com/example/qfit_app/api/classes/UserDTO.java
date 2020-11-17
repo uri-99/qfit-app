@@ -13,7 +13,7 @@ public class UserDTO {
 
     private String gender;
 
-    private int birthdate;
+    private long birthdate;
 
     private String email;
 
@@ -21,13 +21,28 @@ public class UserDTO {
 
     private String avatarUrl;
 
-    private int dateCreated;
+    private long dateCreated;
 
-    private int dateLastActive;
+    private long dateLastActive;
 
     private boolean deleted;
 
     private boolean verified;
+
+    public UserDTO(int id, String username, String fullName, String gender, long birthdate, String email, String phone, String avatarUrl, long dateCreated, long dateLastActive, boolean deleted, boolean verified) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.email = email;
+        this.phone = phone;
+        this.avatarUrl = avatarUrl;
+        this.dateCreated = dateCreated;
+        this.dateLastActive = dateLastActive;
+        this.deleted = deleted;
+        this.verified = verified;
+    }
 
     public int getId() {
         return id;
@@ -61,7 +76,7 @@ public class UserDTO {
         this.gender = gender;
     }
 
-    public int getBirthdate() {
+    public long getBirthdate() {
         return birthdate;
     }
 
@@ -93,7 +108,7 @@ public class UserDTO {
         this.avatarUrl = avatarUrl;
     }
 
-    public int getDateCreated() {
+    public long getDateCreated() {
         return dateCreated;
     }
 
@@ -101,7 +116,7 @@ public class UserDTO {
         this.dateCreated = dateCreated;
     }
 
-    public int getDateLastActive() {
+    public long getDateLastActive() {
         return dateLastActive;
     }
 

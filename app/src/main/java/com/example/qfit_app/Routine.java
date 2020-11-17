@@ -5,6 +5,9 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.example.qfit_app.api.ApiClient;
+import com.example.qfit_app.api.classes.ExerciseDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +15,21 @@ public class Routine implements Parcelable {
 
     String title, trainer, description, duration;
     List<Cycle> cycles;
+    int id;
+    boolean second;
 
-    public Routine(String title, String trainer, String description, String duration) {
+    List<Exercise> exercises1 = new ArrayList<>();
+    List<Exercise> exercises2 = new ArrayList<>();
+    List<Exercise> exercises3 = new ArrayList<>();
+
+    public Routine(String title, String trainer, String description, String duration, int id) {
         this.title = title;
         this.trainer = trainer;
         this.description = description;
         this.duration = duration;
         this.cycles = new ArrayList<>();
+        this.id=id;
+        second=false;
     }
 
     protected Routine(Parcel in) {
@@ -39,6 +50,10 @@ public class Routine implements Parcelable {
             return new Routine[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;
@@ -62,7 +77,7 @@ public class Routine implements Parcelable {
     }
 
     public void log() {
-        Log.d("tagg", getTitle());
+        Log.d("logg", getTitle());
         for(int i=0; i<cycles.size(); i++) {
             Log.d("tagg", cycles.get(i).getTitle());
             for(int j=0; j < cycles.get(i).exercises.size() ; j++) {
@@ -71,19 +86,24 @@ public class Routine implements Parcelable {
         }
     }
 
-    public void createDetails(){
-//esto enrealidad estaria chupando los datos de la api, metiendo los ejercicios de cada ciclo de la rutina correspondiente
-        List<Exercise> exercises1 = new ArrayList<>();
-        List<Exercise> exercises2 = new ArrayList<>();
+    public void setExercises(ApiClient apiClient) {
+
         cycles=new ArrayList<>();
-        exercises1.add(new Exercise("tit1", "duracion1"));
-        exercises1.add(new Exercise("tit2", "duracion2"));
-        exercises1.add(new Exercise("tit22", "duracion3"));
-        exercises2.add(new Exercise("tit3", "duracion4"));
-        exercises2.add(new Exercise("tit4", "duracion5"));
+
+        for(ExerciseDTO exercise : apiClient.cycle1){
+            exercises1.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()) ) );
+        }
+        for(ExerciseDTO exercise : apiClient.cycle2){
+            exercises2.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()) ) );
+        }
+        for(ExerciseDTO exercise : apiClient.cycle3){
+            exercises3.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()) ) );
+        }
 
         createCycle("ciclo1", "descr1", exercises1);
         createCycle("ciclo2", "descr2", exercises2);
+        createCycle("ciclo3", "descr3", exercises3);
+
     }
 
     public Cycle createCycle(String title, String description, List<Exercise> exercises) {

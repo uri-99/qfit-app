@@ -32,6 +32,7 @@ public class ProfileFragment extends Fragment {
         });
 
         MainActivity.disappearLists();
+        MainActivity.refresh();
         return root;
     }
 }

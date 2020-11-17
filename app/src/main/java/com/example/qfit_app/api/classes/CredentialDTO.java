@@ -6,17 +6,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 public class CredentialDTO {
-    String user, password;
+    String username, password;
 
-    public CredentialDTO(String user, String password) {
-        this.user = user;
+    public CredentialDTO(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String toString(){
-        String string = String.format("{\n\"username\": \"%s\",\n\"password\": \"%s\"\n}", user, password);
-        Log.d("logg", string);
-        return string;
-    }
+//    public String toString(){
+//        String string = String.format("{\n\"username\": \"%s\",\n\"password\": \"%s\"\n}", username, password);
+//        Log.d("logg", string);
+//        return string;
+//    }
 
 }

@@ -103,12 +103,12 @@
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
         android:tint="@color/blue"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFav"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_share" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/buttonFav"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"

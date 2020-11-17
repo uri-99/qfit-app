@@ -6,13 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.qfit_app.api.ApiClient;
 
 import org.w3c.dom.Text;
 
@@ -23,13 +27,15 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
     Context context;
     int resource;
     List<Routine> routineList;
+    ApiClient apiClient;
 
-    public RoutineListAdapter(@NonNull Context context, int resource, List<Routine> routineList) {
+    public RoutineListAdapter(@NonNull Context context, int resource, List<Routine> routineList, ApiClient apiClient) {
         super(context, resource, routineList);
 
         this.context=context;
         this.resource=resource;
         this.routineList=routineList;
+        this.apiClient = apiClient;
 
     }
 
@@ -52,8 +58,18 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         view.findViewById(R.id.routineItem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                routine.createDetails();
+                apiClient.getExercises(routine.getId());
                 MainActivity.getInstance().appearDetails(routine);
+            }
+        });
+
+
+        ImageButton buttonFav = view.findViewById(R.id.buttonFav);
+        buttonFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiClient.markAsFavourite(routine.getId());
+                Toast.makeText(context, "routine faved",Toast.LENGTH_SHORT).show();
             }
         });
 

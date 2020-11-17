@@ -39,6 +39,7 @@
         android:layout_marginTop="14dp"
         android:layout_marginEnd="16dp"
         android:background="@color/greyFront"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +94,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="75dp"
             android:backgroundTint="#00FFFFFF"
             android:tint="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
@@ -180,18 +181,67 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+        <Button
+            android:id="@+id/buttonLoadExercises"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:text="View exercises"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageButton5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
-        android:id="@+id/myListView"
+        android:id="@+id/allRoutines"
         android:layout_width="350dp"
         android:layout_height="499dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="120dp"
         android:dividerHeight="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </ListView>
+    <ListView
+        android:id="@+id/favRoutines"
+        android:layout_width="350dp"
+        android:layout_height="499dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="120dp"
+        android:dividerHeight="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="200dp"
+        android:layout_marginBottom="400dp"
+        android:text="login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonGetUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="200dp"
+        android:text="get"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+    <ImageButton
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_popup_sync" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
