@@ -91,18 +91,18 @@ public class Routine implements Parcelable {
         cycles=new ArrayList<>();
 
         for(ExerciseDTO exercise : apiClient.cycle1){
-            exercises1.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()) ) );
+            exercises1.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()), exercise.getDetail()) );
         }
         for(ExerciseDTO exercise : apiClient.cycle2){
-            exercises2.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()) ) );
+            exercises2.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()), exercise.getDetail() ) );
         }
         for(ExerciseDTO exercise : apiClient.cycle3){
-            exercises3.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()) ) );
+            exercises3.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()), exercise.getDetail() ) );
         }
 
-        createCycle("ciclo1", "descr1", exercises1);
-        createCycle("ciclo2", "descr2", exercises2);
-        createCycle("ciclo3", "descr3", exercises3);
+        createCycle("Entrada en calor", "descripción", exercises1);
+        createCycle("Ejercitación principal", "descripción", exercises2);
+        createCycle("Enfriamiento", "descripción", exercises3);
 
     }
 

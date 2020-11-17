@@ -39,7 +39,7 @@ public interface ApiService {
     Call<CodeDTO> markAsFavourite(@Header("authorization") String auth, @Path("routineID") int routineID);
 
     @DELETE("user/current/routines/{routineID}/favourites")
-    Call<CodeDTO> unMarkAsFavourite(@Header("authorization") String auth);
+    Call<CodeDTO> unMarkAsFavourite(@Header("authorization") String auth, @Path("routineID") int routineID);
 
     @GET("routines/{routineID}/cycles/{cycleID}/exercises")
     Call<PagedList<ExerciseDTO>> getExercises(@Header("authorization") String auth, @Path("routineID") int routineID, @Path("cycleID") int cycleID);

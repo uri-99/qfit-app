@@ -33,6 +33,7 @@
 
     <string name="descripcion">Descripción: </string>
     <string name="duracion">Duración: </string>
+    <string name="dificultad">Dificultad: </string>
     <string name="title_activity_login">Inicio de Sesión</string>
     <string name="prompt_email">Correo Electrónico</string>
     <string name="prompt_username">Nombre de Usuario</string>

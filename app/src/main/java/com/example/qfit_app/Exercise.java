@@ -4,16 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Exercise implements Parcelable {
-    String title, reps;
+    String title, reps, detail;
 
-    public Exercise(String title, String reps) {
+    public Exercise(String title, String reps, String detail) {
         this.title = title;
         this.reps = reps;
+        this.detail=detail;
     }
 
     protected Exercise(Parcel in) {
         title = in.readString();
         reps = in.readString();
+        detail = in.readString();
     }
 
     public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
@@ -36,11 +38,16 @@ public class Exercise implements Parcelable {
         return reps;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
     @Override
     public String toString(){
         StringBuilder string = new StringBuilder();
         string.append(title);
         string.append(reps);
+        string.append(detail);
         return string.toString();
     }
 
@@ -53,5 +60,6 @@ public class Exercise implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(reps);
+        dest.writeString(detail);
     }
 }

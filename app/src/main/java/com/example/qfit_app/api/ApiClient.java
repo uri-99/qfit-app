@@ -196,6 +196,23 @@ public class ApiClient implements Parcelable {
 
     }
 
+    public void unMarkAsFavourite(int routineID){
+        Call<CodeDTO> unFavCall = apiService.unMarkAsFavourite(token, routineID);
+
+        unFavCall.enqueue(new Callback<CodeDTO>() {
+            @Override
+            public void onResponse(Call<CodeDTO> call, Response<CodeDTO> response) {
+                Log.d("logg", "remove faved");
+            }
+
+            @Override
+            public void onFailure(Call<CodeDTO> call, Throwable t) {
+                Log.d("logg", "remfaved fail");
+            }
+        });
+
+    }
+
     public void getExercises(int routineID) {
         Call<PagedList<ExerciseDTO>> cycle1Call = apiService.getExercises(token, routineID, 1);
 
@@ -245,7 +262,6 @@ public class ApiClient implements Parcelable {
         });
 
     }
-
 
 
 

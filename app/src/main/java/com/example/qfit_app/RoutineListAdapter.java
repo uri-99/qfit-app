@@ -64,12 +64,23 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         });
 
 
+
         ImageButton buttonFav = view.findViewById(R.id.buttonFav);
+        ImageButton buttonRemFav = view.findViewById(R.id.buttonRemFav);
+
         buttonFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 apiClient.markAsFavourite(routine.getId());
-                Toast.makeText(context, "routine faved",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "added to favourites",Toast.LENGTH_SHORT).show();
+            }
+        });
+        buttonRemFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiClient.unMarkAsFavourite(routine.getId());
+                Toast.makeText(context, "rutina removida",Toast.LENGTH_SHORT).show();
+
             }
         });
 

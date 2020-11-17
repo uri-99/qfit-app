@@ -31,10 +31,11 @@ public class routine_in_progress extends AppCompatActivity {
     List<Exercise> cycle2;
     List<Exercise> cycle3;
     Exercise currentExercise;
-    int size1, size2;
-    int current1, current2 = 0;
+    int size1, size2, size3;
+    int current1, current2, current3 = 0;
     Timer timerTotal;
     int timeTotal=1;
+    int i=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +59,17 @@ public class routine_in_progress extends AppCompatActivity {
         routineTitle.setText(routine.getTitle());
         cycle1 = (List<Exercise>) bundle.get("routineCycle1");
         cycle2 = (List<Exercise>) bundle.get("routineCycle2");
+        cycle3 = (List<Exercise>) bundle.get("routineCycle3");
 
         currentExercise = cycle1.get(0);
         size1 = cycle1.size();
         size2 = cycle2.size();
+        size3 = cycle3.size();
+
 
         exerciseTitle.setText(currentExercise.getTitle());
         exerciseDuration.setText(currentExercise.getReps());
+        exerciseDescription.setText(currentExercise.getDetail());
         displayTime.setText(currentExercise.getReps());
         cycleTitle.setText("Entrada en calor");
         ViewGroup.LayoutParams size = divider.getLayoutParams();
@@ -100,6 +105,16 @@ public class routine_in_progress extends AppCompatActivity {
                     public void run() {
                         timerTotalDisplay.setText("tiempo total: "+timeTotal);
                         timeTotal++;
+
+                        if(i>0) {
+                            i=Integer.parseInt((String) displayTime.getText());
+                            i--;
+                            displayTime.setText(String.format("%d", i));
+                        } else {
+                           displayTime.setText("llegaste?");
+                        }
+
+
                     }
                 });
             }
@@ -119,6 +134,15 @@ public class routine_in_progress extends AppCompatActivity {
 
             currentExercise = cycle2.get(current2);
             current2++;
+        } else if(current3 < size3) {
+            cycleTitle.setText("Enfriamiento");
+            ViewGroup.LayoutParams size = divider.getLayoutParams();
+            size.width= (int) (30*cycleTitle.getText().length());
+            divider.setLayoutParams(size);
+
+            currentExercise = cycle3.get(current3);
+            current3++;
+
         } else {
             timerTotal.cancel();
             timeTotal--; //se le escapa un segundo al final
@@ -140,5 +164,6 @@ public class routine_in_progress extends AppCompatActivity {
         exerciseTitle.setText(currentExercise.getTitle());
         exerciseDuration.setText(currentExercise.getReps());
         displayTime.setText(currentExercise.getReps());
+        exerciseDescription.setText(currentExercise.getDetail());
     }
 }

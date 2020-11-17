@@ -99,7 +99,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
         android:tint="@color/blue"
@@ -112,13 +112,24 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="60dp"
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
         android:tint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+    <ImageButton
+        android:id="@+id/buttonRemFav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@android:drawable/ic_menu_delete"
+        app:layout_constraintStart_toEndOf="@+id/buttonFav"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView14"

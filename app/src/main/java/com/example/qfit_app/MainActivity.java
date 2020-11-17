@@ -1,6 +1,5 @@
 package com.example.qfit_app;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +23,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import static android.view.View.GONE;
@@ -117,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
 
         ImageButton refresh = findViewById(R.id.refresh);
-
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,6 +212,14 @@ public class MainActivity extends AppCompatActivity {
         button_back.setOnClickListener(v -> appearAllList());
         TextView routineDetailTitle = findViewById(R.id.routineDetailTitle);
         routineDetailTitle.setText(routine.getTitle());
+        TextView routineDetailTrainer = findViewById(R.id.routineDetailTrainer);
+        TextView routineDetailDescription = findViewById(R.id.routineDetailDescription);
+        TextView routineDetailDifficulty = findViewById(R.id.routineDetailDifficulty);
+
+        routineDetailTrainer.setText(routine.getTrainer());
+        routineDetailDescription.setText(routine.getDescription());
+        routineDetailDifficulty.setText(routine.getDuration());
+
         Button startButton = findViewById(R.id.routineStartButton);
         Button loadExercises = findViewById(R.id.buttonLoadExercises);
 
