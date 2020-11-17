@@ -72,12 +72,16 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             @Override
             public void onClick(View v) {
                 apiClient.markAsFavourite(routine.getId());
-                Toast.makeText(context, "added to favourites",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "rutina agregada a favoritos",Toast.LENGTH_SHORT).show();
             }
         });
         buttonRemFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //la villereada maxima: hacer desaparecer la rutina
+                //y hay que borrar la rutina 2 veces por alguna razon misteriosa de este codigo trambólico
+                view.setVisibility(View.GONE);
+                routineList.remove(routine);
                 apiClient.unMarkAsFavourite(routine.getId());
                 Toast.makeText(context, "rutina removida",Toast.LENGTH_SHORT).show();
 
