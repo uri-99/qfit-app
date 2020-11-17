@@ -82,8 +82,10 @@ public class routine_in_progress extends AppCompatActivity {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startRoutine = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(startRoutine);
+                Intent endRoutine = new Intent(getApplicationContext(), MainActivity.class);
+                endRoutine.putExtra("username", bundle.get("username").toString());
+                endRoutine.putExtra("password", bundle.get("password").toString());
+                startActivity(endRoutine);
             }
         });
 

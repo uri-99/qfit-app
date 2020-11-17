@@ -1,5 +1,7 @@
 package com.example.qfit_app.api;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -27,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class ApiClient {
+public class ApiClient implements Parcelable {
     private ApiService apiService;
     public String token = "emptys";
     public List<RoutineDTO> routineListAll;
@@ -65,8 +67,25 @@ public class ApiClient {
     }
 
 
-    public void login() {
-        Call<TokenDTO> loginCall = apiService.login(new CredentialDTO("johndoe", "1234567890"));
+    protected ApiClient(Parcel in) {
+        token = in.readString();
+    }
+
+    public static final Creator<ApiClient> CREATOR = new Creator<ApiClient>() {
+        @Override
+        public ApiClient createFromParcel(Parcel in) {
+            return new ApiClient(in);
+        }
+
+        @Override
+        public ApiClient[] newArray(int size) {
+            return new ApiClient[size];
+        }
+    };
+
+    public void login(String username, String password) {
+        Call<TokenDTO> loginCall = apiService.login(new CredentialDTO(username, password));
+
         loginCall.enqueue((new Callback<TokenDTO>() {
             @Override
             public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
@@ -98,6 +117,13 @@ public class ApiClient {
                 call.cancel();
             }
         });
+    }
+
+    public String getToken(){
+        return token;
+    }
+    public void setToken(String newToken){
+        token=newToken;
     }
 
 
@@ -241,4 +267,13 @@ public class ApiClient {
         }));
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(token);
+    }
 }

@@ -27,6 +27,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     LiveData<LoginResult> getLoginResult() {
+
         return loginResult;
     }
 

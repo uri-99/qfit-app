@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.example.qfit_app.Exercise;
 import com.example.qfit_app.MainActivity;
 import com.example.qfit_app.R;
+import com.example.qfit_app.api.ApiClient;
 import com.example.qfit_app.routine_in_progress;
 
 import java.io.Serializable;
@@ -34,8 +36,11 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    ApiClient apiClient;
+
     private LoginViewModel loginViewModel;
     EditText usernameEditText;
+    EditText passwordEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +50,12 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final Button signupButton = findViewById(R.id.sign_up);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final EditText emailEditText = findViewById(R.id.email);
+        apiClient = new ApiClient();
 
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
@@ -110,8 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(v -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
-            loginViewModel.login(usernameEditText.getText().toString(),
-                    passwordEditText.getText().toString());
+            loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
         });
         signupButton.setOnClickListener(v->{
             emailEditText.setVisibility(View.VISIBLE);
@@ -127,9 +132,12 @@ public class LoginActivity extends AppCompatActivity {
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
-
         Intent login = new Intent(getApplicationContext(), MainActivity.class);
-        login.putExtra("user", usernameEditText.getText());
+
+        login.putExtra("username", usernameEditText.getText());
+        login.putExtra("password", passwordEditText.getText());
+//        login.putExtra("apiClient", apiClient);
+        login.putExtra("token", apiClient.getToken());
         startActivity(login);
     }
 

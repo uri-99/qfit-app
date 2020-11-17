@@ -33,6 +33,8 @@ public class HomeFragment extends Fragment {
 
         MainActivity.appearFavList();
 
+        MainActivity.refresh();
+
         return root;
     }
 }

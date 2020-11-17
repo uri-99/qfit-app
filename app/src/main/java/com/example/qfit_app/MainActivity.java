@@ -1,11 +1,13 @@
 package com.example.qfit_app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+
+import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     List<Exercise> exercisesList2;
 
     static ApiClient apiClient;
+    Bundle bundle;
 
 
     @Override
@@ -71,7 +76,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        apiClient = new ApiClient();
+        Intent lastIntent = getIntent();
+        bundle = lastIntent.getExtras();
+        apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
+        apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+//        apiClient.setToken((String) bundle.get("token"));
+//
+//        Log.d("logg", "acá");
+//        Log.d("logg", apiClient.getToken());
 
 
         allRoutineList = new ArrayList<>();
@@ -104,31 +116,25 @@ public class MainActivity extends AppCompatActivity {
 
         instance = this;
 
-
-        Button login = findViewById(R.id.buttonLogin);
-        Button getUser = findViewById(R.id.buttonGetUser);
         ImageButton refresh = findViewById(R.id.refresh);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                apiClient.login();
-            }
-        });
-
-        getUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                apiClient.getRoutines();
-                apiClient.getFavRoutines();
-            }
-        });
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                again=false;
                 refresh();
+            }
+        });
+
+        Button welcomeButton = findViewById(R.id.buttonWelcome);
+        LinearLayout welcomeMessage = findViewById(R.id.welcomeMessage);
+
+        welcomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstGet();
+                welcomeMessage.setVisibility(GONE);
+                navView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -143,6 +149,11 @@ public class MainActivity extends AppCompatActivity {
         routineListFav = apiClient.returnRoutinesFav();
         fillListAll();
         fillListFav();
+    }
+
+    public static void firstGet() {
+        apiClient.getRoutines();
+        apiClient.getFavRoutines();
     }
 
     public static void fillListAll() {
@@ -178,14 +189,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static void appearAllList() {
         allRoutinesView.setVisibility(View.VISIBLE);
-        favRoutinesView.setVisibility(View.GONE);
-        routineDetails.setVisibility(View.GONE);
+        favRoutinesView.setVisibility(GONE);
+        routineDetails.setVisibility(GONE);
     }
 
     public static void appearFavList() {
-        allRoutinesView.setVisibility(View.GONE);
+        allRoutinesView.setVisibility(GONE);
         favRoutinesView.setVisibility(View.VISIBLE);
-        routineDetails.setVisibility(View.GONE);
+        routineDetails.setVisibility(GONE);
     }
 
     public void appearDetails(Routine routine) {
@@ -195,8 +206,8 @@ public class MainActivity extends AppCompatActivity {
         cycleView.setAdapter(cycleAdapter);
         routine.log();
 
-        allRoutinesView.setVisibility(View.GONE);
-        favRoutinesView.setVisibility(View.GONE);
+        allRoutinesView.setVisibility(GONE);
+        favRoutinesView.setVisibility(GONE);
         routineDetails.setVisibility(View.VISIBLE);
 
 
@@ -204,23 +215,28 @@ public class MainActivity extends AppCompatActivity {
         button_back.setOnClickListener(v -> appearAllList());
         TextView routineDetailTitle = findViewById(R.id.routineDetailTitle);
         routineDetailTitle.setText(routine.getTitle());
-
+        Button startButton = findViewById(R.id.routineStartButton);
         Button loadExercises = findViewById(R.id.buttonLoadExercises);
+
         loadExercises.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadExercises.setVisibility(GONE);
+                startButton.setVisibility(View.VISIBLE);
                 routine.setExercises(apiClient);
                 MainActivity.getInstance().appearDetails(routine);
             }
         });
 
-        Button startButton = findViewById(R.id.routineStartButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent startRoutine = new Intent(getApplicationContext(), routine_in_progress.class);
                 startRoutine.putExtra("routine", routine);
+                startRoutine.putExtra("username", bundle.get("username").toString());
+                startRoutine.putExtra("password", bundle.get("password").toString());
+
 
 
                 List<Exercise> cycle1 = routine.cycles.get(0).getExercises();
@@ -238,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void disappearLists() {
-        allRoutinesView.setVisibility(View.GONE);
-        favRoutinesView.setVisibility(View.GONE);
-        routineDetails.setVisibility(View.GONE);
+        allRoutinesView.setVisibility(GONE);
+        favRoutinesView.setVisibility(GONE);
+        routineDetails.setVisibility(GONE);
     }
 
 }
