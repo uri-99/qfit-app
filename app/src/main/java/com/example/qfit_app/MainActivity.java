@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.qfit_app.api.ApiClient;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     static List<Routine> allRoutineList;
     static List<Routine> favRoutineList;
-     private static ListView allRoutinesView;
+    private static ListView allRoutinesView;
     private static ListView favRoutinesView;
 
      private static List<Routine.Cycle> cycleList;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundle;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
@@ -156,27 +161,27 @@ public class MainActivity extends AppCompatActivity {
     public static void fillListAll() {
         Log.d("logg", "enter fill list");
         for(RoutineDTO routine : routineListAll) {
-            repeat1=false;
+            repeat1 = false;
             for(Routine routine2 : allRoutineList)
             {
                 if(routine2.getId() == routine.getId())
-                    repeat1=true;
+                    repeat1 = true;
             }
             if(!repeat1)
-                allRoutineList.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId()));
+                allRoutineList.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
         }
     }
 
     public static void fillListFav() {
         for(RoutineDTO routine : routineListFav) {
-            repeat2=false;
+            repeat2 = false;
             for(Routine routine2 : favRoutineList)
             {
                 if(routine2.getId() == routine.getId())
-                    repeat2=true;
+                    repeat2 = true;
             }
             if(!repeat2)
-                favRoutineList.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId()));
+                favRoutineList.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
         }
     }
 

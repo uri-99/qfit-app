@@ -7,34 +7,23 @@
     android:layout_height="wrap_content"
     android:background="@color/greyFront"
     android:clickable="true"
+    android:fadingEdge="vertical"
     tools:context=".ui.Routine">
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/routineTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
-        android:text="Titulo"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:clickable="true"
+        android:tint="@color/blue"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFav"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_share" />
 
-    <TextView
-        android:id="@+id/routineTrainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:drawableStart="@drawable/ic_baseline_person_blue_24"
-        android:text="Entrenador"
-        android:textColor="@color/blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/routineTitle" />
 
     <TextView
         android:id="@+id/descripcion"
@@ -83,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/routineRating"
         android:layout_width="102dp"
         android:layout_height="31dp"
         android:layout_marginTop="96dp"
@@ -94,18 +83,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/routineTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#00FFFFFF"
-        android:clickable="true"
-        android:tint="@color/blue"
-        app:layout_constraintEnd_toStartOf="@+id/buttonFav"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        android:text="Titulo"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/buttonFav"
@@ -132,14 +121,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/routineTrainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="116dp"
-        android:text="TextView"
-        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:drawableStart="@drawable/ic_baseline_person_blue_24"
+        android:text="Entrenador"
+        android:textColor="@color/blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/routineTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,4 +51,9 @@
 
     <style name="Theme.Qfitapp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.WhiteAccent" parent="TextAppearance.AppCompat.Large">
+        <item name="colorAccent">@color/green</item> <!-- Whatever color you want-->
+    </style>
+
+
 </resources>

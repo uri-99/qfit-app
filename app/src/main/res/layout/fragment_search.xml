@@ -43,7 +43,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
         android:text="@string/subtitle_search"
-        android:textColor="#53534E"
+        android:textColor="#93938C"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/searchTitle" />
 
@@ -51,7 +51,7 @@
         android:id="@+id/searchBar"
         android:layout_width="338dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="4dp"
         android:allowUndo="false"
         android:background="@drawable/edittext_rounded_corners"

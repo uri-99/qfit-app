@@ -58,7 +58,9 @@
             android:layout_weight="1"
             android:background="@color/greyFront"
             android:entries="@array/filters"
-            android:paddingHorizontal="5dp" />
+            android:paddingHorizontal="5dp"
+            android:popupBackground="#2d2d2a"
+            />
 
         <TextView
             android:id="@+id/textView3"
@@ -77,7 +79,8 @@
             android:dropDownSelector="@color/white"
             android:entries="@array/orders"
             android:paddingHorizontal="5dp"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:popupBackground="#2d2d2a"/>
 
         <TextView
             android:id="@+id/textView5"

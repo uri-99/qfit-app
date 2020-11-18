@@ -31,16 +31,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/profilePhoto2"
-            android:layout_width="297dp"
-            android:layout_height="200dp"
-            android:baselineAlignBottom="false"
-            android:clickable="false"
-            android:textAlignment="center"
-            android:visibility="visible"
-            tools:srcCompat="@drawable/ic_baseline_rowing_24"
-            tools:visibility="visible" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/photo_imageView"
+            android:layout_width="174dp"
+            android:layout_height="172dp"
+            android:src="@mipmap/default_profile_picture" />
 
         <TextView
             android:id="@+id/profileName"

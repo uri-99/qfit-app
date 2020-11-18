@@ -1,24 +1,20 @@
 package com.example.qfit_app;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.qfit_app.api.ApiClient;
-
-import org.w3c.dom.Text;
+import com.example.qfit_app.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -29,12 +25,15 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
     List<Routine> routineList;
     ApiClient apiClient;
 
+    String title;
+    String desc;
+
     public RoutineListAdapter(@NonNull Context context, int resource, List<Routine> routineList, ApiClient apiClient) {
         super(context, resource, routineList);
 
-        this.context=context;
-        this.resource=resource;
-        this.routineList=routineList;
+        this.context = context;
+        this.resource = resource;
+        this.routineList = routineList;
         this.apiClient = apiClient;
 
     }
@@ -48,12 +47,30 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         TextView routineTrainer = view.findViewById(R.id.routineTrainer);
         TextView routineDescription = view.findViewById(R.id.routineDescription);
         TextView routineDuration = view.findViewById(R.id.routineDuration);
-
+        TextView routineRating = view.findViewById(R.id.routineRating);
         Routine routine = routineList.get(position);
-        routineTitle.setText(routine.getTitle());
-        routineDescription.setText(routine.getDescription());
+
+       // view.findViewById(R.id.buttonRemFav).setVisibility(View.GONE);
+
+        title = routine.getTitle();
+        if(title.length() >= 20){
+            title = title.substring(0, 19);
+            title = title.concat("...");
+        }
+
+        routineTitle.setText(title);
+
+        desc = routine.getDescription();
+
+        if(desc.length() >= 35){
+            desc = desc.substring(0, 34);
+            desc = desc.concat("...");
+        }
+
+        routineDescription.setText(desc);
         routineDuration.setText(routine.getDuration());
         routineTrainer.setText(routine.getTrainer());
+        routineRating.setText(routine.getRating().toString());
 
         view.findViewById(R.id.routineItem).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +135,8 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             TextView cycleTitle = view.findViewById(R.id.cycleTitle);
             TextView cycleDescription = view.findViewById(R.id.cycleDescription);
             ListView exerciseList = view.findViewById(R.id.exerciseList);
+
+
 
             Routine.Cycle cycle = cycleList.get(position);
             cycleTitle.setText(cycle.getTitle());

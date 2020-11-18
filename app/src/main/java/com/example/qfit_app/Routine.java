@@ -15,14 +15,14 @@ public class Routine implements Parcelable {
 
     String title, trainer, description, duration;
     List<Cycle> cycles;
-    int id;
+    int id, rating;
     boolean second;
 
     List<Exercise> exercises1 = new ArrayList<>();
     List<Exercise> exercises2 = new ArrayList<>();
     List<Exercise> exercises3 = new ArrayList<>();
 
-    public Routine(String title, String trainer, String description, String duration, int id) {
+    public Routine(String title, String trainer, String description, String duration, int id, int rating) {
         this.title = title;
         this.trainer = trainer;
         this.description = description;
@@ -30,6 +30,7 @@ public class Routine implements Parcelable {
         this.cycles = new ArrayList<>();
         this.id=id;
         second=false;
+        this.rating = rating;
     }
 
     protected Routine(Parcel in) {
@@ -37,6 +38,7 @@ public class Routine implements Parcelable {
         trainer = in.readString();
         description = in.readString();
         duration = in.readString();
+        rating = in.readInt();
     }
 
     public static final Creator<Routine> CREATOR = new Creator<Routine>() {
@@ -69,6 +71,10 @@ public class Routine implements Parcelable {
 
     public String getDuration() {
         return duration;
+    }
+
+    public Integer getRating(){
+        return rating;
     }
 
     public List<Cycle> getCycles() {
