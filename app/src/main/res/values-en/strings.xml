@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">qfit-app</string>
+    <string name="app_title">qfit</string>
+    <string name="title_home">Favourites</string>
+    <string name="title_search">Explore</string>
+    <string name="subtitle_search">Discover new Routines</string>
+    <string name="title_profile">User Profile</string>
+    <string name="profile_name">John Doe</string>
+    <string name="profile_age">25 years</string>
+    <string name="edit">Edit Profile</string>
+    <string name="activity">My Activity</string>
+    <string name="objectives">My Objectives</string>
+    <string name="searchHint">Search</string>
+    <string name="comenzar">Start</string>
+    <string name="terminar">End</string>
+    <string name="exerciseDescription">Descripcion del ejercicio asi bien larga y detallada, manos adelante culo pa atras salta y cae cuidado no te tuerzas el tobillo y no aguantes la respiracion</string>
+    <string name="listo">Done</string>
+
+    <string-array name="filters">
+        <item>Filter</item>
+        <item>cat 1</item>
+        <item>cat 2</item>
+        <item>cat 3</item>
+    </string-array>
+    <string-array name="orders">
+        <item>Order 1</item>
+        <item>cat 4</item>
+        <item>cat 5</item>
+        <item>cat 6</item>
+    </string-array>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+
+    <string name="descripcion">Description: </string>
+    <string name="duracion">Duration: </string>
+    <string name="dificultad">Dificulty: </string>
+    <string name="title_activity_login">Log In</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Log In</string>
+    <string name="action_sign_in_short">Log In</string>
+    <string name="action_sign_up_short">Sign Up</string>
+    <string name="welcome">Welcome! </string>
+    <string name="welcomeLong">We hope you have a good day of intense exercise</string>
+    <string name="invalid_username">Invalid Username</string>
+    <string name="invalid_password">Your password must have at least 8 characters</string>
+    <string name="login_failed">"Error signing in"</string>
+
+    <string name="title_activity_routine_in_progress">routine_in_progress</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
