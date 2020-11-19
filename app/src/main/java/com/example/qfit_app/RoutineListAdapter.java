@@ -89,7 +89,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             @Override
             public void onClick(View v) {
                 apiClient.markAsFavourite(routine.getId());
-                Toast.makeText(context, "rutina agregada a favoritos",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.routineAdded,Toast.LENGTH_SHORT).show();
                 MainActivity.refresh();
             }
         });
@@ -102,7 +102,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         //        view.setVisibility(View.GONE);
                 routineList.remove(routine);
                 apiClient.unMarkAsFavourite(routine.getId());
-                Toast.makeText(context, "rutina removida",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.routineRemoved,Toast.LENGTH_SHORT).show();
                 MainActivity.refresh();
             }
         });

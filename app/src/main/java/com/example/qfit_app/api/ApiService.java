@@ -5,6 +5,7 @@ import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
 import com.example.qfit_app.api.classes.PagedList;
+import com.example.qfit_app.api.classes.RatingDTO;
 import com.example.qfit_app.api.classes.RoutineDTO;
 import com.example.qfit_app.api.classes.SportDTO;
 import com.example.qfit_app.api.classes.TokenDTO;
@@ -50,5 +51,7 @@ public interface ApiService {
     @GET("routines/{routineID}/cycles/{cycleID}/exercises")
     Call<PagedList<ExerciseDTO>> getExercises(@Header("authorization") String auth, @Path("routineID") int routineID, @Path("cycleID") int cycleID);
 
+    @POST("routines/{routineId}/ratings")
+    Call<RatingDTO> rateRoutine(@Header("authorization") String auth, @Path("routineId") int routineID, @Body RatingDTO ratingCredential);
 
 }

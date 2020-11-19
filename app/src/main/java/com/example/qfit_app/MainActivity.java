@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
                 startRoutine.putExtra("routine", routine);
                 startRoutine.putExtra("username", bundle.get("username").toString());
                 startRoutine.putExtra("password", bundle.get("password").toString());
+                startRoutine.putExtra("routineId", routine.getId());
 
 
                 List<Exercise> cycle1 = routine.cycles.get(0).getExercises();

@@ -1,10 +1,12 @@
 package com.example.qfit_app.api;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -21,6 +23,7 @@ import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
 import com.example.qfit_app.api.classes.PagedList;
+import com.example.qfit_app.api.classes.RatingDTO;
 import com.example.qfit_app.api.classes.RoutineDTO;
 import com.example.qfit_app.api.classes.SportDTO;
 import com.example.qfit_app.api.classes.TokenDTO;
@@ -56,6 +59,8 @@ public class ApiClient implements Parcelable {
     public String searchParam = null;
     public String orderByParam = null;
     public String directionParam = null;
+
+    public static Context context;
 
     public ApiClient() {
 
@@ -105,6 +110,10 @@ public class ApiClient implements Parcelable {
 //    }
 
 
+    public void setContext(Context context) {
+        this.context=context;
+    }
+
     protected ApiClient(Parcel in) {
         token = in.readString();
     }
@@ -122,14 +131,21 @@ public class ApiClient implements Parcelable {
     };
 
     public void login(String username, String password) {
+
+
         Call<TokenDTO> loginCall = apiService.login(new CredentialDTO(username, password));
 
         loginCall.enqueue((new Callback<TokenDTO>() {
             @Override
             public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
-                Log.d("logg", "enterlogin");
-                Log.d("logg", response.body().getToken());
-                token = String.format("bearer %s", response.body().getToken());
+                if(response.body() != null) {
+                    Log.d("logg", "enterlogin");
+                    Log.d("logg", response.body().getToken());
+                    token = String.format("bearer %s", response.body().getToken());
+                } else {
+                    Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT);
+                    throw new ArithmeticException("invalid credentials");
+                }
             }
 
             @Override
@@ -337,6 +353,25 @@ public class ApiClient implements Parcelable {
     public void setDirectionParam(String directionParam) {
         this.directionParam = directionParam;
     }
+
+    public void rateRoutine(int routineID, RatingDTO ratingCredentials){
+        Call<RatingDTO> rateRoutineCall = apiService.rateRoutine(token, routineID, ratingCredentials);
+
+        rateRoutineCall.enqueue((new Callback<RatingDTO>() {
+            @Override
+            public void onResponse(Call<RatingDTO> call, Response<RatingDTO> response) {
+                Log.d("logg", "Scored correctly");
+
+            }
+
+            @Override
+            public void onFailure(Call<RatingDTO> call, Throwable t) {
+                Log.d("logg", "something went wrong rating");
+
+            }
+        }));
+    }
+
 
     public void getSports() {
         Call<PagedList<SportDTO>> sportsCall = apiService.getSports(token);

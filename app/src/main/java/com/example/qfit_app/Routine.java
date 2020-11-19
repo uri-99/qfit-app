@@ -15,14 +15,15 @@ public class Routine implements Parcelable {
 
     String title, trainer, description, duration;
     List<Cycle> cycles;
-    int id, rating;
+    int id;
+    float rating;
     boolean second;
 
     List<Exercise> exercises1 = new ArrayList<>();
     List<Exercise> exercises2 = new ArrayList<>();
     List<Exercise> exercises3 = new ArrayList<>();
 
-    public Routine(String title, String trainer, String description, String duration, int id, int rating) {
+    public Routine(String title, String trainer, String description, String duration, int id, float rating) {
         this.title = title;
         this.trainer = trainer;
         this.description = description;
@@ -73,7 +74,7 @@ public class Routine implements Parcelable {
         return duration;
     }
 
-    public Integer getRating(){
+    public Float getRating(){
         return rating;
     }
 
@@ -105,6 +106,8 @@ public class Routine implements Parcelable {
         for(ExerciseDTO exercise : apiClient.cycle3){
             exercises3.add(new Exercise(exercise.getName(), String.format("%d", exercise.getDuration()), exercise.getDetail() ) );
         }
+
+//        String string1 = R.string.cycle1Title;
 
         createCycle("Entrada en calor", "descripción", exercises1);
         createCycle("Ejercitación principal", "descripción", exercises2);

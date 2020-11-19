@@ -9,7 +9,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.qfit_app.api.ApiClient;
+import com.example.qfit_app.api.classes.RatingDTO;
 
 import java.util.List;
 import java.util.Timer;
@@ -25,6 +31,8 @@ public class routine_in_progress extends AppCompatActivity {
     TextView displayTime;
     TextView finishMessage;
     Button readyButton;
+    Button rateBtn;
+    RatingBar ratingBar;
     View divider;
     Routine routine;
     List<Exercise> cycle1;
@@ -36,6 +44,7 @@ public class routine_in_progress extends AppCompatActivity {
     Timer timerTotal;
     int timeTotal=1;
     int i=1;
+    ApiClient apiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,11 @@ public class routine_in_progress extends AppCompatActivity {
         finishMessage = findViewById(R.id.finishMessage);
         divider = findViewById(R.id.divider);
         routineTitle = findViewById(R.id.in_progress_routineTitle);
+        rateBtn = findViewById(R.id.rate_btn);
+        ratingBar = findViewById(R.id.ratingBar);
+
+
+
 
         Intent lastIntent = getIntent();
         Bundle bundle = lastIntent.getExtras();
@@ -60,6 +74,9 @@ public class routine_in_progress extends AppCompatActivity {
         cycle1 = (List<Exercise>) bundle.get("routineCycle1");
         cycle2 = (List<Exercise>) bundle.get("routineCycle2");
         cycle3 = (List<Exercise>) bundle.get("routineCycle3");
+
+        apiClient = new ApiClient();
+        apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
 
         currentExercise = cycle1.get(0);
         size1 = cycle1.size();
@@ -71,7 +88,7 @@ public class routine_in_progress extends AppCompatActivity {
         exerciseDuration.setText(currentExercise.getReps());
         exerciseDescription.setText(currentExercise.getDetail());
         displayTime.setText(currentExercise.getReps());
-        cycleTitle.setText("Entrada en calor");
+        cycleTitle.setText(R.string.cycle1Title);
         ViewGroup.LayoutParams size = divider.getLayoutParams();
         size.width= (int) (30*cycleTitle.getText().length());
         divider.setLayoutParams(size);
@@ -83,6 +100,7 @@ public class routine_in_progress extends AppCompatActivity {
                 nextExercise();
             }
         });
+
         Button finish = findViewById(R.id.routineFinishButton);
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +112,18 @@ public class routine_in_progress extends AppCompatActivity {
             }
         });
 
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+           //     ratingBar.setClickable(false);
+                ratingBar.setEnabled(false);
+                rateBtn.setVisibility(View.GONE);
+                rateRoutine((Integer) bundle.get("routineId"));
+                Toast.makeText(routine_in_progress.this, "Rutina puntuada!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         TextView timerTotalDisplay = findViewById(R.id.timerTotalDisplay);
 
         timerTotal = new Timer();
@@ -103,7 +133,7 @@ public class routine_in_progress extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        timerTotalDisplay.setText("tiempo total: "+timeTotal);
+                        timerTotalDisplay.setText("tiempo total: " + timeTotal);
                         timeTotal++;
 
                         if(i>0) {
@@ -111,7 +141,7 @@ public class routine_in_progress extends AppCompatActivity {
                             i--;
                             displayTime.setText(String.format("%d", i));
                         } else {
-                           displayTime.setText("llegaste?");
+                           displayTime.setText(R.string.exerciseReadyMessage);
                         }
 
 
@@ -122,12 +152,18 @@ public class routine_in_progress extends AppCompatActivity {
 
     }
 
+    public void rateRoutine(int routineId){
+        float rate = ratingBar.getRating();
+        RatingDTO creds = new RatingDTO("default text", rate);
+        apiClient.rateRoutine(routineId, creds);
+    }
+
     public void nextExercise(){
         if(current1 < size1-1) {
             current1++;
             currentExercise = cycle1.get(current1);
         } else if(current2 < size2) {
-            cycleTitle.setText("Ejercitacion principal");
+            cycleTitle.setText(R.string.cycle2Title);
             ViewGroup.LayoutParams size = divider.getLayoutParams();
             size.width= (int) (30*cycleTitle.getText().length());
             divider.setLayoutParams(size);
@@ -135,7 +171,7 @@ public class routine_in_progress extends AppCompatActivity {
             currentExercise = cycle2.get(current2);
             current2++;
         } else if(current3 < size3) {
-            cycleTitle.setText("Enfriamiento");
+            cycleTitle.setText(R.string.cycle3Title);
             ViewGroup.LayoutParams size = divider.getLayoutParams();
             size.width= (int) (30*cycleTitle.getText().length());
             divider.setLayoutParams(size);
@@ -146,10 +182,19 @@ public class routine_in_progress extends AppCompatActivity {
         } else {
             timerTotal.cancel();
             timeTotal--; //se le escapa un segundo al final
-            String fs;
-            fs= String.format("Has completado\n'%s' en %d segundos,\nFelicitaciones!",routineTitle.getText() ,timeTotal);
+            StringBuilder fs = new StringBuilder();
+            fs.append(R.string.finishRoutineMessage1);
+            fs.append(routineTitle.getText());
+            fs.append(R.string.finishRoutineMessage2);
+            fs.append(timeTotal);
+            fs.append(R.string.finishRoutineMessage3);
+            fs.append('\n');
+            fs.append(R.string.finishRoutineMessage4);
 
-            finishMessage.setText(fs);
+            LinearLayout linearLayout = findViewById(R.id.routine_finish);
+            linearLayout.setVisibility(View.VISIBLE);
+
+            finishMessage.setText(fs.toString());
             finishMessage.setVisibility(View.VISIBLE);
             cycleTitle.setVisibility(View.INVISIBLE);
             exerciseTitle.setVisibility(View.INVISIBLE);

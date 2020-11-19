@@ -17,17 +17,40 @@
     <string name="exerciseDescription">Descripcion del ejercicio asi bien larga y detallada, manos adelante culo pa atras salta y cae cuidado no te tuerzas el tobillo y no aguantes la respiracion</string>
     <string name="listo">Done</string>
 
-    <string-array name="filters">
-        <item>Filter</item>
-        <item>cat 1</item>
-        <item>cat 2</item>
-        <item>cat 3</item>
+    <string name="cycle1Title">Warmup</string>
+    <string name="cycle2Title">Primary exercise</string>
+    <string name="cycle3Title">Cooldown</string>
+
+    <string name="routineRemoved">routine removed</string>
+    <string name="routineAdded">rutina added to favourites</string>
+
+    <string name="exerciseReadyMessage">did you make it?</string>
+    <string name="totalTimeMessage">total time: </string>
+    <string name="finishRoutineMessage1">You have completed</string>
+    <string name="finishRoutineMessage2"> in </string>
+    <string name="finishRoutineMessage3"> seconds</string>
+    <string name="finishRoutineMessage4">Congratulations!</string>
+
+    <string name="puntuarRutina">Do you want to rate this routine?</string>
+    <string name="rate_routine_btn">Done</string>
+
+    <string name="category">Category</string>
+    <string-array name="ordenar">
+        <item>Categoría</item>
+        <item>id</item>
+        <item>name</item>
+        <item>detail</item>
+        <item>dateCreated</item>
+        <item>averageRating</item>
+        <item>difficulty</item>
+        <item>categoryId</item>
+        <item>creatorId</item>
     </string-array>
-    <string-array name="orders">
-        <item>Order 1</item>
-        <item>cat 4</item>
-        <item>cat 5</item>
-        <item>cat 6</item>
+    <string name="order">Order</string>
+    <string-array name="orden">
+        <item>Orden</item>
+        <item>asc</item>
+        <item>desc</item>
     </string-array>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>

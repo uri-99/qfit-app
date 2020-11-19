@@ -25,7 +25,7 @@ public class RoutineDTO implements Serializable {
 
     @Expose
     @SerializedName("averageRating")
-    int averageRating;
+    float averageRating;
 
     @Expose
     @SerializedName("isPublic")
@@ -71,7 +71,7 @@ public class RoutineDTO implements Serializable {
         return dateCreated;
     }
 
-    public int getAverageRating() {
+    public float getAverageRating() {
         return averageRating;
     }
 

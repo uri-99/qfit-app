@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -132,13 +133,29 @@ public class LoginActivity extends AppCompatActivity {
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
-        Intent login = new Intent(getApplicationContext(), MainActivity.class);
+        try {
 
-        login.putExtra("username", usernameEditText.getText());
-        login.putExtra("password", passwordEditText.getText());
-//        login.putExtra("apiClient", apiClient);
-        login.putExtra("token", apiClient.getToken());
-        startActivity(login);
+            apiClient.setContext(this);
+
+            apiClient.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            Intent login = new Intent(getApplicationContext(), MainActivity.class);
+
+            login.putExtra("username", usernameEditText.getText());
+            login.putExtra("password", passwordEditText.getText());
+            login.putExtra("apiClient", apiClient);
+            login.putExtra("token", apiClient.getToken());
+            startActivity(login);
+        } catch(Exception e)  {
+           Log.d("logg", "its maginc");
+        }
+
+//        Intent login = new Intent(getApplicationContext(), MainActivity.class);
+//
+//        login.putExtra("username", usernameEditText.getText());
+//        login.putExtra("password", passwordEditText.getText());
+////        login.putExtra("apiClient", apiClient);
+//        login.putExtra("token", apiClient.getToken());
+//        startActivity(login);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
