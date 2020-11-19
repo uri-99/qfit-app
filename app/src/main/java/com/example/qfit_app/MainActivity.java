@@ -1,15 +1,21 @@
 package com.example.qfit_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewDebug;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qfit_app.api.ApiClient;
 import com.example.qfit_app.api.classes.RoutineDTO;
@@ -27,40 +33,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static List<RoutineDTO> routineListAll;
-    private static List<RoutineDTO> routineListFav;
     private static MainActivity instance;
-
-    private static boolean repeat1=true;
-    private static boolean repeat2=true;
-    private static boolean again;
 
     static List<Routine> allRoutineList;
     static List<Routine> favRoutineList;
     private static ListView allRoutinesView;
     private static ListView favRoutinesView;
+    private static LinearLayout linearLayoutFilters;
+    private static EditText searchBar;
+    private static ImageButton searchButton;
 
-     private static List<Routine.Cycle> cycleList;
-     private static ListView cycleView;
     private static ConstraintLayout routineDetails;
 
-    List<Exercise> exercises1;
-    List<Exercise> exercises2;
-    private static ListView exerciseView;
+    private static ListView cycleView;
     private static RoutineListAdapter.CycleListAdapter cycleAdapter;
 
     private static RoutineListAdapter allAdapter;
     private static RoutineListAdapter favAdapter;
-    List<Exercise> exercisesList1;
-    List<Exercise> exercisesList2;
 
     static ApiClient apiClient;
     Bundle bundle;
-
-
 
 
     @Override
@@ -78,59 +74,45 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        Context context = this;
+        instance = this;
+
+
+        ImageButton refresh = findViewById(R.id.refresh);
+        searchButton = findViewById(R.id.searchButton);
+        searchBar = findViewById(R.id.searchBar);
+        linearLayoutFilters = findViewById(R.id.linearLayoutFilters);
+        Button welcomeButton = findViewById(R.id.buttonWelcome);
+        LinearLayout welcomeMessage = findViewById(R.id.welcomeMessage);
+        routineDetails = findViewById(R.id.routineDetails);
+        cycleView = findViewById(R.id.cycleList);
+        Spinner orderBy = findViewById(R.id.homeOrderBy);
+        Spinner direction = findViewById(R.id.homeOrden);
+
+
+        searchButton.setVisibility(GONE);
+        searchBar.setVisibility(GONE);
+        linearLayoutFilters.setVisibility(GONE);
+        navView.setVisibility(GONE);
+
+        allRoutineList = new ArrayList<>();
+        favRoutineList = new ArrayList<>();
 
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
         apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
         apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
-//        apiClient.setToken((String) bundle.get("token"));
-//
-//        Log.d("logg", "acá");
-//        Log.d("logg", apiClient.getToken());
-
-
-        allRoutineList = new ArrayList<>();
-        favRoutineList = new ArrayList<>();
-
-
-//        allRoutineList.add(new Routine("Rutina 1", "entrenador 1", "desc 1", "duracion 1"));
-//        allRoutineList.add(new Routine("Rutina 2", "entrenador 2", "desc 2", "duracion 2"));
-//        allRoutineList.add(new Routine("Rutina 3", "entrenador 3", "desc 3", "duracion 3"));
-//        allRoutineList.add(new Routine("Rutina 22", "entrenador 2", "desc 2", "duracion 2"));
-//        allRoutineList.add(new Routine("Rutina 32", "entrenador 3", "desc 3", "duracion 3"));
-//        favRoutineList.add(new Routine("Rutina 4", "entrenador 4", "desc 4", "duracion 4"));
-//        favRoutineList.add(new Routine("Rutina 5", "entrenador 5", "desc 5", "duracion 5"));
-//        favRoutineList.add(new Routine("Rutina 6", "entrenador 6", "desc 6", "duracion 6"));
-//        favRoutineList.add(new Routine("Rutina 42", "entrenador 4", "desc 4", "duracion 4"));
-//        favRoutineList.add(new Routine("Rutina 52", "entrenador 5", "desc 5", "duracion 5"));
-//        favRoutineList.add(new Routine("Rutina 62", "entrenador 6", "desc 6", "duracion 6"));
 
         allRoutinesView = findViewById(R.id.allRoutines);
-        allAdapter = new RoutineListAdapter(this, R.layout.routine_as_item, allRoutineList, apiClient);
+        allAdapter = new RoutineListAdapter(context, R.layout.routine_as_item, allRoutineList, apiClient);
         allRoutinesView.setAdapter(allAdapter);
 
         favRoutinesView = findViewById(R.id.favRoutines);
-        favAdapter = new RoutineListAdapter(this, R.layout.routine_as_item, favRoutineList, apiClient);
+        favAdapter = new RoutineListAdapter(context, R.layout.routine_as_item, favRoutineList, apiClient);
         favRoutinesView.setAdapter(favAdapter);
 
 
-        routineDetails = findViewById(R.id.routineDetails);
-        cycleView = findViewById(R.id.cycleList);
-
-        instance = this;
-
-        ImageButton refresh = findViewById(R.id.refresh);
-
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refresh();
-            }
-        });
-
-        Button welcomeButton = findViewById(R.id.buttonWelcome);
-        LinearLayout welcomeMessage = findViewById(R.id.welcomeMessage);
-
+        welcomeMessage.setVisibility(VISIBLE);
         welcomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,17 +122,108 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(searchBar.getText().length()>2) {
+                    apiClient.setSearchParam(searchBar.getText().toString());
+                    apiClient.getRoutines();
+                } else if (searchBar.getText().length()==0) {
+                    apiClient.setSearchParam(null);
+                } else {
+                    Toast.makeText(context, "Busqueda debe tener al menos 3 caracteres",Toast.LENGTH_SHORT).show();
+                }
+                refresh();
+            }
+        });
+
+        orderBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(!orderBy.getSelectedItem().toString().equals("Categoría") && !direction.getSelectedItem().toString().equals("Orden"))
+                {
+                    apiClient.setOrderByParam(orderBy.getSelectedItem().toString());
+                    apiClient.setDirectionParam(direction.getSelectedItem().toString());
+                } else if (orderBy.getSelectedItem().toString().equals("Categoría") && direction.getSelectedItem().toString().equals("Orden")) {
+                    apiClient.setOrderByParam(null);
+                    apiClient.setDirectionParam(null);
+                }
+                refresh();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(!orderBy.getSelectedItem().toString().equals("Categoría") && !direction.getSelectedItem().toString().equals("Orden"))
+                {
+                    apiClient.setOrderByParam(orderBy.getSelectedItem().toString());
+                    apiClient.setDirectionParam(direction.getSelectedItem().toString());
+                } else if (orderBy.getSelectedItem().toString().equals("Categoría") && direction.getSelectedItem().toString().equals("Orden")) {
+                    apiClient.setOrderByParam(null);
+                    apiClient.setDirectionParam(null);
+                }
+                refresh();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        //para liveData
+//        loginButton.setOnClickListener(v -> {
+//            CredentialDTO credentials = new CredentialDTO("johndoe", "1234567890");
+//            MyApplication app = ((MyApplication)getApplication());
+//            app.getUserRepository().login(credentials).observe(this,r -> {
+//                switch (r.getStatus()) {
+//                    case SUCCESS:
+//                        Log.d("UI", "success");
+//                        AppPreferences preferences = new AppPreferences(app);
+//                        preferences.setAuthToken(r.getData().getToken());
+//                        binding.result.setText(R.string.success);
+//                        binding.getCurrentUserButton.setEnabled(true);
+//                        binding.getAllButton.setEnabled(true);
+//                        binding.getButton.setEnabled(true);
+//                        binding.addButton.setEnabled(true);
+//                        break;
+//                    default:
+//                        defaultResourceHandler(r);
+//                        break;
+//                }
+//            });
+//        });
+
 
     }
 
     public static void refresh() {
-        Log.d("logg", "enter refresh");
+        allAdapter.clear();
         apiClient.getRoutines();
+        for(RoutineDTO routine : apiClient.returnRoutines()){
+            allAdapter.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
+        }
+
+        favAdapter.clear();
         apiClient.getFavRoutines();
-        routineListAll = apiClient.returnRoutines();
-        routineListFav = apiClient.returnRoutinesFav();
-        fillListAll();
-        fillListFav();
+        for(RoutineDTO routine: apiClient.returnRoutinesFav()){
+            favAdapter.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
+        }
     }
 
     public static void firstGet() {
@@ -158,31 +231,9 @@ public class MainActivity extends AppCompatActivity {
         apiClient.getFavRoutines();
     }
 
-    public static void fillListAll() {
-        Log.d("logg", "enter fill list");
-        for(RoutineDTO routine : routineListAll) {
-            repeat1 = false;
-            for(Routine routine2 : allRoutineList)
-            {
-                if(routine2.getId() == routine.getId())
-                    repeat1 = true;
-            }
-            if(!repeat1)
-                allRoutineList.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
-        }
-    }
-
-    public static void fillListFav() {
-        for(RoutineDTO routine : routineListFav) {
-            repeat2 = false;
-            for(Routine routine2 : favRoutineList)
-            {
-                if(routine2.getId() == routine.getId())
-                    repeat2 = true;
-            }
-            if(!repeat2)
-                favRoutineList.add(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
-        }
+    public static void notified(){
+        favAdapter.notifyDataSetChanged();
+        allAdapter.notifyDataSetChanged();
     }
 
     public static MainActivity getInstance(){
@@ -190,15 +241,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void appearAllList() {
+        searchButton.setVisibility(VISIBLE);
+        searchBar.setVisibility(VISIBLE);
+        linearLayoutFilters.setVisibility(View.VISIBLE);
         allRoutinesView.setVisibility(View.VISIBLE);
         favRoutinesView.setVisibility(GONE);
         routineDetails.setVisibility(GONE);
     }
 
     public static void appearFavList() {
+        searchButton.setVisibility(GONE);
+        searchBar.setVisibility(View.GONE);
+        linearLayoutFilters.setVisibility(View.GONE);
         allRoutinesView.setVisibility(GONE);
         favRoutinesView.setVisibility(View.VISIBLE);
         routineDetails.setVisibility(GONE);
+    }
+
+    public static void disappearLists() {
+        allRoutinesView.setVisibility(GONE);
+        favRoutinesView.setVisibility(GONE);
+        routineDetails.setVisibility(GONE);
+        searchBar.setVisibility(GONE);
+        searchButton.setVisibility(GONE);
+        linearLayoutFilters.setVisibility(GONE);
     }
 
     public void appearDetails(Routine routine) {
@@ -208,6 +274,9 @@ public class MainActivity extends AppCompatActivity {
         cycleView.setAdapter(cycleAdapter);
         routine.log();
 
+        searchBar.setVisibility(GONE);
+        searchButton.setVisibility(GONE);
+        linearLayoutFilters.setVisibility(GONE);
         allRoutinesView.setVisibility(GONE);
         favRoutinesView.setVisibility(GONE);
         routineDetails.setVisibility(View.VISIBLE);
@@ -248,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
                 startRoutine.putExtra("password", bundle.get("password").toString());
 
 
-
                 List<Exercise> cycle1 = routine.cycles.get(0).getExercises();
                 startRoutine.putExtra("routineCycle1", (Serializable) cycle1);
                 List<Exercise> cycle2 = routine.cycles.get(1).getExercises();
@@ -263,10 +331,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void disappearLists() {
-        allRoutinesView.setVisibility(GONE);
-        favRoutinesView.setVisibility(GONE);
-        routineDetails.setVisibility(GONE);
-    }
 
 }

@@ -1,14 +1,22 @@
 package com.example.qfit_app.api;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.example.qfit_app.BuildConfig;
 import com.example.qfit_app.Exercise;
 import com.example.qfit_app.MainActivity;
 import com.example.qfit_app.Routine;
+//import com.example.qfit_app.api.LiveData.ApiResponse;
+//import com.example.qfit_app.api.LiveData.LiveDataCallAdapterFactory;
+//import com.example.qfit_app.api.LiveData.NetworkBoundResource;
+//import com.example.qfit_app.api.LiveData.Resource;
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
@@ -17,6 +25,8 @@ import com.example.qfit_app.api.classes.RoutineDTO;
 import com.example.qfit_app.api.classes.SportDTO;
 import com.example.qfit_app.api.classes.TokenDTO;
 import com.example.qfit_app.api.classes.UserDTO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +53,10 @@ public class ApiClient implements Parcelable {
     public static final int READ_TIMEOUT = 60;
     public static final int WRITE_TIMEOUT = 60;
 
+    public String searchParam = null;
+    public String orderByParam = null;
+    public String directionParam = null;
+
     public ApiClient() {
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().
@@ -57,14 +71,38 @@ public class ApiClient implements Parcelable {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(" http://192.168.100.15:8080/api/") //antes: http://10.0.1.197:8080/api/
+                .baseUrl("http://10.0.1.197:8080/api/") //antes: http://10.0.1.197:8080/api/
                 .client(okHttpClient)
+//                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
          apiService = retrofit.create(ApiService.class);
 
 
     }
+
+    //para livedata:
+//    public static <S> S create(Context context) {
+//        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().
+//                setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+//
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addInterceptor(httpLoggingInterceptor)
+//                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+//                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+//                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+//                .build();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://10.0.1.197:8080/api/") //antes: http://10.0.1.197:8080/api/
+//                .client(okHttpClient)
+//                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        return (S) retrofit.create(ApiService.class);
+//    }
 
 
     protected ApiClient(Parcel in) {
@@ -101,6 +139,19 @@ public class ApiClient implements Parcelable {
         }));
     }
 
+
+    //para livedata
+//    public LiveData<Resource<TokenDTO>> login(CredentialDTO credentials) {
+//        return new NetworkBoundResource<TokenDTO, TokenDTO>()
+//        {
+//            @NonNull
+//            @Override
+//            protected LiveData<ApiResponse<TokenDTO>> createCall() {
+//                return apiService.login(credentials);
+//            }
+//        }.asLiveData();
+//    }
+
     public void getCurrentUser() {
         Call<UserDTO> currentUserCall = apiService.getCurrentUser(token);
         currentUserCall.enqueue(new Callback<UserDTO>() {
@@ -128,7 +179,7 @@ public class ApiClient implements Parcelable {
 
 
     public void getRoutines() {
-        Call<PagedList<RoutineDTO>> loginCall = apiService.getRoutines(token);
+        Call<PagedList<RoutineDTO>> loginCall = apiService.getRoutines(token, searchParam, orderByParam, directionParam);
 
 
         loginCall.enqueue(new Callback<PagedList<RoutineDTO>>() {
@@ -138,6 +189,8 @@ public class ApiClient implements Parcelable {
 //                Log.d("logg", response.body().getOrderBy());
 //                updateRoutineList(response.body().getResults());
                 routineListAll=response.body().getResults();
+
+                MainActivity.notified();
             }
 
             @Override
@@ -158,6 +211,8 @@ public class ApiClient implements Parcelable {
 //                Log.d("logg", response.body().getOrderBy());
 //                updateRoutineList(response.body().getResults());
                 routineListFav=response.body().getResults();
+
+                MainActivity.notified();
             }
 
             @Override
@@ -171,11 +226,15 @@ public class ApiClient implements Parcelable {
 
     public List<RoutineDTO> returnRoutines(){
         Log.d("logg", "database returned");
+
+        MainActivity.notified();
         return routineListAll;
     }
 
     public List<RoutineDTO> returnRoutinesFav(){
         Log.d("logg", "fav database returned");
+
+        MainActivity.notified();
         return routineListFav;
     }
 
@@ -186,6 +245,8 @@ public class ApiClient implements Parcelable {
             @Override
             public void onResponse(Call<CodeDTO> call, Response<CodeDTO> response) {
                 Log.d("logg", "faved");
+
+                MainActivity.refresh();
             }
 
             @Override
@@ -203,6 +264,8 @@ public class ApiClient implements Parcelable {
             @Override
             public void onResponse(Call<CodeDTO> call, Response<CodeDTO> response) {
                 Log.d("logg", "remove faved");
+
+                MainActivity.refresh();
             }
 
             @Override
@@ -263,7 +326,17 @@ public class ApiClient implements Parcelable {
 
     }
 
+    public void setSearchParam(String searchParam) {
+        this.searchParam = searchParam;
+    }
 
+    public void setOrderByParam(String orderByParam) {
+        this.orderByParam = orderByParam;
+    }
+
+    public void setDirectionParam(String directionParam) {
+        this.directionParam = directionParam;
+    }
 
     public void getSports() {
         Call<PagedList<SportDTO>> sportsCall = apiService.getSports(token);

@@ -1,5 +1,6 @@
 package com.example.qfit_app.api;
 
+
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
@@ -16,9 +17,14 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface ApiService {
+
+    //para livedata:
+//    @POST("user/login")
+//    LiveData<ApiResponse<TokenDTO>> login(@Body CredentialDTO credentials);
 
     @POST("user/login")
     Call<TokenDTO> login(@Body CredentialDTO credentials);
@@ -27,7 +33,7 @@ public interface ApiService {
     Call<UserDTO> getCurrentUser(@Header("authorization") String auth);
 
     @GET("routines")
-    Call<PagedList<RoutineDTO>> getRoutines(@Header("authorization") String auth);
+    Call<PagedList<RoutineDTO>> getRoutines(@Header("authorization") String auth, @Query("search") String search, @Query("orderBy") String order, @Query("direction") String direction);
 
     @GET("user/current/routines/favourites")
     Call<PagedList<RoutineDTO>> getFavRoutines(@Header("authorization") String auth);
