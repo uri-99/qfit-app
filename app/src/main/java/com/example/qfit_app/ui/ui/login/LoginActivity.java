@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +45,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText;
     EditText passwordEditText;
 
+    private int signupStep=1;
+
+    private static LoginActivity context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +62,14 @@ public class LoginActivity extends AppCompatActivity {
         final Button signupButton = findViewById(R.id.sign_up);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final EditText emailEditText = findViewById(R.id.email);
+        Button verifyCodeButton = findViewById(R.id.verifyCode);
+        EditText confirmationCode = findViewById(R.id.confirmationCode);
+        ImageButton backToLogin = findViewById(R.id.backToLogin);
+
+        context=this;
+
         apiClient = new ApiClient();
+        apiClient.setContext(context);
 
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
@@ -116,13 +129,47 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            loadingProgressBar.setVisibility(View.VISIBLE);
-            loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+
+            apiClient.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+
+            if(apiClient.token != "emptys" && apiClient.token!="invalid") {
+                Intent login = new Intent(getApplicationContext(), MainActivity.class);
+                login.putExtra("username", usernameEditText.getText());
+                login.putExtra("password", passwordEditText.getText());
+                startActivity(login);
+            }
         });
+
         signupButton.setOnClickListener(v->{
-            emailEditText.setVisibility(View.VISIBLE);
-            loginButton.setVisibility(View.GONE);
-            signupButton.setBackgroundColor(Color.rgb(1,225,64));
+            if(signupStep==1){
+                emailEditText.setVisibility(View.VISIBLE);
+                loginButton.setVisibility(View.GONE);
+                signupButton.setBackgroundColor(Color.rgb(1,225,64));
+                Log.d("logg", String.format("%d",signupStep));
+                signupStep++;
+                Log.d("logg", String.format("%d",signupStep));
+                backToLogin.setVisibility(View.VISIBLE);
+            } else if(signupStep==2) {
+                verifyCodeButton.setVisibility(View.VISIBLE);
+                confirmationCode.setVisibility(View.VISIBLE);
+                Toast.makeText(context, R.string.sentCode, Toast.LENGTH_SHORT).show();
+                apiClient.createUser(usernameEditText.getText().toString(), passwordEditText.getText().toString(), emailEditText.getText().toString());
+                Log.d("logg", String.format("%d",signupStep));
+                apiClient.setContext(context);
+            }
+        });
+
+        verifyCodeButton.setOnClickListener(v->{
+            apiClient.verifyEmail(emailEditText.getText().toString(), confirmationCode.getText().toString());
+        });
+
+        backToLogin.setOnClickListener(v->{
+            signupStep=1;
+            emailEditText.setVisibility(View.GONE);
+            loginButton.setVisibility(View.VISIBLE);
+            verifyCodeButton.setVisibility(View.GONE);
+            confirmationCode.setVisibility(View.GONE);
+            backToLogin.setVisibility(View.GONE);
         });
 
 
@@ -135,15 +182,13 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
 
-            apiClient.setContext(this);
-
             apiClient.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-            Intent login = new Intent(getApplicationContext(), MainActivity.class);
 
+            Intent login = new Intent(getApplicationContext(), MainActivity.class);
             login.putExtra("username", usernameEditText.getText());
             login.putExtra("password", passwordEditText.getText());
-            login.putExtra("apiClient", apiClient);
-            login.putExtra("token", apiClient.getToken());
+    //        login.putExtra("apiClient", apiClient);
+    //        login.putExtra("token", apiClient.getToken());
             startActivity(login);
         } catch(Exception e)  {
            Log.d("logg", "its maginc");

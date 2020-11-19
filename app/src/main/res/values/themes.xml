@@ -60,6 +60,10 @@
         <item name="colorControlActivated">@color/yellow</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
 
 

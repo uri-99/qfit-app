@@ -4,12 +4,14 @@ package com.example.qfit_app.api;
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
+import com.example.qfit_app.api.classes.NewUserDTO;
 import com.example.qfit_app.api.classes.PagedList;
 import com.example.qfit_app.api.classes.RatingDTO;
 import com.example.qfit_app.api.classes.RoutineDTO;
 import com.example.qfit_app.api.classes.SportDTO;
 import com.example.qfit_app.api.classes.TokenDTO;
 import com.example.qfit_app.api.classes.UserDTO;
+import com.example.qfit_app.api.classes.VerifyEmailDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,6 +31,12 @@ public interface ApiService {
 
     @POST("user/login")
     Call<TokenDTO> login(@Body CredentialDTO credentials);
+
+    @POST("user")
+    Call<UserDTO> createUser(@Body NewUserDTO newUser);
+
+    @POST("user/verify_email")
+    Call<CodeDTO> verifyEmail(@Body VerifyEmailDTO verifyEmail);
 
     @GET("user/current")
     Call<UserDTO> getCurrentUser(@Header("authorization") String auth);

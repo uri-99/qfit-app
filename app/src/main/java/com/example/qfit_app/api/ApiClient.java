@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData;
 import com.example.qfit_app.BuildConfig;
 import com.example.qfit_app.Exercise;
 import com.example.qfit_app.MainActivity;
+import com.example.qfit_app.R;
 import com.example.qfit_app.Routine;
 //import com.example.qfit_app.api.LiveData.ApiResponse;
 //import com.example.qfit_app.api.LiveData.LiveDataCallAdapterFactory;
@@ -22,12 +23,14 @@ import com.example.qfit_app.Routine;
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
+import com.example.qfit_app.api.classes.NewUserDTO;
 import com.example.qfit_app.api.classes.PagedList;
 import com.example.qfit_app.api.classes.RatingDTO;
 import com.example.qfit_app.api.classes.RoutineDTO;
 import com.example.qfit_app.api.classes.SportDTO;
 import com.example.qfit_app.api.classes.TokenDTO;
 import com.example.qfit_app.api.classes.UserDTO;
+import com.example.qfit_app.api.classes.VerifyEmailDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -138,13 +141,15 @@ public class ApiClient implements Parcelable {
         loginCall.enqueue((new Callback<TokenDTO>() {
             @Override
             public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
-                if(response.body() != null) {
+                if(response.code() == 200) {
                     Log.d("logg", "enterlogin");
                     Log.d("logg", response.body().getToken());
                     token = String.format("bearer %s", response.body().getToken());
+
                 } else {
-                    Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT);
-                    throw new ArithmeticException("invalid credentials");
+                    token = "invalid";
+                    Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                   // throw new ArithmeticException("invalid credentials");
                 }
             }
 
@@ -186,6 +191,41 @@ public class ApiClient implements Parcelable {
         });
     }
 
+    public void createUser(String username, String password, String email){
+        Call<UserDTO> newUser = apiService.createUser(new NewUserDTO(username,password,email));
+        newUser.enqueue(new Callback<UserDTO>() {
+            @Override
+            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                Log.d("logg", "Falta la verificacion");
+            }
+
+            @Override
+            public void onFailure(Call<UserDTO> call, Throwable t) {
+                Log.d("logg","Error al crear el usuario");
+            }
+        });
+
+    }
+
+    public void verifyEmail(String email, String code) {
+        Call<CodeDTO> verify = apiService.verifyEmail(new VerifyEmailDTO(email, code));
+        verify.enqueue(new Callback<CodeDTO>() {
+            @Override
+            public void onResponse(Call<CodeDTO> call, Response<CodeDTO> response) {
+                if(response.code() == 200) {
+                    Toast.makeText(context, R.string.correctCode, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, R.string.incorrectCode, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CodeDTO> call, Throwable t) {
+                Log.d("logg", "failverify");
+            }
+        });
+    }
+
     public String getToken(){
         return token;
     }
@@ -195,10 +235,10 @@ public class ApiClient implements Parcelable {
 
 
     public void getRoutines() {
-        Call<PagedList<RoutineDTO>> loginCall = apiService.getRoutines(token, searchParam, orderByParam, directionParam);
+        Call<PagedList<RoutineDTO>> getRoutines = apiService.getRoutines(token, searchParam, orderByParam, directionParam);
 
 
-        loginCall.enqueue(new Callback<PagedList<RoutineDTO>>() {
+        getRoutines.enqueue(new Callback<PagedList<RoutineDTO>>() {
             @Override
             public void onResponse(Call<PagedList<RoutineDTO>> call, Response<PagedList<RoutineDTO>> response) {
                 Log.d("logg", "enter getroutines");
@@ -218,9 +258,9 @@ public class ApiClient implements Parcelable {
     }
 
     public void getFavRoutines() {
-        Call<PagedList<RoutineDTO>> loginCall = apiService.getFavRoutines(token);
+        Call<PagedList<RoutineDTO>> getRoutines = apiService.getFavRoutines(token);
 
-        loginCall.enqueue(new Callback<PagedList<RoutineDTO>>() {
+        getRoutines.enqueue(new Callback<PagedList<RoutineDTO>>() {
             @Override
             public void onResponse(Call<PagedList<RoutineDTO>> call, Response<PagedList<RoutineDTO>> response) {
                 Log.d("logg", "enter getfavroutines");

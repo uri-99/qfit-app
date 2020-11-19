@@ -1,5 +1,7 @@
 package com.example.qfit_app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.example.qfit_app.api.ApiClient;
 import com.example.qfit_app.api.classes.RatingDTO;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -45,6 +48,7 @@ public class routine_in_progress extends AppCompatActivity {
     int timeTotal=1;
     int i=1;
     ApiClient apiClient;
+    private static routine_in_progress instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,7 @@ public class routine_in_progress extends AppCompatActivity {
         rateBtn = findViewById(R.id.rate_btn);
         ratingBar = findViewById(R.id.ratingBar);
 
-
-
+        instance=this;
 
         Intent lastIntent = getIntent();
         Bundle bundle = lastIntent.getExtras();
@@ -76,7 +79,14 @@ public class routine_in_progress extends AppCompatActivity {
         cycle3 = (List<Exercise>) bundle.get("routineCycle3");
 
         apiClient = new ApiClient();
-        apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+            apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+
+        String mode = bundle.get("mode").toString();
+        if(mode.equals("simple") ) {
+            exerciseDescription.setVisibility(View.GONE);
+        } else if(mode.equals("detailed")){
+            exerciseDescription.setVisibility(View.VISIBLE);
+        }
 
         currentExercise = cycle1.get(0);
         size1 = cycle1.size();
@@ -105,10 +115,25 @@ public class routine_in_progress extends AppCompatActivity {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent endRoutine = new Intent(getApplicationContext(), MainActivity.class);
-                endRoutine.putExtra("username", bundle.get("username").toString());
-                endRoutine.putExtra("password", bundle.get("password").toString());
-                startActivity(endRoutine);
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
+                dialog.setTitle(R.string.confirmExit);
+            //    dialog.setMessage(R.string.confirmExitSubtitle);
+                dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent endRoutine = new Intent(getApplicationContext(), MainActivity.class);
+                        endRoutine.putExtra("username", bundle.get("username").toString());
+                        endRoutine.putExtra("password", bundle.get("password").toString());
+                        startActivity(endRoutine);
+                    }
+                });
+                dialog.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                dialog.create().show(); // Create the Dialog and display it to the user
             }
         });
 
@@ -182,19 +207,13 @@ public class routine_in_progress extends AppCompatActivity {
         } else {
             timerTotal.cancel();
             timeTotal--; //se le escapa un segundo al final
-            StringBuilder fs = new StringBuilder();
-            fs.append(R.string.finishRoutineMessage1);
-            fs.append(routineTitle.getText());
-            fs.append(R.string.finishRoutineMessage2);
-            fs.append(timeTotal);
-            fs.append(R.string.finishRoutineMessage3);
-            fs.append('\n');
-            fs.append(R.string.finishRoutineMessage4);
+
+            String fs = String.format("Has completado '%s' en %d segundos,\nFelicitaciones!", routineTitle.getText(), timeTotal);
+            finishMessage.setText(fs);
 
             LinearLayout linearLayout = findViewById(R.id.routine_finish);
             linearLayout.setVisibility(View.VISIBLE);
 
-            finishMessage.setText(fs.toString());
             finishMessage.setVisibility(View.VISIBLE);
             cycleTitle.setVisibility(View.INVISIBLE);
             exerciseTitle.setVisibility(View.INVISIBLE);

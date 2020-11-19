@@ -5,7 +5,7 @@
     <string name="title_home">Favourites</string>
     <string name="title_search">Explore</string>
     <string name="subtitle_search">Discover new Routines</string>
-    <string name="title_profile">User Profile</string>
+    <string name="title_profile">My Profile</string>
     <string name="profile_name">John Doe</string>
     <string name="profile_age">25 years</string>
     <string name="edit">Edit Profile</string>
@@ -13,9 +13,20 @@
     <string name="objectives">My Objectives</string>
     <string name="searchHint">Search</string>
     <string name="comenzar">Start</string>
-    <string name="terminar">End</string>
+    <string name="terminar">Finish</string>
     <string name="exerciseDescription">Descripcion del ejercicio asi bien larga y detallada, manos adelante culo pa atras salta y cae cuidado no te tuerzas el tobillo y no aguantes la respiracion</string>
     <string name="listo">Done</string>
+
+    <string name="loadExercises">Load exercises</string>
+
+    <string name="simple">SIMPLE</string>
+    <string name="detailed">DETAILED</string>
+    <string name="selectRoutineType">Choose a mode</string>
+    <string name="confirmExit">Are you sure you wish to exit the current routine?</string>
+    <string name="confirmExitSubtitle">Your current progress will be lost</string>
+
+    <string name="affirmative">YES</string>
+    <string name="negative">NO</string>
 
     <string name="cycle1Title">Warmup</string>
     <string name="cycle2Title">Primary exercise</string>
@@ -70,6 +81,12 @@
     <string name="invalid_username">Invalid Username</string>
     <string name="invalid_password">Your password must have at least 8 characters</string>
     <string name="login_failed">"Error signing in"</string>
+
+    <string name="verifyCode">Verify code</string>
+    <string name="confirmationCode">Confirmation code</string>
+    <string name="sentCode">Confirmation code sent</string>
+    <string name="correctCode">Account verified</string>
+    <string name="incorrectCode">Incorrect code</string>
 
     <string name="title_activity_routine_in_progress">routine_in_progress</string>
     <!-- Strings used for fragments for navigation -->

@@ -16,6 +16,18 @@
     <string name="exerciseDescription">Descripcion del ejercicio asi bien larga y detallada, manos adelante culo pa atras salta y cae cuidado no te tuerzas el tobillo y no aguantes la respiracion</string>
     <string name="listo">listo</string>
 
+    <string name="loadExercises">Cargar ejercicios</string>
+
+    <string name="simple">SIMPLE</string>
+    <string name="detailed">DETALLADA</string>
+    <string name="selectRoutineType">Elije un modo</string>
+    <string name="confirmExit">Está seguro que desea salir de la rutina actual?</string>
+    <string name="confirmExitSubtitle">Se perderá su progreso actual</string>
+
+    <string name="affirmative">SI</string>
+    <string name="negative">NO</string>
+
+
     <string name="cycle1Title">Entrada en calor</string>
     <string name="cycle2Title">Ejercitación principal</string>
     <string name="cycle3Title">Enfriamiento</string>
@@ -69,6 +81,12 @@
     <string name="invalid_username">Nombre de Usuario Inválido</string>
     <string name="invalid_password">Su contraseña debe tener al menos 8 caracteres</string>
     <string name="login_failed">"Error al iniciar sesión"</string>
+
+    <string name="verifyCode">Verificar código</string>
+    <string name="confirmationCode">Código de confirmación</string>
+    <string name="sentCode">Código de confirmación enviado</string>
+    <string name="correctCode">Cuenta verificada</string>
+    <string name="incorrectCode">Código incorrecto</string>
 
     <string name="title_activity_routine_in_progress">routine_in_progress</string>
     <!-- Strings used for fragments for navigation -->

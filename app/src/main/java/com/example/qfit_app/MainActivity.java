@@ -1,6 +1,8 @@
 package com.example.qfit_app;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +30,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private static LinearLayout linearLayoutFilters;
     private static EditText searchBar;
     private static ImageButton searchButton;
+    private static ImageButton refreshButton;
+    public Button startButton;
+    public Button loadExercises;
 
     private static ConstraintLayout routineDetails;
 
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
 
 
-        ImageButton refresh = findViewById(R.id.refresh);
+        refreshButton = findViewById(R.id.refresh);
         searchButton = findViewById(R.id.searchButton);
         searchBar = findViewById(R.id.searchBar);
         linearLayoutFilters = findViewById(R.id.linearLayoutFilters);
@@ -88,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         cycleView = findViewById(R.id.cycleList);
         Spinner orderBy = findViewById(R.id.homeOrderBy);
         Spinner direction = findViewById(R.id.homeOrden);
+        startButton = findViewById(R.id.routineStartButton);
+        loadExercises = findViewById(R.id.buttonLoadExercises);
 
 
         searchButton.setVisibility(GONE);
@@ -101,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
         apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
-        apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+            apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
 
         allRoutinesView = findViewById(R.id.allRoutines);
         allAdapter = new RoutineListAdapter(context, R.layout.routine_as_item, allRoutineList, apiClient);
@@ -122,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        refresh.setOnClickListener(new View.OnClickListener() {
+        refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refresh();
@@ -247,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
         allRoutinesView.setVisibility(View.VISIBLE);
         favRoutinesView.setVisibility(GONE);
         routineDetails.setVisibility(GONE);
+        refreshButton.setVisibility(VISIBLE);
     }
 
     public static void appearFavList() {
@@ -256,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         allRoutinesView.setVisibility(GONE);
         favRoutinesView.setVisibility(View.VISIBLE);
         routineDetails.setVisibility(GONE);
+        refreshButton.setVisibility(VISIBLE);
     }
 
     public static void disappearLists() {
@@ -265,6 +275,8 @@ public class MainActivity extends AppCompatActivity {
         searchBar.setVisibility(GONE);
         searchButton.setVisibility(GONE);
         linearLayoutFilters.setVisibility(GONE);
+        refreshButton.setVisibility(GONE);
+
     }
 
     public void appearDetails(Routine routine) {
@@ -294,8 +306,6 @@ public class MainActivity extends AppCompatActivity {
         routineDetailDescription.setText(routine.getDescription());
         routineDetailDifficulty.setText(routine.getDuration());
 
-        Button startButton = findViewById(R.id.routineStartButton);
-        Button loadExercises = findViewById(R.id.buttonLoadExercises);
 
         loadExercises.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -317,7 +327,6 @@ public class MainActivity extends AppCompatActivity {
                 startRoutine.putExtra("password", bundle.get("password").toString());
                 startRoutine.putExtra("routineId", routine.getId());
 
-
                 List<Exercise> cycle1 = routine.cycles.get(0).getExercises();
                 startRoutine.putExtra("routineCycle1", (Serializable) cycle1);
                 List<Exercise> cycle2 = routine.cycles.get(1).getExercises();
@@ -325,8 +334,23 @@ public class MainActivity extends AppCompatActivity {
                 List<Exercise> cycle3 = routine.cycles.get(2).getExercises();
                 startRoutine.putExtra("routineCycle3", (Serializable) cycle3);
 
+                AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
+                dialog.setTitle(R.string.selectRoutineType);
+                dialog.setPositiveButton(R.string.simple, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startRoutine.putExtra("mode", "simple");
+                        startActivity(startRoutine);
+                    }
+                });
+                dialog.setNegativeButton(R.string.detailed, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        startRoutine.putExtra("mode", "detailed");
+                        startActivity(startRoutine);
+                    }
+                });
+                dialog.create().show(); // Create the Dialog and display it to the user
 
-                startActivity(startRoutine);
             }
         });
 

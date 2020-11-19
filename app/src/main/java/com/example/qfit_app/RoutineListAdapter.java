@@ -77,6 +77,8 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             public void onClick(View v) {
                 apiClient.getExercises(routine.getId());
                 MainActivity.getInstance().appearDetails(routine);
+                MainActivity.getInstance().startButton.setVisibility(View.GONE);
+                MainActivity.getInstance().loadExercises.setVisibility(View.VISIBLE);
             }
         });
 
