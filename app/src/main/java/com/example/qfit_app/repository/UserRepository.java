@@ -26,7 +26,7 @@ public class UserRepository {
 
     public LiveData<Resource<String>> login(String username, String password) {
 
-        return new NetworkBoundResource<String, Void, TokenDTO>(executors,null, null, model -> model.getToken()) {
+        return new NetworkBoundResource<String, Void, TokenDTO>(executors,null, null, TokenDTO::getToken) {
 
             @Override
             protected void saveCallResult(@NonNull Void entity) {

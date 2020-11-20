@@ -79,7 +79,7 @@ public class routine_in_progress extends AppCompatActivity {
         cycle3 = (List<Exercise>) bundle.get("routineCycle3");
 
         apiClient = new ApiClient();
-            apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+            //apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
 
         String mode = bundle.get("mode").toString();
         if(mode.equals("simple") ) {
@@ -180,7 +180,7 @@ public class routine_in_progress extends AppCompatActivity {
     public void rateRoutine(int routineId){
         float rate = ratingBar.getRating();
         RatingDTO creds = new RatingDTO("default text", rate);
-        apiClient.rateRoutine(routineId, creds);
+        //apiClient.rateRoutine(routineId, creds);
     }
 
     public void nextExercise(){

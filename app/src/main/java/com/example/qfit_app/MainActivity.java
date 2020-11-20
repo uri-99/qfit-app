@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
         apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
-            apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+           // apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
 
         allRoutineList = new ArrayList<>();
         favRoutineList = new ArrayList<>();
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         welcomeMessage.setVisibility(VISIBLE);
-        welcomeButton.setOnClickListener(new View.OnClickListener() {
+        /*welcomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firstGet();
@@ -141,10 +141,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(searchBar.getText().length()>2) {
-                    apiClient.setSearchParam(searchBar.getText().toString());
-                    apiClient.getRoutines();
+                    //apiClient.setSearchParam(searchBar.getText().toString());
+                    //apiClient.getRoutines();
                 } else if (searchBar.getText().length()==0) {
-                    apiClient.setSearchParam(null);
+                    //apiClient.setSearchParam(null);
                 } else {
                     Toast.makeText(context, "Busqueda debe tener al menos 3 caracteres",Toast.LENGTH_SHORT).show();
                 }
@@ -159,49 +159,49 @@ public class MainActivity extends AppCompatActivity {
                 switch (orderBy.getSelectedItem().toString()) {
                     case "Order by":
                     case "Ordenar por": {
-                        apiClient.setOrderByParam(null);
+                       // apiClient.setOrderByParam(null);
                         break;
                     }
                     case "ID":{
-                        apiClient.setOrderByParam("id");
+                        //apiClient.setOrderByParam("id");
                         break;
                     }
                     case "Name":
                     case "Nombre": {
-                        apiClient.setOrderByParam("name");
+                       // apiClient.setOrderByParam("name");
                         break;
                     }
                     case "Detail":
                     case "Detalle": {
-                        apiClient.setOrderByParam("detail");
+                        //apiClient.setOrderByParam("detail");
                         break;
                     }
                     case "Date created":
                     case "Fecha de creación": {
-                        apiClient.setOrderByParam("dateCreated");
+                       // apiClient.setOrderByParam("dateCreated");
                         break;
                     }
                     case "Rating": {
-                        apiClient.setOrderByParam("averageRating");
+                        //apiClient.setOrderByParam("averageRating");
                         break;
                     }
                     case "Difficulty":
                     case "Dificultad": {
-                        apiClient.setOrderByParam("difficulty");
+                        //apiClient.setOrderByParam("difficulty");
                         break;
                     }
                     case "Category":
                     case "Categoría": {
-                        apiClient.setOrderByParam("categoryId");
+                        //apiClient.setOrderByParam("categoryId");
                         break;
                     }
                     case "Creator":
                     case "Creador": {
-                        apiClient.setOrderByParam("creatorId");
+                        //apiClient.setOrderByParam("creatorId");
                         break;
                     }
                     default:
-                        apiClient.setOrderByParam(null);
+                        //apiClient.setOrderByParam(null);
                 }
                 refresh();
             }
@@ -218,21 +218,21 @@ public class MainActivity extends AppCompatActivity {
                 switch (direction.getSelectedItem().toString()) {
                     case "Direction":
                     case "Dirección": {
-                        apiClient.setDirectionParam(null);
+                        //apiClient.setDirectionParam(null);
                         break;
                     }
                     case "Ascendant":
                     case "Ascendiente": {
-                        apiClient.setDirectionParam("asc");
+                        //apiClient.setDirectionParam("asc");
                         break;
                     }
                     case "Descendant":
                     case "Descendiente": {
-                        apiClient.setDirectionParam("desc");
+                        //apiClient.setDirectionParam("desc");
                         break;
                     }
                     default:
-                        apiClient.setDirectionParam(null);
+                       // apiClient.setDirectionParam(null);
                 }
                 refresh();
             }
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
 
 
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void refresh() {
+    /*public static void refresh() {
         allAdapter.clear();
         apiClient.getRoutines();
         for(RoutineDTO routine : apiClient.returnRoutines()){
@@ -404,9 +404,8 @@ public class MainActivity extends AppCompatActivity {
                 dialog.create().show(); // Create the Dialog and display it to the user
 
             }
-        });
+        });*/
 
     }
 
 
-}

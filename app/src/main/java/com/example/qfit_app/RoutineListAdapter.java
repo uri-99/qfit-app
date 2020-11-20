@@ -76,10 +76,10 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         view.findViewById(R.id.routineItem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiClient.getExercises(routine.getId());
-                MainActivity.getInstance().appearDetails(routine);
+
+               /* MainActivity.getInstance().appearDetails(routine);
                 MainActivity.getInstance().startButton.setVisibility(View.GONE);
-                MainActivity.getInstance().loadExercises.setVisibility(View.VISIBLE);
+                MainActivity.getInstance().loadExercises.setVisibility(View.VISIBLE);*/
             }
         });
 
@@ -91,22 +91,17 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         buttonFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiClient.markAsFavourite(routine.getId());
                 Toast.makeText(context, R.string.routineAdded,Toast.LENGTH_SHORT).show();
-                MainActivity.refresh();
+               // MainActivity.refresh();
             }
         });
 
         buttonRemFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //la villereada maxima: hacer desaparecer la rutina
-                //y hay que borrar la rutina 2 veces por alguna razon misteriosa de este codigo trambólico
-        //        view.setVisibility(View.GONE);
                 routineList.remove(routine);
-                apiClient.unMarkAsFavourite(routine.getId());
                 Toast.makeText(context, R.string.routineRemoved,Toast.LENGTH_SHORT).show();
-                MainActivity.refresh();
+                //MainActivity.refresh();
             }
         });
 

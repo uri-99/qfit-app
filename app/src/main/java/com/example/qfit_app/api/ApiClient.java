@@ -34,6 +34,7 @@ import com.example.qfit_app.api.classes.VerifyEmailDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -46,6 +47,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ApiClient{
+    private static final String BASE_URL = "http://10.0.1.197:8080/api/";
     private ApiService apiService;
     public String token = "emptys";
     public List<RoutineDTO> routineListAll;
@@ -67,27 +69,31 @@ public class ApiClient{
 
     public ApiClient() {
 
+    }
+    public static <S> S create(Context context, Class<S> serviceClass) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().
                 setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new AuthInterceptor(context))
                 .addInterceptor(httpLoggingInterceptor)
                 .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .build();
 
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new ApiDateTypeAdapter())
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.1.197:8080/api/") //antes: http://10.0.1.197:8080/api/
+                .baseUrl(BASE_URL)
                 .client(okHttpClient)
-//                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .build();
 
-         apiService = retrofit.create(ApiService.class);
-
-
+        return retrofit.create(serviceClass);
     }
 
 
@@ -98,7 +104,8 @@ public class ApiClient{
     }
 
 
-    public void login(String username, String password) {
+
+   /* public void login(String username, String password) {
 
 
         Call<TokenDTO> loginCall = apiService.login(new CredentialDTO(username, password));
@@ -123,12 +130,12 @@ public class ApiClient{
                 Log.d("logg", "failurelogin");
             }
         }));
-    }
+    }*/
 
 
 
 
-    public void getCurrentUser() {
+   /* public void getCurrentUser() {
         Call<UserDTO> currentUserCall = apiService.getCurrentUser(token);
         currentUserCall.enqueue(new Callback<UserDTO>() {
             @Override
@@ -180,8 +187,8 @@ public class ApiClient{
             }
         });
     }
-
-    public String getToken(){
+*/
+    /*public String getToken(){
         return token;
     }
     public void setToken(String newToken){
@@ -384,6 +391,6 @@ public class ApiClient{
 
             }
         }));
-    }
+    }*/
 
 }

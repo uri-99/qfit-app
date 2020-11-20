@@ -33,9 +33,9 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        MainActivity.disappearLists();
+        //MainActivity.disappearLists();
 
-  //      MainActivity.firstGet();
+
         return root;
     }
 }

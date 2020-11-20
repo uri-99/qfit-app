@@ -41,12 +41,12 @@ public class MyApplication extends Application {
         appExecutors = new AppExecutors();
 
         ApiService userService = ApiClient.create(this, ApiService.class);
-        ApiService sportService = ApiClient.create(this, ApiSportService.class);
+        //ApiService sportService = ApiClient.create(this, ApiSportService.class);
 
         MyDatabase database = Room.databaseBuilder(this, MyDatabase.class, Constants.DATABASE_NAME).build();
 
         userRepository = new UserRepository(appExecutors, userService, database);
 
-        sportRepository = new SportRepository(appExecutors, sportService, database);
+        //sportRepository = new SportRepository(appExecutors, sportService, database);
     }
 }

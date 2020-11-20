@@ -34,9 +34,9 @@ public class HomeFragment extends Fragment {
         });
 
 
-        MainActivity.appearFavList();
+       /* MainActivity.appearFavList();
 
-        MainActivity.refresh();
+        MainActivity.refresh();*/
 
         return root;
     }

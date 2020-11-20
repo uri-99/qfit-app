@@ -149,7 +149,8 @@ public class SportRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<PagedList<SportDTO>>> createCall() {
-                return service.getSports(page, size);
+                /*return service.getSports(page, size);*/
+                return null;
             }
         }.asLiveData();
     }
@@ -181,7 +182,8 @@ public class SportRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<SportDTO>> createCall() {
-                return service.getSport(sportId);
+                /*return service.getSport(sportId);*/
+                return null;
             }
         }.asLiveData();
     }
@@ -220,7 +222,8 @@ public class SportRepository {
             @Override
             protected LiveData<ApiResponse<SportDTO>> createCall() {
                 SportDTO model = mapSportDomainToModel(sport);
-                return service.addSport(model);
+                /*return service.addSport(model);*/
+                return null;
             }
         }.asLiveData();
     }
@@ -253,7 +256,8 @@ public class SportRepository {
             @Override
             protected LiveData<ApiResponse<SportDTO>> createCall() {
                 SportDTO model = mapSportDomainToModel(sport);
-                return service.modifySport(model.getId(), model);
+                /*return service.modifySport(model.getId(), model);*/
+                return null;
             }
         }.asLiveData();
     }
@@ -294,7 +298,8 @@ public class SportRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<Void>> createCall() {
-                return service.deleteSport(sport.getId());
+                /*return service.deleteSport(sport.getId());*/
+                return null;
             }
         }.asLiveData();
     }

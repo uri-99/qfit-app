@@ -34,9 +34,9 @@ public class SearchFragment extends Fragment {
         });
 
 
-        MainActivity.appearAllList();
+        /*MainActivity.appearAllList();
 
-        MainActivity.refresh();
+        MainActivity.refresh();*/
 
         return root;
     }

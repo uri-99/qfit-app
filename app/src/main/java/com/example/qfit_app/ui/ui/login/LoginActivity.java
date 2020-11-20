@@ -30,8 +30,11 @@ import android.widget.Toast;
 
 import com.example.qfit_app.Exercise;
 import com.example.qfit_app.MainActivity;
+import com.example.qfit_app.MyApplication;
+import com.example.qfit_app.MyPreferences;
 import com.example.qfit_app.R;
 import com.example.qfit_app.api.ApiClient;
+import com.example.qfit_app.repository.UserRepository;
 import com.example.qfit_app.routine_in_progress;
 
 import java.io.Serializable;
@@ -40,10 +43,11 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     ApiClient apiClient;
-
+    MyApplication application;
     private LoginViewModel loginViewModel;
     EditText usernameEditText;
     EditText passwordEditText;
+    private UserRepository userRepository;
 
     private int signupStep=1;
 
@@ -52,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        application = (MyApplication) this.getApplication();
+        userRepository = application.getUserRepository();
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -129,18 +135,32 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
+            userRepository
+                    .login(usernameEditText.getText().toString(), passwordEditText.getText().toString())
+                    .observe(this, resource -> {
+                        switch (resource.status) {
+                            case LOADING:
+                                loginButton.setEnabled(false);
+                                loadingProgressBar.setVisibility(View.VISIBLE);
+                                break;
+                            case SUCCESS:
+                                loginButton.setEnabled(true);
+                                application.getPreferences().setAuthToken(resource.data);
+                                Toast.makeText(application, getString(R.string.operation_success), Toast.LENGTH_SHORT).show();
+                                Intent login = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(login);
+                                break;
+                            case ERROR:
+                                loginButton.setEnabled(true);
+                                loadingProgressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(application, resource.message, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    });
 
-            apiClient.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-
-            if(apiClient.token != "emptys" && apiClient.token!="invalid") {
-                Intent login = new Intent(getApplicationContext(), MainActivity.class);
-                login.putExtra("username", usernameEditText.getText());
-                login.putExtra("password", passwordEditText.getText());
-                startActivity(login);
-            }
         });
 
-        signupButton.setOnClickListener(v->{
+        /*signupButton.setOnClickListener(v->{
             if(signupStep==1){
                 emailEditText.setVisibility(View.VISIBLE);
                 loginButton.setVisibility(View.GONE);
@@ -170,37 +190,15 @@ public class LoginActivity extends AppCompatActivity {
             verifyCodeButton.setVisibility(View.GONE);
             confirmationCode.setVisibility(View.GONE);
             backToLogin.setVisibility(View.GONE);
-        });
+        });*/
 
 
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + usernameEditText.getText();//model.getDisplayName();
-        // TODO : initiate successful logged in experience
+        String welcome = getString(R.string.welcome) + usernameEditText.getText();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
-        try {
-
-            apiClient.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
-
-            Intent login = new Intent(getApplicationContext(), MainActivity.class);
-            login.putExtra("username", usernameEditText.getText());
-            login.putExtra("password", passwordEditText.getText());
-    //        login.putExtra("apiClient", apiClient);
-    //        login.putExtra("token", apiClient.getToken());
-            startActivity(login);
-        } catch(Exception e)  {
-           Log.d("logg", "its maginc");
-        }
-
-//        Intent login = new Intent(getApplicationContext(), MainActivity.class);
-//
-//        login.putExtra("username", usernameEditText.getText());
-//        login.putExtra("password", passwordEditText.getText());
-////        login.putExtra("apiClient", apiClient);
-//        login.putExtra("token", apiClient.getToken());
-//        startActivity(login);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
