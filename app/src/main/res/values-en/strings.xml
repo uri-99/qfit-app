@@ -45,26 +45,38 @@
     <string name="puntuarRutina">Do you want to rate this routine?</string>
     <string name="rate_routine_btn">Done</string>
 
-    <string name="category">Category</string>
+    <string name="orderBy">Order by</string>
     <string-array name="ordenar">
-        <item>Categoría</item>
-        <item>id</item>
-        <item>name</item>
-        <item>detail</item>
-        <item>dateCreated</item>
-        <item>averageRating</item>
-        <item>difficulty</item>
-        <item>categoryId</item>
-        <item>creatorId</item>
+        <item>@string/orderBy</item>
+        <item>@string/id</item>
+        <item>@string/name</item>
+        <item>@string/detail</item>
+        <item>@string/dateCreated</item>
+        <item>@string/averageRating</item>
+        <item>@string/difficulty</item>
+        <item>@string/categoryId</item>
+        <item>@string/creatorId</item>
     </string-array>
-    <string name="order">Order</string>
+
+    <string name="id">ID</string>
+    <string name="name">Name</string>
+    <string name="detail">Detail</string>
+    <string name="dateCreated">Date created</string>
+    <string name="averageRating">Rating</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="categoryId">Category</string>
+    <string name="creatorId">Creator</string>
+
+
+    <string name="direction">Direction</string>
     <string-array name="orden">
-        <item>Orden</item>
-        <item>asc</item>
-        <item>desc</item>
+        <item>@string/direction</item>
+        <item>Ascendant</item>
+        <item>Descendant</item>
     </string-array>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+
 
     <string name="descripcion">Description: </string>
     <string name="duracion">Duration: </string>

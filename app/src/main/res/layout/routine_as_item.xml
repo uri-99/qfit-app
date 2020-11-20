@@ -104,7 +104,7 @@
         android:layout_marginEnd="60dp"
         android:backgroundTint="#00FFFFFF"
         android:clickable="true"
-        android:tint="@color/red"
+        android:tint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_favorite_24" />
@@ -113,10 +113,10 @@
         android:id="@+id/buttonRemFav"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:backgroundTint="#00FFFFFF"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@drawable/ic_baseline_delete_red_24"
         app:layout_constraintStart_toEndOf="@+id/buttonFav"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,9 +127,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:drawableStart="@drawable/ic_baseline_person_blue_24"
+        android:drawableStart="@drawable/ic_baseline_person_green_24"
         android:text="Entrenador"
-        android:textColor="@color/blue"
+        android:textColor="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/routineTitle" />
 

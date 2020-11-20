@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
         ProgressBar loadingProgressBar = findViewById(R.id.loading);
@@ -103,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutFilters.setVisibility(GONE);
         navView.setVisibility(GONE);
 
-        allRoutineList = new ArrayList<>();
-        favRoutineList = new ArrayList<>();
-
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
         apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
             apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+
+        allRoutineList = new ArrayList<>();
+        favRoutineList = new ArrayList<>();
 
         allRoutinesView = findViewById(R.id.allRoutines);
         allAdapter = new RoutineListAdapter(context, R.layout.routine_as_item, allRoutineList, apiClient);
@@ -155,13 +155,53 @@ public class MainActivity extends AppCompatActivity {
         orderBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(!orderBy.getSelectedItem().toString().equals("Categoría") && !direction.getSelectedItem().toString().equals("Orden"))
-                {
-                    apiClient.setOrderByParam(orderBy.getSelectedItem().toString());
-                    apiClient.setDirectionParam(direction.getSelectedItem().toString());
-                } else if (orderBy.getSelectedItem().toString().equals("Categoría") && direction.getSelectedItem().toString().equals("Orden")) {
-                    apiClient.setOrderByParam(null);
-                    apiClient.setDirectionParam(null);
+
+                switch (orderBy.getSelectedItem().toString()) {
+                    case "Order by":
+                    case "Ordenar por": {
+                        apiClient.setOrderByParam(null);
+                        break;
+                    }
+                    case "ID":{
+                        apiClient.setOrderByParam("id");
+                        break;
+                    }
+                    case "Name":
+                    case "Nombre": {
+                        apiClient.setOrderByParam("name");
+                        break;
+                    }
+                    case "Detail":
+                    case "Detalle": {
+                        apiClient.setOrderByParam("detail");
+                        break;
+                    }
+                    case "Date created":
+                    case "Fecha de creación": {
+                        apiClient.setOrderByParam("dateCreated");
+                        break;
+                    }
+                    case "Rating": {
+                        apiClient.setOrderByParam("averageRating");
+                        break;
+                    }
+                    case "Difficulty":
+                    case "Dificultad": {
+                        apiClient.setOrderByParam("difficulty");
+                        break;
+                    }
+                    case "Category":
+                    case "Categoría": {
+                        apiClient.setOrderByParam("categoryId");
+                        break;
+                    }
+                    case "Creator":
+                    case "Creador": {
+                        apiClient.setOrderByParam("creatorId");
+                        break;
+                    }
+                    default:
+                        apiClient.setOrderByParam(null);
                 }
                 refresh();
             }
@@ -171,16 +211,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(!orderBy.getSelectedItem().toString().equals("Categoría") && !direction.getSelectedItem().toString().equals("Orden"))
-                {
-                    apiClient.setOrderByParam(orderBy.getSelectedItem().toString());
-                    apiClient.setDirectionParam(direction.getSelectedItem().toString());
-                } else if (orderBy.getSelectedItem().toString().equals("Categoría") && direction.getSelectedItem().toString().equals("Orden")) {
-                    apiClient.setOrderByParam(null);
-                    apiClient.setDirectionParam(null);
+                switch (direction.getSelectedItem().toString()) {
+                    case "Direction":
+                    case "Dirección": {
+                        apiClient.setDirectionParam(null);
+                        break;
+                    }
+                    case "Ascendant":
+                    case "Ascendiente": {
+                        apiClient.setDirectionParam("asc");
+                        break;
+                    }
+                    case "Descendant":
+                    case "Descendiente": {
+                        apiClient.setDirectionParam("desc");
+                        break;
+                    }
+                    default:
+                        apiClient.setDirectionParam(null);
                 }
                 refresh();
             }
