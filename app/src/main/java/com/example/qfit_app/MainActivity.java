@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewDebug;
@@ -195,6 +197,29 @@ public class MainActivity extends AppCompatActivity {
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                refresh();
+            }
+        });
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(searchBar.getText().length()>2) {
+                    apiClient.setSearchParam(searchBar.getText().toString());
+                    apiClient.getRoutines();
+                } else if (searchBar.getText().length()==0) {
+                    apiClient.setSearchParam(null);
+                } else {
+                    Toast.makeText(context, "Busqueda debe tener al menos 3 caracteres",Toast.LENGTH_SHORT).show();
+                }
                 refresh();
             }
         });

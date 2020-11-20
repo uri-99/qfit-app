@@ -50,7 +50,7 @@
     <string name="puntuarRutina">Do you want to rate this routine?</string>
     <string name="rate_routine_btn">Done</string>
 
-    <string name="orderBy">Order by</string>
+    <string name="orderBy">Sort by</string>
     <string-array name="ordenar">
         <item>@string/orderBy</item>
         <item>@string/id</item>
