@@ -110,7 +110,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         //        view.setVisibility(View.GONE);
 
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialog);
                 dialog.setTitle(R.string.confirmRemove);
                 dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
                     @Override
