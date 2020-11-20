@@ -68,7 +68,7 @@
     <string name="creatorId">Creator</string>
 
 
-    <string name="direction">Direction</string>
+    <string name="direction">ORDER</string>
     <string-array name="orden">
         <item>@string/direction</item>
         <item>Ascendant</item>
@@ -95,12 +95,15 @@
     <string name="login_failed">"Error signing in"</string>
 
     <string name="verifyCode">Verify code</string>
-    <string name="confirmationCode">Confirmation code</string>
+    <string name="confirmationCode">Insert confirmation code</string>
     <string name="sentCode">Confirmation code sent</string>
     <string name="correctCode">Account verified</string>
     <string name="incorrectCode">Incorrect code</string>
 
     <string name="title_activity_routine_in_progress">routine_in_progress</string>
+
+    <string name="total_time">total time: </string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -109,4 +112,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="confirmRemove">Remove from favourites?</string>
 </resources>

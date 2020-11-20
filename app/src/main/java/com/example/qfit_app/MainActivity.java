@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     static ApiClient apiClient;
     Bundle bundle;
 
+    private static String direction = "Direction";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         routineDetails = findViewById(R.id.routineDetails);
         cycleView = findViewById(R.id.cycleList);
         Spinner orderBy = findViewById(R.id.homeOrderBy);
-        Spinner direction = findViewById(R.id.homeOrden);
+        Button direction = findViewById(R.id.homeOrden);
+        direction.setTag(1);
         startButton = findViewById(R.id.routineStartButton);
         loadExercises = findViewById(R.id.buttonLoadExercises);
 
@@ -212,6 +215,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        direction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch ((Integer) direction.getTag()) { //puede que tenga que hacer eso de antes para el text
+                    case 0: {
+                        apiClient.setDirectionParam(null);
+                        direction.setTag(1);
+                        direction.setText(R.string.direction);
+
+
+                        break;
+                    }
+                    case 1: {
+                        apiClient.setDirectionParam("asc");
+                        direction.setTag(2);
+                        direction.setText("asc ↑");
+                        break;
+                    }
+                    case 2: {
+                        apiClient.setDirectionParam("desc");
+                        direction.setTag(0);
+                        direction.setText("desc ↓");
+                        break;
+                    }
+                    default:
+                        apiClient.setDirectionParam(null);
+                }
+                refresh();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+/*
         direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -242,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        */
 
 
 

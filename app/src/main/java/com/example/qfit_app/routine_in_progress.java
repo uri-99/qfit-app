@@ -100,7 +100,7 @@ public class routine_in_progress extends AppCompatActivity {
         displayTime.setText(currentExercise.getReps());
         cycleTitle.setText(R.string.cycle1Title);
         ViewGroup.LayoutParams size = divider.getLayoutParams();
-        size.width= (int) (30*cycleTitle.getText().length());
+        size.width = (int) (30*cycleTitle.getText().length());
         divider.setLayoutParams(size);
 
 
@@ -108,6 +108,7 @@ public class routine_in_progress extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 nextExercise();
+                i=1; //Porque sino, cuando se termina una, las siguientes arrancan en 0.
             }
         });
 
@@ -158,10 +159,10 @@ public class routine_in_progress extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        timerTotalDisplay.setText("tiempo total: " + timeTotal);
+                        timerTotalDisplay.setText("Tiempo total " + timeTotal);
                         timeTotal++;
 
-                        if(i>0) {
+                        if(i > 0) {
                             i=Integer.parseInt((String) displayTime.getText());
                             i--;
                             displayTime.setText(String.format("%d", i));
@@ -183,6 +184,7 @@ public class routine_in_progress extends AppCompatActivity {
         apiClient.rateRoutine(routineId, creds);
     }
 
+  //  @SuppressLint("DefaultLocale")
     public void nextExercise(){
         if(current1 < size1-1) {
             current1++;
@@ -207,9 +209,9 @@ public class routine_in_progress extends AppCompatActivity {
         } else {
             timerTotal.cancel();
             timeTotal--; //se le escapa un segundo al final
+            String fs = new String();
+            fs = String.format("%s %s %s %d %s \n %s", getResources().getString(R.string.finishRoutineMessage1), routineTitle.getText(), getResources().getString(R.string.finishRoutineMessage2), timeTotal, getResources().getString(R.string.finishRoutineMessage3), getResources().getString(R.string.finishRoutineMessage4));
 
-            String fs = String.format("Has completado '%s' en %d segundos,\nFelicitaciones!", routineTitle.getText(), timeTotal);
-            finishMessage.setText(fs);
 
             LinearLayout linearLayout = findViewById(R.id.routine_finish);
             linearLayout.setVisibility(View.VISIBLE);

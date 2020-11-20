@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+
 import com.example.qfit_app.BuildConfig;
 import com.example.qfit_app.Exercise;
 import com.example.qfit_app.MainActivity;
@@ -79,7 +80,7 @@ public class ApiClient implements Parcelable {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.1.197:8080/api/") //antes: http://10.0.1.197:8080/api/
+                .baseUrl("http://10.0.2.2:8080/api/") //antes: http://10.0.1.197:8080/api/
                 .client(okHttpClient)
 //                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -333,7 +334,7 @@ public class ApiClient implements Parcelable {
     }
 
     public void getExercises(int routineID) {
-        Call<PagedList<ExerciseDTO>> cycle1Call = apiService.getExercises(token, routineID, 1);
+        Call<PagedList<ExerciseDTO>> cycle1Call = apiService.getExercises(token, routineID, 11);
 
         cycle1Call.enqueue(new Callback<PagedList<ExerciseDTO>>() {
             @Override
@@ -350,7 +351,7 @@ public class ApiClient implements Parcelable {
 
         });
 
-        Call<PagedList<ExerciseDTO>> cycle2Call = apiService.getExercises(token, routineID, 2);
+        Call<PagedList<ExerciseDTO>> cycle2Call = apiService.getExercises(token, routineID, 12);
         cycle2Call.enqueue(new Callback<PagedList<ExerciseDTO>>() {
             @Override
             public void onResponse(Call<PagedList<ExerciseDTO>> call, Response<PagedList<ExerciseDTO>> response) {
@@ -365,7 +366,7 @@ public class ApiClient implements Parcelable {
 
         });
 
-        Call<PagedList<ExerciseDTO>> cycle3Call = apiService.getExercises(token, routineID, 3);
+        Call<PagedList<ExerciseDTO>> cycle3Call = apiService.getExercises(token, routineID, 13);
         cycle3Call.enqueue(new Callback<PagedList<ExerciseDTO>>() {
             @Override
             public void onResponse(Call<PagedList<ExerciseDTO>> call, Response<PagedList<ExerciseDTO>> response) {

@@ -68,7 +68,8 @@
     <string name="creatorId">Creador</string>
 
 
-    <string name="direction">Dirección</string>
+
+    <string name="direction">ORDEN</string>
     <string-array name="orden">
         <item>@string/direction</item>
         <item>Ascendiente</item>
@@ -94,12 +95,15 @@
     <string name="login_failed">"Error al iniciar sesión"</string>
 
     <string name="verifyCode">Verificar código</string>
-    <string name="confirmationCode">Código de confirmación</string>
+    <string name="confirmationCode">Escriba su código de confirmación</string>
     <string name="sentCode">Código de confirmación enviado</string>
     <string name="correctCode">Cuenta verificada</string>
     <string name="incorrectCode">Código incorrecto</string>
 
     <string name="title_activity_routine_in_progress">routine_in_progress</string>
+
+    <string name="total_time">tiempo total: </string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -108,5 +112,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="confirmRemove">¿Eliminar de favoritos?</string>
 
 </resources>

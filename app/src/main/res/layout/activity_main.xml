@@ -314,18 +314,18 @@
             android:text="."
             android:visibility="invisible" />
 
-        <Spinner
+        <Button
             android:id="@+id/homeOrden"
             android:layout_width="50dp"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             android:layout_weight="3"
-            android:background="@color/greyFront"
-            android:dropDownSelector="@color/white"
-            android:entries="@array/orden"
+            android:backgroundTint="@color/greyFront"
             android:paddingHorizontal="5dp"
-            android:popupBackground="#2d2d2a"
-            android:spinnerMode="dropdown"
+            android:text="@string/direction"
+            android:shadowRadius="0"
+            android:textColor="@color/green"
             android:textAlignment="center" />
+
 
         <TextView
             android:id="@+id/textView5"

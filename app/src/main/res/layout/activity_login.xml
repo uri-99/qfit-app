@@ -151,7 +151,7 @@
         android:hint="@string/confirmationCode"
         android:imeActionLabel="@string/confirmationCode"
         android:imeOptions="actionDone"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:selectAllOnFocus="true"
         android:shadowColor="#FFFFFF"
         android:textColor="#FFFFFF"

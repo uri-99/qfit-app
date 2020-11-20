@@ -1,7 +1,11 @@
 package com.example.qfit_app;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Icon;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +55,8 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         TextView routineRating = view.findViewById(R.id.routineRating);
         Routine routine = routineList.get(position);
 
-       // view.findViewById(R.id.buttonRemFav).setVisibility(View.GONE);
+
+
 
         title = routine.getTitle();
         if(title.length() >= 20){
@@ -103,10 +108,30 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
                 //la villereada maxima: hacer desaparecer la rutina
                 //y hay que borrar la rutina 2 veces por alguna razon misteriosa de este codigo trambólico
         //        view.setVisibility(View.GONE);
-                routineList.remove(routine);
-                apiClient.unMarkAsFavourite(routine.getId());
-                Toast.makeText(context, R.string.routineRemoved,Toast.LENGTH_SHORT).show();
-                MainActivity.refresh();
+
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
+                dialog.setTitle(R.string.confirmRemove);
+                dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        routineList.remove(routine);
+                        apiClient.unMarkAsFavourite(routine.getId());
+                        Toast.makeText(context, R.string.routineRemoved,Toast.LENGTH_SHORT).show();
+                        MainActivity.refresh();
+
+                    }
+                });
+                dialog.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                dialog.create().show();
+
+
+
+
             }
         });
 
