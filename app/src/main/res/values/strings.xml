@@ -17,6 +17,11 @@
     <string name="listo">listo</string>
 
     <string name="loadExercises">Cargar ejercicios</string>
+    <string name="showExercises">Mostrar ejercicios</string>
+    <string name="showDetails">Ver detalles</string>
+    <string name="sharedTitle">Te han compartido una rutina</string>
+    <string name="routineNotFound">Rutina no encontrada</string>
+    <string name="loginFirst">Debés loguearte primero</string>
 
     <string name="simple">SIMPLE</string>
     <string name="detailed">DETALLADA</string>

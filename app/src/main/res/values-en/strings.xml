@@ -18,6 +18,11 @@
     <string name="listo">Done</string>
 
     <string name="loadExercises">Load exercises</string>
+    <string name="showExercises">Show exercises</string>
+    <string name="showDetails">View details</string>
+    <string name="sharedTitle">You have been shared a routine</string>
+    <string name="routineNotFound">Routine not found</string>
+    <string name="loginFirst">You have to log in first</string>
 
     <string name="simple">SIMPLE</string>
     <string name="detailed">DETAILED</string>

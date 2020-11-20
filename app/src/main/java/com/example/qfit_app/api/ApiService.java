@@ -1,8 +1,11 @@
 package com.example.qfit_app.api;
 
 
+import android.graphics.pdf.PdfDocument;
+
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
+import com.example.qfit_app.api.classes.CycleDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
 import com.example.qfit_app.api.classes.NewUserDTO;
 import com.example.qfit_app.api.classes.PagedList;
@@ -25,10 +28,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    //para livedata:
-//    @POST("user/login")
-//    LiveData<ApiResponse<TokenDTO>> login(@Body CredentialDTO credentials);
-
     @POST("user/login")
     Call<TokenDTO> login(@Body CredentialDTO credentials);
 
@@ -43,6 +42,9 @@ public interface ApiService {
 
     @GET("routines")
     Call<PagedList<RoutineDTO>> getRoutines(@Header("authorization") String auth, @Query("search") String search, @Query("orderBy") String order, @Query("direction") String direction);
+
+    @GET("routines/{id}/cycles")
+    Call<PagedList<CycleDTO>> getRoutineCycles(@Header("authorization") String auth, @Path("id") int routineID);
 
     @GET("user/current/routines/favourites")
     Call<PagedList<RoutineDTO>> getFavRoutines(@Header("authorization") String auth);
@@ -62,4 +64,6 @@ public interface ApiService {
     @POST("routines/{routineId}/ratings")
     Call<RatingDTO> rateRoutine(@Header("authorization") String auth, @Path("routineId") int routineID, @Body RatingDTO ratingCredential);
 
+    @POST("user/logout")
+    Call<CodeDTO> logout(@Header("authorization") String auth);
 }

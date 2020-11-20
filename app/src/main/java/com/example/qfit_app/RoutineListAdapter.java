@@ -81,7 +81,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         view.findViewById(R.id.routineItem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiClient.getExercises(routine.getId());
+                apiClient.getRoutineCycles(routine.getId());
                 MainActivity.getInstance().appearDetails(routine);
                 MainActivity.getInstance().startButton.setVisibility(View.GONE);
                 MainActivity.getInstance().loadExercises.setVisibility(View.VISIBLE);
@@ -132,6 +132,22 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
 
 
 
+            }
+        });
+
+        ImageButton buttonShare = view.findViewById(R.id.buttonShare);
+        buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              String link= String.format("http://www.qfit.com/routines/%d", routine.getId());
+
+              Intent sendIntent = new Intent();
+              sendIntent.setAction(Intent.ACTION_SEND);
+              sendIntent.putExtra(Intent.EXTRA_TEXT, link);
+              sendIntent.setType("text/plain");
+
+              Intent shareIntent = Intent.createChooser(sendIntent, null);
+              context.startActivity(shareIntent);
             }
         });
 

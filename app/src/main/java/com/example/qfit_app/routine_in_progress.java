@@ -49,6 +49,7 @@ public class routine_in_progress extends AppCompatActivity {
     int i=1;
     ApiClient apiClient;
     private static routine_in_progress instance;
+    boolean finished=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,24 +118,31 @@ public class routine_in_progress extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
-                dialog.setTitle(R.string.confirmExit);
-            //    dialog.setMessage(R.string.confirmExitSubtitle);
-                dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent endRoutine = new Intent(getApplicationContext(), MainActivity.class);
-                        endRoutine.putExtra("username", bundle.get("username").toString());
-                        endRoutine.putExtra("password", bundle.get("password").toString());
-                        startActivity(endRoutine);
-                    }
-                });
-                dialog.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
-                        //do nothing
-                    }
-                });
-                dialog.create().show(); // Create the Dialog and display it to the user
+                if(!finished) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
+                    dialog.setTitle(R.string.confirmExit);
+                    //    dialog.setMessage(R.string.confirmExitSubtitle);
+                    dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent endRoutine = new Intent(getApplicationContext(), MainActivity.class);
+                            endRoutine.putExtra("username", bundle.get("username").toString());
+                            endRoutine.putExtra("password", bundle.get("password").toString());
+                            startActivity(endRoutine);
+                        }
+                    });
+                    dialog.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
+                        @Override public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    });
+                    dialog.create().show(); // Create the Dialog and display it to the user
+                } else {
+                    Intent endRoutine = new Intent(getApplicationContext(), MainActivity.class);
+                    endRoutine.putExtra("username", bundle.get("username").toString());
+                    endRoutine.putExtra("password", bundle.get("password").toString());
+                    startActivity(endRoutine);
+                }
             }
         });
 
@@ -216,6 +224,7 @@ public class routine_in_progress extends AppCompatActivity {
             LinearLayout linearLayout = findViewById(R.id.routine_finish);
             linearLayout.setVisibility(View.VISIBLE);
 
+            finishMessage.setText(fs);
             finishMessage.setVisibility(View.VISIBLE);
             cycleTitle.setVisibility(View.INVISIBLE);
             exerciseTitle.setVisibility(View.INVISIBLE);
@@ -224,7 +233,7 @@ public class routine_in_progress extends AppCompatActivity {
             displayTime.setVisibility(View.INVISIBLE);
             readyButton.setVisibility(View.INVISIBLE);
             divider.setVisibility(View.INVISIBLE);
-
+            finished=true;
         }
 
         exerciseTitle.setText(currentExercise.getTitle());

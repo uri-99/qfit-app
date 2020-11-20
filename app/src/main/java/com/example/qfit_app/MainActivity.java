@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.qfit_app.api.ApiClient;
 import com.example.qfit_app.api.classes.RoutineDTO;
+import com.example.qfit_app.ui.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private static ImageButton refreshButton;
     public Button startButton;
     public Button loadExercises;
+    Button showSharedRoutine;
+    LinearLayout sharedRoutinePopup;
+    static ImageButton logoutButton;
+    static TextView logoutText;
 
     private static ConstraintLayout routineDetails;
 
@@ -63,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     static ApiClient apiClient;
     Bundle bundle;
+    String sharedRoutine = null;
+    Boolean found=false;
 
     private static String direction = "Direction";
 
@@ -99,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
         direction.setTag(1);
         startButton = findViewById(R.id.routineStartButton);
         loadExercises = findViewById(R.id.buttonLoadExercises);
+        sharedRoutinePopup = findViewById(R.id.sharedRoutinePopup);
+        showSharedRoutine = findViewById(R.id.buttonShowShared);
+        logoutButton = findViewById(R.id.logoutButton);
+        logoutText = findViewById(R.id.logoutText);
+
 
 
         searchButton.setVisibility(GONE);
@@ -109,7 +122,28 @@ public class MainActivity extends AppCompatActivity {
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
         apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
+//        apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+
+        String action = lastIntent.getAction();
+        Uri data = lastIntent.getData();
+
+        if(data != null) {
+            Log.d("logg", data.getLastPathSegment());
+
+            Toast.makeText(this, R.string.loginFirst, Toast.LENGTH_SHORT).show();
+
+            Intent loginFirst = new Intent(getApplicationContext(), LoginActivity.class);
+            loginFirst.putExtra("sharedRoutine", data.getLastPathSegment());
+            startActivity(loginFirst);
+
+        } else {
+            if(bundle.get("sharedRoutine")!=null)
+                sharedRoutine=bundle.get("sharedRoutine").toString();
             apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
+        }
+
+ //       apiClient.login("johndoe", "1234567890");
+
 
         allRoutineList = new ArrayList<>();
         favRoutineList = new ArrayList<>();
@@ -130,6 +164,31 @@ public class MainActivity extends AppCompatActivity {
                 firstGet();
                 welcomeMessage.setVisibility(GONE);
                 navView.setVisibility(View.VISIBLE);
+
+                if(sharedRoutine!=null) {
+                    sharedRoutinePopup.setVisibility(VISIBLE);
+
+                    showSharedRoutine.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for(RoutineDTO routine : apiClient.returnRoutines()){
+                                if(String.format("%d",routine.getId()).equals(sharedRoutine)) {
+                                    found=true;
+                                    apiClient.getRoutineCycles(routine.getId());
+                                    appearDetails(new Routine(routine.getName(), routine.getCreator().getUsername(), routine.getDetail(), routine.getDifficulty(), routine.getId(), routine.getAverageRating()));
+                                    break;
+                                }
+                            }
+                            if(!found) {
+                                Log.d("logg", "routine not found");
+                                Toast.makeText(context, R.string.routineNotFound, Toast.LENGTH_SHORT).show();
+                            }
+                            sharedRoutinePopup.setVisibility(GONE);
+                        }
+                    });
+                }
+
+
             }
         });
 
@@ -250,13 +309,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
 /*
         direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -291,30 +343,14 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
-
-
-        //para liveData
-//        loginButton.setOnClickListener(v -> {
-//            CredentialDTO credentials = new CredentialDTO("johndoe", "1234567890");
-//            MyApplication app = ((MyApplication)getApplication());
-//            app.getUserRepository().login(credentials).observe(this,r -> {
-//                switch (r.getStatus()) {
-//                    case SUCCESS:
-//                        Log.d("UI", "success");
-//                        AppPreferences preferences = new AppPreferences(app);
-//                        preferences.setAuthToken(r.getData().getToken());
-//                        binding.result.setText(R.string.success);
-//                        binding.getCurrentUserButton.setEnabled(true);
-//                        binding.getAllButton.setEnabled(true);
-//                        binding.getButton.setEnabled(true);
-//                        binding.addButton.setEnabled(true);
-//                        break;
-//                    default:
-//                        defaultResourceHandler(r);
-//                        break;
-//                }
-//            });
-//        });
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiClient.logout();
+                Intent logout = new Intent(context, LoginActivity.class);
+                startActivity(logout);
+            }
+        });
 
 
     }
@@ -348,6 +384,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void appearAllList() {
+        logoutButton.setVisibility(GONE);
+        logoutText.setVisibility(GONE);
         searchButton.setVisibility(VISIBLE);
         searchBar.setVisibility(VISIBLE);
         linearLayoutFilters.setVisibility(View.VISIBLE);
@@ -358,6 +396,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void appearFavList() {
+        logoutButton.setVisibility(GONE);
+        logoutText.setVisibility(GONE);
         searchButton.setVisibility(GONE);
         searchBar.setVisibility(View.GONE);
         linearLayoutFilters.setVisibility(View.GONE);
@@ -368,6 +408,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void disappearLists() {
+        logoutButton.setVisibility(VISIBLE);
+        logoutText.setVisibility(VISIBLE);
         allRoutinesView.setVisibility(GONE);
         favRoutinesView.setVisibility(GONE);
         routineDetails.setVisibility(GONE);
@@ -400,6 +442,7 @@ public class MainActivity extends AppCompatActivity {
         TextView routineDetailTrainer = findViewById(R.id.routineDetailTrainer);
         TextView routineDetailDescription = findViewById(R.id.routineDetailDescription);
         TextView routineDetailDifficulty = findViewById(R.id.routineDetailDifficulty);
+        Button showExercises = findViewById(R.id.buttonShowExercises);
 
         routineDetailTrainer.setText(routine.getTrainer());
         routineDetailDescription.setText(routine.getDescription());
@@ -410,7 +453,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadExercises.setVisibility(GONE);
-                startButton.setVisibility(View.VISIBLE);
+                showExercises.setVisibility(View.VISIBLE);
+                apiClient.getExercises(routine.getId());
+            }
+        });
+
+
+        showExercises.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showExercises.setVisibility(GONE);
+                startButton.setVisibility(VISIBLE);
                 routine.setExercises(apiClient);
                 MainActivity.getInstance().appearDetails(routine);
             }

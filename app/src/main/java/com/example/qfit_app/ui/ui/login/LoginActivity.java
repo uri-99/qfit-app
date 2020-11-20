@@ -136,6 +136,9 @@ public class LoginActivity extends AppCompatActivity {
                 Intent login = new Intent(getApplicationContext(), MainActivity.class);
                 login.putExtra("username", usernameEditText.getText());
                 login.putExtra("password", passwordEditText.getText());
+                Intent lastIntent = getIntent();
+                if(lastIntent.getExtras()!=null && lastIntent.getExtras().get("sharedRoutine")!=null)
+                    login.putExtra("sharedRoutine", lastIntent.getExtras().get("sharedRoutine").toString());
                 startActivity(login);
             }
         });

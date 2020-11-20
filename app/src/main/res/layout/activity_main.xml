@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:foregroundTint="#A6FFFFFF">
+    android:layout_height="match_parent">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -170,6 +168,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cycleList" />
+
+        <Button
+            android:id="@+id/buttonShowExercises"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/showExercises"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/cycleList" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
@@ -200,6 +208,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#00FFFFFF"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_popup_sync" />
@@ -261,7 +270,7 @@
         android:paddingHorizontal="15dp"
         android:selectAllOnFocus="false"
         android:singleLine="false"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/searchButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/refresh" />
@@ -273,10 +282,34 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/edittext_rounded_corners"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/searchBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/refresh"
         app:srcCompat="@drawable/ic_baseline_search_24" />
+
+    <ImageButton
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#00FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_logout_elderly_24" />
+
+    <TextView
+        android:id="@+id/logoutText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="logout"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
 
     <LinearLayout
         android:id="@+id/linearLayoutFilters"
@@ -284,7 +317,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/searchBar"
         tools:layout_editor_absoluteX="0dp">
 
@@ -334,6 +367,39 @@
             android:layout_weight="10"
             android:visibility="invisible" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sharedRoutinePopup"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_rounded_corners"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/sharedTitle"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonShowShared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="20dp"
+            android:text="@string/showDetails"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

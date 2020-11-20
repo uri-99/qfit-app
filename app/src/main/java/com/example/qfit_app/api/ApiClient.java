@@ -23,6 +23,7 @@ import com.example.qfit_app.Routine;
 //import com.example.qfit_app.api.LiveData.Resource;
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
+import com.example.qfit_app.api.classes.CycleDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
 import com.example.qfit_app.api.classes.NewUserDTO;
 import com.example.qfit_app.api.classes.PagedList;
@@ -55,6 +56,10 @@ public class ApiClient implements Parcelable {
     public List<ExerciseDTO> cycle1;
     public List<ExerciseDTO> cycle2;
     public List<ExerciseDTO> cycle3;
+
+    public int cycleID1;
+    public int cycleID2;
+    public int cycleID3;
 
     public static final int CONNECT_TIMEOUT = 60;
     public static final int READ_TIMEOUT = 60;
@@ -90,28 +95,6 @@ public class ApiClient implements Parcelable {
 
 
     }
-
-    //para livedata:
-//    public static <S> S create(Context context) {
-//        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().
-//                setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-//
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(httpLoggingInterceptor)
-//                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-//                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-//                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-//                .build();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://10.0.1.197:8080/api/") //antes: http://10.0.1.197:8080/api/
-//                .client(okHttpClient)
-//                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        return (S) retrofit.create(ApiService.class);
-//    }
 
 
     public void setContext(Context context) {
@@ -161,18 +144,6 @@ public class ApiClient implements Parcelable {
         }));
     }
 
-
-    //para livedata
-//    public LiveData<Resource<TokenDTO>> login(CredentialDTO credentials) {
-//        return new NetworkBoundResource<TokenDTO, TokenDTO>()
-//        {
-//            @NonNull
-//            @Override
-//            protected LiveData<ApiResponse<TokenDTO>> createCall() {
-//                return apiService.login(credentials);
-//            }
-//        }.asLiveData();
-//    }
 
     public void getCurrentUser() {
         Call<UserDTO> currentUserCall = apiService.getCurrentUser(token);
@@ -334,7 +305,7 @@ public class ApiClient implements Parcelable {
     }
 
     public void getExercises(int routineID) {
-        Call<PagedList<ExerciseDTO>> cycle1Call = apiService.getExercises(token, routineID, 11);
+        Call<PagedList<ExerciseDTO>> cycle1Call = apiService.getExercises(token, routineID, cycleID1);
 
         cycle1Call.enqueue(new Callback<PagedList<ExerciseDTO>>() {
             @Override
@@ -351,7 +322,7 @@ public class ApiClient implements Parcelable {
 
         });
 
-        Call<PagedList<ExerciseDTO>> cycle2Call = apiService.getExercises(token, routineID, 12);
+        Call<PagedList<ExerciseDTO>> cycle2Call = apiService.getExercises(token, routineID, cycleID2);
         cycle2Call.enqueue(new Callback<PagedList<ExerciseDTO>>() {
             @Override
             public void onResponse(Call<PagedList<ExerciseDTO>> call, Response<PagedList<ExerciseDTO>> response) {
@@ -366,7 +337,7 @@ public class ApiClient implements Parcelable {
 
         });
 
-        Call<PagedList<ExerciseDTO>> cycle3Call = apiService.getExercises(token, routineID, 13);
+        Call<PagedList<ExerciseDTO>> cycle3Call = apiService.getExercises(token, routineID, cycleID3);
         cycle3Call.enqueue(new Callback<PagedList<ExerciseDTO>>() {
             @Override
             public void onResponse(Call<PagedList<ExerciseDTO>> call, Response<PagedList<ExerciseDTO>> response) {
@@ -381,6 +352,42 @@ public class ApiClient implements Parcelable {
 
         });
 
+    }
+
+    public void getRoutineCycles(int routineID) {
+        Call<PagedList<CycleDTO>> getCycles = apiService.getRoutineCycles(token, routineID);
+
+        getCycles.enqueue(new Callback<PagedList<CycleDTO>>() {
+            @Override
+            public void onResponse(Call<PagedList<CycleDTO>> call, Response<PagedList<CycleDTO>> response) {
+                Log.d("logg", response.body().toString());
+                cycleID1=response.body().getResults().get(0).getId();
+                cycleID2=response.body().getResults().get(1).getId();
+                cycleID3=response.body().getResults().get(2).getId();
+                Log.d("logg", String.format("ids now are: %d %d %d", response.body().getResults().get(0).getId(), response.body().getResults().get(1).getId(), response.body().getResults().get(2).getId()));
+            }
+
+            @Override
+            public void onFailure(Call<PagedList<CycleDTO>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void logout() {
+        Call<CodeDTO> logout = apiService.logout(token);
+
+        logout.enqueue(new Callback<CodeDTO>() {
+            @Override
+            public void onResponse(Call<CodeDTO> call, Response<CodeDTO> response) {
+                //nothing
+            }
+
+            @Override
+            public void onFailure(Call<CodeDTO> call, Throwable t) {
+                //nothing
+            }
+        });
     }
 
     public void setSearchParam(String searchParam) {
