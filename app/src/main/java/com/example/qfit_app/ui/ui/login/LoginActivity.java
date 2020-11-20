@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(application, getString(R.string.operation_success), Toast.LENGTH_SHORT).show();
                                 Intent login = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(login);
+                                finish();
                                 break;
                             case ERROR:
                                 loginButton.setEnabled(true);
