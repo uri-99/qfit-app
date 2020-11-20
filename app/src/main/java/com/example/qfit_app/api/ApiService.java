@@ -1,6 +1,8 @@
 package com.example.qfit_app.api;
 
 
+import androidx.lifecycle.LiveData;
+
 import com.example.qfit_app.api.classes.CodeDTO;
 import com.example.qfit_app.api.classes.CredentialDTO;
 import com.example.qfit_app.api.classes.ExerciseDTO;
@@ -13,7 +15,7 @@ import com.example.qfit_app.api.classes.TokenDTO;
 import com.example.qfit_app.api.classes.UserDTO;
 import com.example.qfit_app.api.classes.VerifyEmailDTO;
 
-import retrofit2.Call;
+
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -25,41 +27,46 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    //para livedata:
-//    @POST("user/login")
-//    LiveData<ApiResponse<TokenDTO>> login(@Body CredentialDTO credentials);
 
     @POST("user/login")
-    Call<TokenDTO> login(@Body CredentialDTO credentials);
+    LiveData<ApiResponse<TokenDTO>> login(@Body CredentialDTO credentials);
+
+    @POST("user/logout")
+    LiveData<ApiResponse<Void>> logout();
 
     @POST("user")
-    Call<UserDTO> createUser(@Body NewUserDTO newUser);
+    LiveData<ApiResponse<UserDTO>> createUser(@Body NewUserDTO newUser);
 
     @POST("user/verify_email")
-    Call<CodeDTO> verifyEmail(@Body VerifyEmailDTO verifyEmail);
+    LiveData<ApiResponse<CodeDTO>> verifyEmail(@Body VerifyEmailDTO verifyEmail);
 
     @GET("user/current")
-    Call<UserDTO> getCurrentUser(@Header("authorization") String auth);
+    LiveData<ApiResponse<UserDTO>> getCurrentUser();
 
     @GET("routines")
-    Call<PagedList<RoutineDTO>> getRoutines(@Header("authorization") String auth, @Query("search") String search, @Query("orderBy") String order, @Query("direction") String direction);
+    LiveData<ApiResponse<PagedList<RoutineDTO>>> getRoutines( @Query("search") String search, @Query("orderBy") String order, @Query("direction") String direction);
 
     @GET("user/current/routines/favourites")
-    Call<PagedList<RoutineDTO>> getFavRoutines(@Header("authorization") String auth);
+    LiveData<ApiResponse<PagedList<RoutineDTO>>> getFavRoutines();
 
     @GET("sports")
-    Call<PagedList<SportDTO>> getSports(@Header("authorization") String auth);
+    LiveData<ApiResponse<PagedList<SportDTO>>> getSports();
 
     @POST("user/current/routines/{routineID}/favourites")
-    Call<CodeDTO> markAsFavourite(@Header("authorization") String auth, @Path("routineID") int routineID);
+    LiveData<ApiResponse<CodeDTO>> markAsFavourite(@Header("authorization") String auth, @Path("routineID") int routineID);
 
     @DELETE("user/current/routines/{routineID}/favourites")
-    Call<CodeDTO> unMarkAsFavourite(@Header("authorization") String auth, @Path("routineID") int routineID);
+    LiveData<ApiResponse<CodeDTO>> unMarkAsFavourite( @Path("routineID") int routineID);
 
     @GET("routines/{routineID}/cycles/{cycleID}/exercises")
-    Call<PagedList<ExerciseDTO>> getExercises(@Header("authorization") String auth, @Path("routineID") int routineID, @Path("cycleID") int cycleID);
+    LiveData<ApiResponse<PagedList<ExerciseDTO>>> getExercises( @Path("routineID") int routineID, @Path("cycleID") int cycleID);
 
     @POST("routines/{routineId}/ratings")
-    Call<RatingDTO> rateRoutine(@Header("authorization") String auth, @Path("routineId") int routineID, @Body RatingDTO ratingCredential);
+    LiveData<ApiResponse<RatingDTO>> rateRoutine( @Path("routineId") int routineID, @Body RatingDTO ratingCredential);
+
+
+
+
+
 
 }

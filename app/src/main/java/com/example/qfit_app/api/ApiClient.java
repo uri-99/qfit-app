@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class ApiClient implements Parcelable {
+public class ApiClient{
     private ApiService apiService;
     public String token = "emptys";
     public List<RoutineDTO> routineListAll;
@@ -90,48 +90,13 @@ public class ApiClient implements Parcelable {
 
     }
 
-    //para livedata:
-//    public static <S> S create(Context context) {
-//        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().
-//                setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-//
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(httpLoggingInterceptor)
-//                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-//                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-//                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-//                .build();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://10.0.1.197:8080/api/") //antes: http://10.0.1.197:8080/api/
-//                .client(okHttpClient)
-//                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        return (S) retrofit.create(ApiService.class);
-//    }
+
 
 
     public void setContext(Context context) {
         this.context=context;
     }
 
-    protected ApiClient(Parcel in) {
-        token = in.readString();
-    }
-
-    public static final Creator<ApiClient> CREATOR = new Creator<ApiClient>() {
-        @Override
-        public ApiClient createFromParcel(Parcel in) {
-            return new ApiClient(in);
-        }
-
-        @Override
-        public ApiClient[] newArray(int size) {
-            return new ApiClient[size];
-        }
-    };
 
     public void login(String username, String password) {
 
@@ -161,17 +126,7 @@ public class ApiClient implements Parcelable {
     }
 
 
-    //para livedata
-//    public LiveData<Resource<TokenDTO>> login(CredentialDTO credentials) {
-//        return new NetworkBoundResource<TokenDTO, TokenDTO>()
-//        {
-//            @NonNull
-//            @Override
-//            protected LiveData<ApiResponse<TokenDTO>> createCall() {
-//                return apiService.login(credentials);
-//            }
-//        }.asLiveData();
-//    }
+
 
     public void getCurrentUser() {
         Call<UserDTO> currentUserCall = apiService.getCurrentUser(token);
@@ -431,13 +386,4 @@ public class ApiClient implements Parcelable {
         }));
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(token);
-    }
 }
