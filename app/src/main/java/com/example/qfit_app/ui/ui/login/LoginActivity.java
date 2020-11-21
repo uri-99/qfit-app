@@ -2,40 +2,29 @@ package com.example.qfit_app.ui.ui.login;
 
 import android.app.Activity;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.qfit_app.Exercise;
 import com.example.qfit_app.MainActivity;
 import com.example.qfit_app.R;
 import com.example.qfit_app.api.ApiClient;
-import com.example.qfit_app.routine_in_progress;
-
-import java.io.Serializable;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
