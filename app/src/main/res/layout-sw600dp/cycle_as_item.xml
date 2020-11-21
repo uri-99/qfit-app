@@ -7,6 +7,17 @@
     android:layout_weight="2">
 
     <TextView
+        android:id="@+id/cycleRepetitions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/cycleTitle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/cycleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
