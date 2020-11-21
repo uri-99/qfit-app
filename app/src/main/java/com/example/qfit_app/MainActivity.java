@@ -458,6 +458,7 @@ public class MainActivity extends AppCompatActivity {
         allRoutinesView.setVisibility(GONE);
         favRoutinesView.setVisibility(GONE);
         routineDetails.setVisibility(View.VISIBLE);
+        refreshButton.setVisibility(GONE);
 
 
         ImageButton button_back = findViewById(R.id.button_back);

@@ -55,8 +55,6 @@ public class routine_in_progress extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine_in_progress);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         cycleTitle = findViewById(R.id.in_progress_cicleTitle);
         exerciseTitle = findViewById(R.id.in_progress_exerciseTitle);
         exerciseDuration = findViewById(R.id.in_progress_exerciseDuration);
@@ -121,7 +119,7 @@ public class routine_in_progress extends AppCompatActivity {
                 if(!finished) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
                     dialog.setTitle(R.string.confirmExit);
-                    //    dialog.setMessage(R.string.confirmExitSubtitle);
+                    dialog.setMessage(R.string.confirmExitSubtitle);
                     dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -167,7 +165,7 @@ public class routine_in_progress extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        timerTotalDisplay.setText("Tiempo total " + timeTotal);
+                        timerTotalDisplay.setText(getResources().getString(R.string.totalTimeMessage) + " " + timeTotal);
                         timeTotal++;
 
                         if(i > 0) {
