@@ -73,7 +73,7 @@
     <string name="creatorId">Creator</string>
 
 
-    <string name="direction">ORDER</string>
+    <string name="direction">Order</string>
     <string-array name="orden">
         <item>@string/direction</item>
         <item>Ascendant</item>
@@ -121,4 +121,5 @@
     <string name="confirmRemove">Remove from favourites?</string>
 
     <string name="changeTheme">Change theme</string>
+    <string name="confirmLogOut">Log out?</string>
 </resources>

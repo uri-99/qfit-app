@@ -23,7 +23,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Qfitapp">
+            android:theme="@style/Theme.Qfitapp"
+            android:screenOrientation="unspecified">
             <intent-filter android:label="view_id_intent">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -180,26 +180,33 @@
             app:layout_constraintStart_toStartOf="@+id/cycleList" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
-        android:id="@+id/allRoutines"
-        android:layout_width="350dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:dividerHeight="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutFilters" />
 
-    <ListView
-        android:id="@+id/favRoutines"
-        android:layout_width="350dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:dividerHeight="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/refresh" />
+
+        <ListView
+            android:id="@+id/allRoutines"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:dividerHeight="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/nav_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutFilters" />
+
+
+
+
+
+        <ListView
+            android:id="@+id/favRoutines"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:dividerHeight="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/nav_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/refresh" />
+
 
     <ImageButton
         android:id="@+id/refresh"
@@ -228,12 +235,7 @@
             tools:layout_editor_absoluteY="5dp">
 
 
-            <Button
-                android:id="@+id/buttonWelcome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:text="@string/comenzar" />
+
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -258,6 +260,13 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/buttonWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:text="@string/comenzar" />
         </LinearLayout>
     </ScrollView>
 
@@ -361,6 +370,7 @@
             android:backgroundTint="@color/greyFront"
             android:paddingHorizontal="5dp"
             android:text="@string/direction"
+            android:textAllCaps="false"
             android:shadowRadius="0"
             android:textColor="@color/green"
             android:textAlignment="center" />

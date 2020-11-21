@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -57,9 +60,10 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
 
 
 
+        int orientation = Resources.getSystem().getConfiguration().orientation;
 
         title = routine.getTitle();
-        if(title.length() >= 20){
+        if(title.length() >= 20 && orientation == Configuration.ORIENTATION_PORTRAIT){
             title = title.substring(0, 19);
             title = title.concat("...");
         }
@@ -68,7 +72,7 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
 
         desc = routine.getDescription();
 
-        if(desc.length() >= 35){
+        if(desc.length() >= 35 && orientation == Configuration.ORIENTATION_PORTRAIT){
             desc = desc.substring(0, 34);
             desc = desc.concat("...");
         }
@@ -105,29 +109,34 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         buttonRemFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //la villereada maxima: hacer desaparecer la rutina
-                //y hay que borrar la rutina 2 veces por alguna razon misteriosa de este codigo trambólico
-        //        view.setVisibility(View.GONE);
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context, R.style.AlertDialogRed);
+                builder.setTitle(R.string.confirmRemove);
 
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialog);
-                dialog.setTitle(R.string.confirmRemove);
-                dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
+               // AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.AlertDialog);
+               // dialog
+                builder.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         routineList.remove(routine);
                         apiClient.unMarkAsFavourite(routine.getId());
-                        Toast.makeText(context, R.string.routineRemoved,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.routineRemoved, Toast.LENGTH_SHORT).show();
                         MainActivity.refresh();
 
                     }
                 });
-                dialog.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialog, int which) {
                         //do nothing
                     }
                 });
-                dialog.create().show();
+                builder.create();
+
+                AlertDialog dialog = builder.show();
+
+
+                dialog.show();
 
 
 

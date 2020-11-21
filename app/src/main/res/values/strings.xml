@@ -74,7 +74,7 @@
 
 
 
-    <string name="direction">ORDEN</string>
+    <string name="direction">Orden</string>
     <string-array name="orden">
         <item>@string/direction</item>
         <item>Ascendiente</item>
@@ -119,6 +119,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="confirmRemove">¿Eliminar de favoritos?</string>
+    <string name="confirmLogOut">¿Cerrar sesión?</string>
 
     <string name="changeTheme">Cambiar colores</string>
 

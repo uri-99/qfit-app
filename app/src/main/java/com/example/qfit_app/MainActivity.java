@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +29,7 @@ import com.example.qfit_app.api.classes.RoutineDTO;
 import com.example.qfit_app.ui.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -121,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
         logoutText = findViewById(R.id.logoutText);
         profileLayout = findViewById(R.id.profileLayout);
         profileText = findViewById(R.id.profileName);
-
-
 
         searchButton.setVisibility(GONE);
         searchBar.setVisibility(GONE);
@@ -384,9 +384,28 @@ public class MainActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiClient.logout();
-                Intent logout = new Intent(context, LoginActivity.class);
-                startActivity(logout);
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(instance,  R.style.AlertDialogRed);
+                dialog.setTitle(R.string.confirmLogOut);
+                dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        apiClient.logout();
+                        Intent logout = new Intent(context, LoginActivity.class);
+                        startActivity(logout);
+                    }
+                });
+                dialog.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+                dialog.create().show(); // Create the Dialog and display it to the user
+
+
+
+
+
             }
         });
 
@@ -543,7 +562,7 @@ public class MainActivity extends AppCompatActivity {
                 List<Exercise> cycle3 = routine.cycles.get(2).getExercises();
                 startRoutine.putExtra("routineCycle3", (Serializable) cycle3);
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogBlue);
                 dialog.setTitle(R.string.selectRoutineType);
                 dialog.setPositiveButton(R.string.simple, new DialogInterface.OnClickListener() {
                     @Override

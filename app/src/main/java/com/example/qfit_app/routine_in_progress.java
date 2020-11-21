@@ -92,9 +92,9 @@ public class routine_in_progress extends AppCompatActivity {
         size2 = cycle2.size();
         size3 = cycle3.size();
 
-
+        String str = new String("x" + currentExercise.getReps());
         exerciseTitle.setText(currentExercise.getTitle());
-        exerciseDuration.setText(currentExercise.getReps());
+        exerciseDuration.setText(str);
         exerciseDescription.setText(currentExercise.getDetail());
         displayTime.setText(currentExercise.getReps());
         cycleTitle.setText(R.string.cycle1Title);
@@ -117,7 +117,7 @@ public class routine_in_progress extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(!finished) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogStyle);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(instance,  R.style.AlertDialogRed);
                     dialog.setTitle(R.string.confirmExit);
                     dialog.setMessage(R.string.confirmExitSubtitle);
                     dialog.setPositiveButton(R.string.affirmative, new DialogInterface.OnClickListener() {
