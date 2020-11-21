@@ -31,6 +31,7 @@ public class routine_in_progress extends AppCompatActivity {
     TextView exerciseDescription;
     TextView displayTime;
     TextView finishMessage;
+    TextView repsDisplay;
     Button readyButton;
     Button rateBtn;
     RatingBar ratingBar;
@@ -42,6 +43,7 @@ public class routine_in_progress extends AppCompatActivity {
     Exercise currentExercise;
     int size1, size2, size3;
     int current1, current2, current3 = 0;
+    int reps1, reps2, reps3, reps1Total, reps2Total, reps3Total;
     Timer timerTotal;
     int timeTotal=1;
     int i=1;
@@ -64,6 +66,7 @@ public class routine_in_progress extends AppCompatActivity {
         routineTitle = findViewById(R.id.in_progress_routineTitle);
         rateBtn = findViewById(R.id.rate_btn);
         ratingBar = findViewById(R.id.ratingBar);
+        repsDisplay = findViewById(R.id.repeDisplay);
 
         instance=this;
 
@@ -75,6 +78,13 @@ public class routine_in_progress extends AppCompatActivity {
         cycle2 = (List<Exercise>) bundle.get("routineCycle2");
         cycle3 = (List<Exercise>) bundle.get("routineCycle3");
 
+        reps1 = (Integer) bundle.get("cycle1Reps");
+        reps2 = (Integer) bundle.get("cycle2Reps");
+        reps3 = (Integer) bundle.get("cycle3Reps");
+        reps1Total=reps1;
+        reps2Total=reps2;
+        reps3Total=reps3;
+
         apiClient = new ApiClient();
             apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
 
@@ -85,7 +95,7 @@ public class routine_in_progress extends AppCompatActivity {
             exerciseDescription.setVisibility(View.VISIBLE);
         }
 
-        currentExercise = cycle1.get(0);
+        currentExercise = cycle1.get(0); //first exercise
         size1 = cycle1.size();
         size2 = cycle2.size();
         size3 = cycle3.size();
@@ -96,6 +106,7 @@ public class routine_in_progress extends AppCompatActivity {
         exerciseDescription.setText(currentExercise.getDetail());
         displayTime.setText(currentExercise.getReps());
         cycleTitle.setText(R.string.cycle1Title);
+        repsDisplay.setText(String.format("%d / %d", ((reps1Total - reps1)+1), reps1Total));
         ViewGroup.LayoutParams size = divider.getLayoutParams();
         size.width = (int) (30*cycleTitle.getText().length());
         divider.setLayoutParams(size);
@@ -190,10 +201,20 @@ public class routine_in_progress extends AppCompatActivity {
 
   //  @SuppressLint("DefaultLocale")
     public void nextExercise(){
-        if(current1 < size1-1) {
+        if(current1 < size1-1 || reps1>1) {
+            if(current1 == size1-1){
+                reps1--;
+                current1=-1;
+            }
+            repsDisplay.setText(String.format("%d / %d", ((reps1Total - reps1)+1), reps1Total));
             current1++;
             currentExercise = cycle1.get(current1);
-        } else if(current2 < size2) {
+        } else if(current2 < size2 || reps2>1) {
+            if(current2 == size2){
+                reps2--;
+                current2=0;
+            }
+            repsDisplay.setText(String.format("%d / %d", ((reps2Total - reps2)+1), reps2Total));
             cycleTitle.setText(R.string.cycle2Title);
             ViewGroup.LayoutParams size = divider.getLayoutParams();
             size.width= (int) (30*cycleTitle.getText().length());
@@ -201,7 +222,12 @@ public class routine_in_progress extends AppCompatActivity {
 
             currentExercise = cycle2.get(current2);
             current2++;
-        } else if(current3 < size3) {
+        } else if(current3 < size3 || reps3>1) {
+            if(current3 == size3){
+                reps3--;
+                current3=0;
+            }
+            repsDisplay.setText(String.format("%d / %d", ((reps3Total - reps3)+1), reps3Total));
             cycleTitle.setText(R.string.cycle3Title);
             ViewGroup.LayoutParams size = divider.getLayoutParams();
             size.width= (int) (30*cycleTitle.getText().length());
@@ -220,7 +246,10 @@ public class routine_in_progress extends AppCompatActivity {
             LinearLayout linearLayout = findViewById(R.id.routine_finish);
             linearLayout.setVisibility(View.VISIBLE);
 
+            TextView repetition = findViewById(R.id.repe);
+            repetition.setVisibility(View.GONE);
             finishMessage.setText(fs);
+            repsDisplay.setVisibility(View.GONE);
             finishMessage.setVisibility(View.VISIBLE);
             cycleTitle.setVisibility(View.INVISIBLE);
             exerciseTitle.setVisibility(View.INVISIBLE);

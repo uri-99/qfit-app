@@ -47,7 +47,7 @@
         android:layout_width="140dp"
         android:layout_height="2dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:background="?android:attr/listDivider"
         android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,5 +119,23 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+    <TextView
+        android:id="@+id/repeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/repe"
+        app:layout_constraintTop_toBottomOf="@+id/in_progress_cicleTitle" />
+
+    <TextView
+        android:id="@+id/repe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/repetition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_progress_cicleTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

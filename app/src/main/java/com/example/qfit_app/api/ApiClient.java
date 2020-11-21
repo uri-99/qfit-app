@@ -60,6 +60,8 @@ public class ApiClient implements Parcelable {
     public int cycleID1;
     public int cycleID2;
     public int cycleID3;
+    public int[] cycleReps = new int[3];
+
 
     public static final int CONNECT_TIMEOUT = 60;
     public static final int READ_TIMEOUT = 60;
@@ -364,6 +366,11 @@ public class ApiClient implements Parcelable {
                 cycleID1=response.body().getResults().get(0).getId();
                 cycleID2=response.body().getResults().get(1).getId();
                 cycleID3=response.body().getResults().get(2).getId();
+                cycleReps[0]=response.body().getResults().get(0).getRepetitions();
+                cycleReps[1]=response.body().getResults().get(1).getRepetitions();
+                cycleReps[2]=response.body().getResults().get(2).getRepetitions();
+
+
                 Log.d("logg", String.format("ids now are: %d %d %d", response.body().getResults().get(0).getId(), response.body().getResults().get(1).getId(), response.body().getResults().get(2).getId()));
             }
 

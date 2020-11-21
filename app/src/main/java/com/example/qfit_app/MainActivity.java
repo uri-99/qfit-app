@@ -23,12 +23,14 @@ import android.widget.Toast;
 
 import com.example.qfit_app.api.ApiClient;
 import com.example.qfit_app.api.classes.RoutineDTO;
+import com.example.qfit_app.ui.home.HomeViewModel;
 import com.example.qfit_app.ui.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     static TextView profileText;
 
     private static String direction = "Direction";
+    private HomeViewModel homeViewModel;
 
 
     @Override
@@ -124,9 +127,11 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutFilters.setVisibility(GONE);
         navView.setVisibility(GONE);
 
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         Intent lastIntent = getIntent();
         bundle = lastIntent.getExtras();
-        apiClient = new ApiClient();//(ApiClient) bundle.get("apiClient");
+        apiClient = homeViewModel.getApiClient();//(ApiClient) bundle.get("apiClient");
 //        apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
 
         String action = lastIntent.getAction();
@@ -151,8 +156,9 @@ public class MainActivity extends AppCompatActivity {
  //       apiClient.login("johndoe", "1234567890");
 
 
-        allRoutineList = new ArrayList<>();
-        favRoutineList = new ArrayList<>();
+        allRoutineList = homeViewModel.getAllRoutineList();
+        favRoutineList = homeViewModel.getFavRoutineList();
+
 
         allRoutinesView = findViewById(R.id.allRoutines);
         allAdapter = new RoutineListAdapter(context, R.layout.routine_as_item, allRoutineList, apiClient);
@@ -314,7 +320,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch ((Integer) direction.getTag()) { //puede que tenga que hacer eso de antes para el text
                     case 0: {
-                        apiClient.setDirectionParam(null);
+                       // apiClient.setDirectionParam(null);
+                        apiClient.setDirectionParam("asc");
                         direction.setTag(1);
                         direction.setText(R.string.direction);
 
@@ -322,13 +329,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case 1: {
-                        apiClient.setDirectionParam("asc");
+                     //   apiClient.setDirectionParam("asc");
+                        apiClient.setDirectionParam("desc");
                         direction.setTag(2);
                         direction.setText("asc ↑");
                         break;
                     }
                     case 2: {
-                        apiClient.setDirectionParam("desc");
+                       // apiClient.setDirectionParam("desc");
+                        apiClient.setDirectionParam(null);
                         direction.setTag(0);
                         direction.setText("desc ↓");
                         break;
@@ -339,41 +348,6 @@ public class MainActivity extends AppCompatActivity {
                 refresh();
             }
         });
-
-
-
-/*
-        direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (direction.getSelectedItem().toString()) {
-                    case "Direction":
-                    case "Dirección": {
-                        apiClient.setDirectionParam(null);
-                        break;
-                    }
-                    case "Ascendant":
-                    case "Ascendiente": {
-                        apiClient.setDirectionParam("asc");
-                        break;
-                    }
-                    case "Descendant":
-                    case "Descendiente": {
-                        apiClient.setDirectionParam("desc");
-                        break;
-                    }
-                    default:
-                        apiClient.setDirectionParam(null);
-                }
-                refresh();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        */
 
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -556,6 +530,10 @@ public class MainActivity extends AppCompatActivity {
                 startRoutine.putExtra("routineCycle2", (Serializable) cycle2);
                 List<Exercise> cycle3 = routine.cycles.get(2).getExercises();
                 startRoutine.putExtra("routineCycle3", (Serializable) cycle3);
+
+                startRoutine.putExtra("cycle1Reps", routine.cycles.get(0).getReps());
+                startRoutine.putExtra("cycle2Reps", routine.cycles.get(1).getReps());
+                startRoutine.putExtra("cycle3Reps", routine.cycles.get(2).getReps());
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(instance, R.style.AlertDialogBlue);
                 dialog.setTitle(R.string.selectRoutineType);

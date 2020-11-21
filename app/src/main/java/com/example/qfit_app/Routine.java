@@ -109,14 +109,14 @@ public class Routine implements Parcelable {
 
 //        String string1 = R.string.cycle1Title;
 
-        createCycle("Entrada en calor", "descripción", exercises1);
-        createCycle("Ejercitación principal", "descripción", exercises2);
-        createCycle("Enfriamiento", "descripción", exercises3);
+        createCycle("Entrada en calor", "descripción", exercises1, apiClient.cycleReps[0]);
+        createCycle("Ejercitación principal", "descripción", exercises2, apiClient.cycleReps[1]);
+        createCycle("Enfriamiento", "descripción", exercises3, apiClient.cycleReps[2]);
 
     }
 
-    public Cycle createCycle(String title, String description, List<Exercise> exercises) {
-        cycles.add(new Cycle(title, description, exercises));
+    public Cycle createCycle(String title, String description, List<Exercise> exercises, int reps) {
+        cycles.add(new Cycle(title, description, exercises, reps));
         return cycles.get(cycles.size() -1); //el que acabo de crear
     }
 
@@ -136,11 +136,13 @@ public class Routine implements Parcelable {
     public class Cycle {
         String title, description;
         List<Exercise> exercises;
+        int reps;
 
-        public Cycle(String title, String description, List<Exercise> exercises) {
+        public Cycle(String title, String description, List<Exercise> exercises, int reps) {
             this.title = title;
             this.description = description;
             this.exercises=exercises;
+            this.reps=reps;
         }
 
         public String getTitle() {
@@ -155,6 +157,10 @@ public class Routine implements Parcelable {
                 string.append(exercise.getReps());
             }
             return string.toString();
+        }
+
+        public int getReps() {
+            return reps;
         }
 
         public String getDescription() {

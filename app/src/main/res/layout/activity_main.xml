@@ -420,7 +420,7 @@
             android:id="@+id/photo_imageView"
             android:layout_width="174dp"
             android:layout_height="172dp"
-            android:src="@mipmap/default_profile_picture" />
+            android:src="@drawable/ic_baseline_person_blue_24" />
 
         <TextView
             android:id="@+id/textView10"

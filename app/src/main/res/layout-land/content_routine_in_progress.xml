@@ -120,4 +120,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
+    <TextView
+        android:id="@+id/repeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/in_progress_cicleTitle" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="@string/repetition"
+        app:layout_constraintStart_toEndOf="@+id/in_progress_cicleTitle"
+        app:layout_constraintTop_toBottomOf="@+id/in_progress_cicleTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

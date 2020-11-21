@@ -122,5 +122,6 @@
     <string name="confirmLogOut">¿Cerrar sesión?</string>
 
     <string name="changeTheme">Cambiar colores</string>
+    <string name="repetition">Repetición </string>
 
 </resources>

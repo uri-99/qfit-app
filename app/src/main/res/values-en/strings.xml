@@ -119,7 +119,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="confirmRemove">Remove from favourites?</string>
+    <string name="confirmLogOut">¿Log Out?</string>
 
     <string name="changeTheme">Change theme</string>
-    <string name="confirmLogOut">Log out?</string>
+    <string name="repetition">Repetition </string>
 </resources>

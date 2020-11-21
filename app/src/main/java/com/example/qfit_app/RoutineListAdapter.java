@@ -42,6 +42,18 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
 
     }
 
+
+    @NonNull
+    @Override
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -186,12 +198,14 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
             TextView cycleTitle = view.findViewById(R.id.cycleTitle);
             TextView cycleDescription = view.findViewById(R.id.cycleDescription);
             ListView exerciseList = view.findViewById(R.id.exerciseList);
+            TextView cycleRepetitions = view.findViewById(R.id.cycleRepetitions);
 
 
 
             Routine.Cycle cycle = cycleList.get(position);
             cycleTitle.setText(cycle.getTitle());
             cycleDescription.setText(cycle.getDescription());
+            cycleRepetitions.setText(String.format("x%d", cycle.getReps()));
             exerciseList.setAdapter(createExerciseListAdapter(context, resource, cycle.exercises));
             ViewGroup.LayoutParams listSize = exerciseList.getLayoutParams();
 
