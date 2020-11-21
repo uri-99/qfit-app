@@ -21,7 +21,7 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/profileLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -72,7 +72,7 @@
             android:visibility="invisible" />
 
         <Button
-            android:id="@+id/profileActivity"
+            android:id="@+id/changeThemeButton"
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:backgroundTint="@color/greyFront"

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +29,7 @@ import com.example.qfit_app.ui.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout sharedRoutinePopup;
     static ImageButton logoutButton;
     static TextView logoutText;
+    static LinearLayout profileLayout;
 
     private static ConstraintLayout routineDetails;
 
@@ -73,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundle;
     String sharedRoutine = null;
     Boolean found=false;
+    Boolean isDarkModeOn;
+    static Boolean welcomePressed;
+    static TextView profileText;
 
     private static String direction = "Direction";
 
@@ -113,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
         showSharedRoutine = findViewById(R.id.buttonShowShared);
         logoutButton = findViewById(R.id.logoutButton);
         logoutText = findViewById(R.id.logoutText);
+        profileLayout = findViewById(R.id.profileLayout);
+        profileText = findViewById(R.id.profileName);
 
 
 
@@ -143,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 sharedRoutine=bundle.get("sharedRoutine").toString();
             apiClient.login(bundle.get("username").toString(), bundle.get("password").toString());
         }
+        profileText.setText(bundle.get("username").toString());
 
  //       apiClient.login("johndoe", "1234567890");
 
@@ -159,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         favRoutinesView.setAdapter(favAdapter);
 
 
+        welcomePressed=false;
         welcomeMessage.setVisibility(VISIBLE);
         welcomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
                 firstGet();
                 welcomeMessage.setVisibility(GONE);
                 navView.setVisibility(View.VISIBLE);
+                profileLayout.setVisibility(VISIBLE);
+                welcomePressed=true;
 
                 if(sharedRoutine!=null) {
                     sharedRoutinePopup.setVisibility(VISIBLE);
@@ -215,12 +227,13 @@ public class MainActivity extends AppCompatActivity {
                 if(searchBar.getText().length()>2) {
                     apiClient.setSearchParam(searchBar.getText().toString());
                     apiClient.getRoutines();
+                    refresh();//
                 } else if (searchBar.getText().length()==0) {
                     apiClient.setSearchParam(null);
                 } else {
                     Toast.makeText(context, "Busqueda debe tener al menos 3 caracteres",Toast.LENGTH_SHORT).show();
                 }
-                refresh();
+//                refresh();
             }
         });
 
@@ -377,6 +390,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button changeTheme = findViewById(R.id.changeThemeButton);
+        isDarkModeOn = !(changeTheme.getCurrentTextColor()==getResources().getColor(R.color.originalwhite));
+        changeTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isDarkModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    isDarkModeOn=false;
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    isDarkModeOn=true;
+                }
+                welcomePressed=false;
+            }
+        });
 
     }
 
@@ -409,6 +437,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void appearAllList() {
+        profileLayout.setVisibility(GONE);
         logoutButton.setVisibility(GONE);
         logoutText.setVisibility(GONE);
         searchButton.setVisibility(VISIBLE);
@@ -421,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void appearFavList() {
+        profileLayout.setVisibility(GONE);
         logoutButton.setVisibility(GONE);
         logoutText.setVisibility(GONE);
         searchButton.setVisibility(GONE);
@@ -442,7 +472,8 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setVisibility(GONE);
         linearLayoutFilters.setVisibility(GONE);
         refreshButton.setVisibility(GONE);
-
+        if(welcomePressed)
+            profileLayout.setVisibility(VISIBLE);
     }
 
     public void appearDetails(Routine routine) {

@@ -1,0 +1,77 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Qfitapp" parent="Theme.MaterialComponents.DayNight.NoActionBar"> //.NoActionBar - DarkActionBar y comentar la linea 79 de mainactivity.java
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/greyBack</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue</item>
+        <item name="colorSecondaryVariant">@color/red</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <!--        <item name="android:backgroundTint">@color/greyBack</item>-->
+        <!--        <item name="android:navigationBarColor">@color/blue</item>-->
+        <item name="android:windowBackground">@color/greyBack</item>
+        <!--        <item name="android:actionBarItemBackground">@color/red</item>-->
+        <!--        <item name="android:actionMenuTextColor">@color/red</item>-->
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:panelColorForeground">@color/red</item>
+    </style>
+    <style name="Theme.Login" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryVariant">@color/greyBack</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue</item>
+        <item name="colorSecondaryVariant">@color/red</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <!--        <item name="android:backgroundTint">@color/greyBack</item>-->
+        <!--        <item name="android:navigationBarColor">@color/blue</item>-->
+        <item name="android:windowBackground">@color/greyBack</item>
+        <!--        <item name="android:actionBarItemBackground">@color/red</item>-->
+        <!--        <item name="android:actionMenuTextColor">@color/red</item>-->
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:panelColorForeground">@color/red</item>
+    </style>
+
+
+    <style name="Theme.Qfitapp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Qfitapp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Qfitapp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.WhiteAccent" parent="TextAppearance.AppCompat.Large">
+        <item name="colorAccent">@color/green</item> <!-- Whatever color you want-->
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textColorPrimary">#595959</item>
+        <item name="android:colorAccent">#1b5e20</item>
+    </style>
+
+
+
+
+</resources>

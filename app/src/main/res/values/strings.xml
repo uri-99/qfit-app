@@ -120,4 +120,6 @@
 
     <string name="confirmRemove">¿Eliminar de favoritos?</string>
 
+    <string name="changeTheme">Cambiar colores</string>
+
 </resources>

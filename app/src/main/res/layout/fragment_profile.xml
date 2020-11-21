@@ -19,79 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/text_profile"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photo_imageView"
-            android:layout_width="174dp"
-            android:layout_height="172dp"
-            android:src="@mipmap/default_profile_picture" />
-
-        <TextView
-            android:id="@+id/profileName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_name"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/profileAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_age"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/profileEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            app:closeIcon="@drawable/ic_baseline_settings_24"
-            app:closeIconEnabled="true" />
-
-        <TextView
-            android:id="@+id/text_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/profileActivity"
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            android:backgroundTint="@color/greyFront"
-            android:text="@string/activity"
-            android:textAlignment="textStart"
-            app:icon="@drawable/ic_baseline_assignment_turned_in_24"
-            app:iconGravity="end"
-            app:iconSize="40dp" />
-
-        <Button
-            android:id="@+id/profileObjectives"
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            android:backgroundTint="@color/greyFront"
-            android:text="@string/objectives"
-            android:textAlignment="viewStart"
-            app:icon="@drawable/ic_baseline_golf_course_24"
-            app:iconGravity="end"
-            app:iconSize="40dp" />
-
-    </LinearLayout>
+        android:text="TextView"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="267dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
